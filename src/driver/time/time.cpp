@@ -5,10 +5,10 @@
 
 #define CTC_MATCH_OVERFLOW ((F_CPU / 1000) / 8)
 
-static volatile uint32_t isr_milliseconds;
+static volatile uint32_t g_milliseconds;
 
 ISR(TIMER1_COMPA_vect) {
-  isr_milliseconds++;
+  g_milliseconds++;
 }
 
 Time::Time() {
@@ -27,7 +27,7 @@ Time::Time() {
 uint32_t Time::milliseconds() {
   uint32_t result;
   do {
-    result = isr_milliseconds;
-  } while (result != isr_milliseconds);
+    result = g_milliseconds;
+  } while (result != g_milliseconds);
   return result;
 }

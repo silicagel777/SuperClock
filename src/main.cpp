@@ -13,6 +13,5 @@ int main(void) {
   sched.addTask([](void *p) { ((decltype(&buzzerTone))p)->stop(); }, &buzzerTone, 1000);
   for (;;) {
     sched.process();
-    display.process();
   }
 }

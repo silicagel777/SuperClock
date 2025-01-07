@@ -1,19 +1,47 @@
+#include <avr/interrupt.h>
 #include <avr/io.h>
-#include <util/delay.h>
 
 #include "driver/display/display.h"
 
-// TODO: rewrite properly to timer2 interrupts!
+static uint8_t g_col = 0;
+static uint8_t g_buf[Display::c_width][Display::c_height] = {
+    {0, 0, 0, 0, 0, 0},
+    {0, 255, 0, 0, 0, 0},
+    {255, 255, 255, 255, 255, 0},
+    {0, 0, 0, 0, 0, 0},
+    {255, 0, 255, 0, 255, 0},
+    {255, 0, 255, 0, 255, 0},
+    {255, 255, 255, 255, 255, 0},
+    {0, 0, 0, 0, 0, 0},
+    {0, 255, 0, 0, 255, 0},
+    {0, 0, 0, 0, 0, 0},
+    {255, 0, 255, 255, 255, 0},
+    {255, 0, 255, 0, 255, 0},
+    {255, 255, 255, 0, 255, 0},
+    {0, 0, 0, 0, 0, 0},
+    {255, 0, 255, 0, 255, 0},
+    {255, 0, 255, 0, 255, 255},
+    {255, 255, 255, 255, 255, 0},
+};
 
-Display::Display() {
+static void display_init() {
   // Init outputs
   DDRA |= 0b01111111;
   DDRB |= 0b00010111;
   DDRC |= 0b11111100;
   DDRD |= 0b11111111;
+
+  // Timer 2, CTC mode, F_CPU/32
+  TCCR2 = (1 << WGM21) | (1 << CS21) | (1 << CS20);
+  // Set output compare
+  OCR2 = 10;
+  // Enable the compare match interrupt
+  TIMSK |= (1 << OCIE2);
+  // Now enable global interrupts
+  sei();
 }
 
-void Display::process() {
+static void display_step() {
   // Reset outputs
   PORTA &= ~0b01111111;
   PORTB &= ~0b00010111;
@@ -21,19 +49,17 @@ void Display::process() {
   PORTD &= ~0b11111111;
 
   // Write rows
-  PORTB |= (m_buf[m_col][1] ? 1 : 0) << 4;  // DOT0
-  PORTD |= (m_buf[m_col][4] ? 1 : 0) << 0 | // DOT1
-           (m_buf[m_col][5] ? 1 : 0) << 1 | // A5
-           (m_buf[m_col][4] ? 1 : 0) << 2 | // A4
-           (m_buf[m_col][3] ? 1 : 0) << 3 | // A3
-           (m_buf[m_col][2] ? 1 : 0) << 4 | // A2
-           (m_buf[m_col][1] ? 1 : 0) << 5 | // A1
-           (m_buf[m_col][0] ? 1 : 0) << 6;  // A0
-
-  _delay_us(400); // reduce global brigtness
+  PORTB |= (g_buf[g_col][1] ? 1 : 0) << 4;  // DOT0
+  PORTD |= (g_buf[g_col][4] ? 1 : 0) << 0 | // DOT1
+           (g_buf[g_col][5] ? 1 : 0) << 1 | // A5
+           (g_buf[g_col][4] ? 1 : 0) << 2 | // A4
+           (g_buf[g_col][3] ? 1 : 0) << 3 | // A3
+           (g_buf[g_col][2] ? 1 : 0) << 4 | // A2
+           (g_buf[g_col][1] ? 1 : 0) << 5 | // A1
+           (g_buf[g_col][0] ? 1 : 0) << 6;  // A0
 
   // Write column select
-  switch (m_col) { // clang-format off
+  switch (g_col) { // clang-format off
   case 0:  PORTD |= 1 << 7; break; // C0
   case 1:  PORTC |= 1 << 2; break; // C1
   case 2:  PORTC |= 1 << 3; break; // C2
@@ -53,9 +79,15 @@ void Display::process() {
   case 16: PORTB |= 1 << 2; break; // C16
   } // clang-format on
 
-  if (++m_col >= c_width) {
-    m_col = 0;
+  if (++g_col >= Display::c_width) {
+    g_col = 0;
   }
+}
 
-  _delay_us(50);
+ISR(TIMER2_COMP_vect) {
+  display_step();
+}
+
+Display::Display() {
+  display_init();
 }

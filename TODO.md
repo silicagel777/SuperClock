@@ -1,4 +1,4 @@
 # TODO list!
 
-- Rewrite display driver to use interrupts
+- Add variable per-pixel and global brigtness
 - Optimize & improve scheduler?
