@@ -1,148 +1,59 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#include "display.h"
+#include "driver/display/display.h"
 
 // TODO: rewrite properly to timer2 interrupts!
 
-#define set_bit(byte, bit) ((byte) |= 1 << (bit))
-#define unset_bit(byte, bit) ((byte) &= ~(1 << (bit)))
-#define toggle_bit(byte, bit) ((byte) ^= 1 << (bit))
-#define write_bit(byte, bit, value) ((value) ? set_bit((byte), (bit)) : unset_bit((byte), (bit)))
-#define get_bit(byte, bit) (((byte) >> (bit)) & 1)
-
-static const uint8_t buf[17][6] = {
-    {0, 0, 0, 0, 0, 0},
-    {0, 255, 0, 0, 0, 0},
-    {255, 255, 255, 255, 255, 0},
-    {0, 0, 0, 0, 0, 0},
-    {255, 0, 255, 0, 255, 0},
-    {255, 0, 255, 0, 255, 0},
-    {255, 255, 255, 255, 255, 0},
-    {0, 0, 0, 0, 0, 0},
-    {0, 255, 0, 0, 255, 0},
-    {0, 0, 0, 0, 0, 0},
-    {255, 0, 255, 255, 255, 0},
-    {255, 0, 255, 0, 255, 0},
-    {255, 255, 255, 0, 255, 0},
-    {0, 0, 0, 0, 0, 0},
-    {255, 0, 255, 0, 255, 0},
-    {255, 0, 255, 0, 255, 255},
-    {255, 255, 255, 255, 255, 0},
-};
-
 Display::Display() {
-  set_bit(DDRD, 6); // A0
-  set_bit(DDRD, 5); // A1
-  set_bit(DDRD, 4); // A2
-  set_bit(DDRD, 3); // A3
-  set_bit(DDRD, 2); // A4
-  set_bit(DDRD, 1); // A5
-  set_bit(DDRB, 4); // DOT0
-  set_bit(DDRD, 0); // DOT1
-
-  set_bit(DDRD, 7); // C0
-  set_bit(DDRC, 2); // C1
-  set_bit(DDRC, 3); // C2
-  set_bit(DDRC, 4); // C3
-  set_bit(DDRC, 5); // C4
-  set_bit(DDRC, 6); // C5
-  set_bit(DDRC, 7); // C6
-  set_bit(DDRA, 6); // C7
-  set_bit(DDRA, 5); // C8
-  set_bit(DDRA, 4); // C9
-  set_bit(DDRA, 3); // C10
-  set_bit(DDRA, 2); // C11
-  set_bit(DDRA, 1); // C12
-  set_bit(DDRA, 0); // C13
-  set_bit(DDRB, 0); // C14
-  set_bit(DDRB, 1); // C15
-  set_bit(DDRB, 2); // C16
+  // Init outputs
+  DDRA |= 0b01111111;
+  DDRB |= 0b00010111;
+  DDRC |= 0b11111100;
+  DDRD |= 0b11111111;
 }
 
 void Display::process() {
-  unset_bit(PORTD, 7); // C0
-  unset_bit(PORTC, 2); // C1
-  unset_bit(PORTC, 3); // C2
-  unset_bit(PORTC, 4); // C3
-  unset_bit(PORTC, 5); // C4
-  unset_bit(PORTC, 6); // C5
-  unset_bit(PORTC, 7); // C6
-  unset_bit(PORTA, 6); // C7
-  unset_bit(PORTA, 5); // C8
-  unset_bit(PORTA, 4); // C9
-  unset_bit(PORTA, 3); // C10
-  unset_bit(PORTA, 2); // C11
-  unset_bit(PORTA, 1); // C12
-  unset_bit(PORTA, 0); // C13
-  unset_bit(PORTB, 0); // C14
-  unset_bit(PORTB, 1); // C15
-  unset_bit(PORTB, 2); // C16
+  // Reset outputs
+  PORTA &= ~0b01111111;
+  PORTB &= ~0b00010111;
+  PORTC &= ~0b11111100;
+  PORTD &= ~0b11111111;
 
-  write_bit(PORTD, 6, buf[m_col][0]); // A0
-  write_bit(PORTD, 5, buf[m_col][1]); // A1
-  write_bit(PORTD, 4, buf[m_col][2]); // A2
-  write_bit(PORTD, 3, buf[m_col][3]); // A3
-  write_bit(PORTD, 2, buf[m_col][4]); // A4
-  write_bit(PORTD, 1, buf[m_col][5]); // A5
+  // Write rows
+  PORTB |= (m_buf[m_col][1] ? 1 : 0) << 4;  // DOT0
+  PORTD |= (m_buf[m_col][4] ? 1 : 0) << 0 | // DOT1
+           (m_buf[m_col][5] ? 1 : 0) << 1 | // A5
+           (m_buf[m_col][4] ? 1 : 0) << 2 | // A4
+           (m_buf[m_col][3] ? 1 : 0) << 3 | // A3
+           (m_buf[m_col][2] ? 1 : 0) << 4 | // A2
+           (m_buf[m_col][1] ? 1 : 0) << 5 | // A1
+           (m_buf[m_col][0] ? 1 : 0) << 6;  // A0
 
   _delay_us(400); // reduce global brigtness
 
-  switch (m_col) {
-  case 0:
-    set_bit(PORTD, 7);
-    break;
-  case 1:
-    set_bit(PORTC, 2);
-    break;
-  case 2:
-    set_bit(PORTC, 3);
-    break;
-  case 3:
-    set_bit(PORTC, 4);
-    break;
-  case 4:
-    set_bit(PORTC, 5);
-    break;
-  case 5:
-    set_bit(PORTC, 6);
-    break;
-  case 6:
-    set_bit(PORTC, 7);
-    break;
-  case 7:
-    set_bit(PORTA, 6);
-    break;
-  case 8:
-    set_bit(PORTA, 5);
-    break;
-  case 9:
-    set_bit(PORTA, 4);
-    break;
-  case 10:
-    set_bit(PORTA, 3);
-    break;
-  case 11:
-    set_bit(PORTA, 2);
-    break;
-  case 12:
-    set_bit(PORTA, 1);
-    break;
-  case 13:
-    set_bit(PORTA, 0);
-    break;
-  case 14:
-    set_bit(PORTB, 0);
-    break;
-  case 15:
-    set_bit(PORTB, 1);
-    break;
-  case 16:
-    set_bit(PORTB, 2);
-    break;
-  }
+  // Write column select
+  switch (m_col) { // clang-format off
+  case 0:  PORTD |= 1 << 7; break; // C0
+  case 1:  PORTC |= 1 << 2; break; // C1
+  case 2:  PORTC |= 1 << 3; break; // C2
+  case 3:  PORTC |= 1 << 4; break; // C3
+  case 4:  PORTC |= 1 << 5; break; // C4
+  case 5:  PORTC |= 1 << 6; break; // C5
+  case 6:  PORTC |= 1 << 7; break; // C6
+  case 7:  PORTA |= 1 << 6; break; // C7
+  case 8:  PORTA |= 1 << 5; break; // C8
+  case 9:  PORTA |= 1 << 4; break; // C9
+  case 10: PORTA |= 1 << 3; break; // C10
+  case 11: PORTA |= 1 << 2; break; // C11
+  case 12: PORTA |= 1 << 1; break; // C12
+  case 13: PORTA |= 1 << 0; break; // C13
+  case 14: PORTB |= 1 << 0; break; // C14
+  case 15: PORTB |= 1 << 1; break; // C15
+  case 16: PORTB |= 1 << 2; break; // C16
+  } // clang-format on
 
-  if (++m_col > 16) {
+  if (++m_col >= c_width) {
     m_col = 0;
   }
 

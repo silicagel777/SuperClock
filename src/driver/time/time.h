@@ -1,15 +1,12 @@
 #pragma once
 
 #include <stdint.h>
-#include <system.h>
 
 class Time {
 public:
-  Time() {}
+  Time();
 
-  inline uint32_t milliseconds() {
-    return systemMilliseconds();
-  }
+  uint32_t milliseconds();
 
 private:
   Time(const Time &) = delete;

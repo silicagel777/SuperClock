@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-#include "driver/time/time.h"
+class Time;
 
 class Sched {
 public:

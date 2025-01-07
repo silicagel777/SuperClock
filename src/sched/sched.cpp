@@ -1,3 +1,4 @@
+#include "driver/time/time.h"
 #include "sched/sched.h"
 
 Sched::Sched(Time &time) : time(time) {

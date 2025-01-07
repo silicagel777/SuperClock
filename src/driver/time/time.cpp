@@ -1,27 +1,18 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
-#include <stdlib.h>
 
-#include "system.h"
+#include "driver/time/time.h"
 
 #define CTC_MATCH_OVERFLOW ((F_CPU / 1000) / 8)
 
-static volatile uint32_t milliseconds;
+static volatile uint32_t isr_milliseconds;
 
 ISR(TIMER1_COMPA_vect) {
-  milliseconds++;
+  isr_milliseconds++;
 }
 
-uint32_t systemMilliseconds(void) {
-  uint32_t result;
-  do {
-    result = milliseconds;
-  } while (result != milliseconds);
-  return result;
-}
-
-void systemInit(void) {
-  // CTC mode, Clock/8
+Time::Time() {
+  // Timer 1, CTC mode, Clock/8
   TCCR1B |= (1 << WGM12) | (1 << CS11);
   // Load the high byte, then the low byte
   // into the output compare
@@ -31,4 +22,12 @@ void systemInit(void) {
   TIMSK |= (1 << OCIE1A);
   // Now enable global interrupts
   sei();
+}
+
+uint32_t Time::milliseconds() {
+  uint32_t result;
+  do {
+    result = isr_milliseconds;
+  } while (result != isr_milliseconds);
+  return result;
 }
