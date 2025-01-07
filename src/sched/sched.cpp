@@ -25,7 +25,7 @@ void Sched::process() {
         m_tasks[i].delayMs -= diff;
         i++;
       } else {
-        m_tasks->cb(m_tasks->data);
+        m_tasks[i].cb(m_tasks[i].data);
         for (uint8_t j = i; j < m_tasksTail - 1; j++) {
           m_tasks[j] = m_tasks[j + 1];
         }
