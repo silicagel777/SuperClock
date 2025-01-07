@@ -10,7 +10,7 @@ public:
   Display();
   void setDot(uint8_t x, uint8_t y, uint8_t value);
   uint8_t getDot(uint8_t x, uint8_t y);
-  
+  void setBrigntess(uint8_t brightness);
 
 private:
   Display(const Display &) = delete;

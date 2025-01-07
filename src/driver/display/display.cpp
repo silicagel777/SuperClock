@@ -1,14 +1,12 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
-#include <util/delay.h>
 
 #include "display.h"
 #include "driver/display/display.h"
 
-static uint8_t g_timerStep = 0;
-static uint8_t g_col = 0;
 static constexpr uint8_t c_dot = 1;
-static uint8_t g_buf[Display::c_width][Display::c_height] = {
+static volatile uint8_t g_col = 0;
+static volatile uint8_t g_buf[Display::c_width][Display::c_height] = {
     {0, 0, 0, 0, 0, 0},
     {0, c_dot, 0, 0, 0, 0},
     {c_dot, c_dot, c_dot, c_dot, c_dot, 0},
@@ -28,21 +26,30 @@ static uint8_t g_buf[Display::c_width][Display::c_height] = {
     {c_dot, c_dot, c_dot, c_dot, c_dot, 0},
 };
 
-static void display_init() {
+static inline void display_init() {
   // Init outputs
   DDRA |= 0b01111111;
   DDRB |= 0b00010111;
   DDRC |= 0b11111100;
   DDRD |= 0b11111111;
 
-  // Timer 2, CTC mode, F_CPU/32
-  TCCR2 = (1 << WGM21) | (1 << CS21) | (1 << CS20);
+  // Timer 2, fast PWM mode, F_CPU/32
+  TCCR2 = (1 << WGM21) | (1 << WGM20) | (1 << CS21) | (1 << CS20);
   // Set output compare
-  OCR2 = 10;
-  // Enable the compare match interrupt
-  TIMSK |= (1 << OCIE2);
+  OCR2 = 1;
+  // Enable the compare match interrupt and overflow interrupt
+  TIMSK |= (1 << OCIE2) | (1 << TOIE2);
   // Now enable global interrupts
   sei();
+}
+
+static inline void display_set_brigtness(uint8_t brightness) {
+  brightness = 255 - brightness;
+  if (brightness == 0) {
+    // Prevents two interrupts from clashing
+    brightness = 1;
+  }
+  OCR2 = brightness;
 }
 
 static inline void display_off() {
@@ -53,18 +60,16 @@ static inline void display_off() {
   PORTD &= ~0b11111111;
 }
 
-static inline void display_step(uint8_t col, uint8_t bit) {
-  display_off();
-
+static inline void display_step() {
   // Write rows
-  PORTB |= ((g_buf[g_col][1] >> bit) & 1) << 4;  // DOT0
-  PORTD |= ((g_buf[g_col][4] >> bit) & 1) << 0 | // DOT1
-           ((g_buf[g_col][5] >> bit) & 1) << 1 | // A5
-           ((g_buf[g_col][4] >> bit) & 1) << 2 | // A4
-           ((g_buf[g_col][3] >> bit) & 1) << 3 | // A3
-           ((g_buf[g_col][2] >> bit) & 1) << 4 | // A2
-           ((g_buf[g_col][1] >> bit) & 1) << 5 | // A1
-           ((g_buf[g_col][0] >> bit) & 1) << 6;  // A0
+  PORTB |= (g_buf[g_col][1] ? 1 : 0) << 4;  // DOT0
+  PORTD |= (g_buf[g_col][4] ? 1 : 0) << 0 | // DOT1
+           (g_buf[g_col][5] ? 1 : 0) << 1 | // A5
+           (g_buf[g_col][4] ? 1 : 0) << 2 | // A4
+           (g_buf[g_col][3] ? 1 : 0) << 3 | // A3
+           (g_buf[g_col][2] ? 1 : 0) << 4 | // A2
+           (g_buf[g_col][1] ? 1 : 0) << 5 | // A1
+           (g_buf[g_col][0] ? 1 : 0) << 6;  // A0
 
   // Write column select
   switch (g_col) { // clang-format off
@@ -86,34 +91,18 @@ static inline void display_step(uint8_t col, uint8_t bit) {
   case 15: PORTB |= 1 << 1; break; // C15
   case 16: PORTB |= 1 << 2; break; // C16
   } // clang-format on
+
+  if (++g_col >= Display::c_width) {
+    g_col = 0;
+  }
 }
 
 ISR(TIMER2_COMP_vect) {
-  switch (g_timerStep) {
-  case 0:
-    display_step(g_col, 0);
-    OCR2 = 16;
-    g_timerStep++;
-    break;
-  case 1:
-    display_step(g_col, 1);
-    OCR2 = 32;
-    g_timerStep++;
-    break;
-  case 2:
-    display_step(g_col, 2);
-    OCR2 = 64;
-    g_timerStep++;
-    break;
-  case 3:
-    display_step(g_col, 3);
-    OCR2 = 128;
-    g_timerStep = 0;
-    if (++g_col >= Display::c_width) {
-      g_col = 0;
-    }
-    break;
-  }
+  display_step();
+}
+
+ISR(TIMER2_OVF_vect) {
+  display_off();
 }
 
 Display::Display() {
@@ -126,4 +115,8 @@ void Display::setDot(uint8_t x, uint8_t y, uint8_t value) {
 
 uint8_t Display::getDot(uint8_t x, uint8_t y) {
   return g_buf[x][y];
+}
+
+void Display::setBrigntess(uint8_t brightness) {
+  display_set_brigtness(brightness);
 }

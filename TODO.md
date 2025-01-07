@@ -1,4 +1,4 @@
 # TODO list!
 
-- Add variable per-pixel and global brigtness
+- Find how to increase display frequency?
 - Optimize & improve scheduler?

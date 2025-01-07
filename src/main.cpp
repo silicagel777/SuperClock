@@ -9,19 +9,16 @@ Sched sched{time};
 Display display{};
 Tone tone{};
 Buzzer buzzer{sched, tone};
-uint8_t dotVal = 0;
-int8_t dotInc = 1;
+uint8_t animateVal = 0;
+int8_t animateInc = 1;
 
 void animate(void *p) {
-  dotVal += dotInc;
-  if (dotVal == 0 || dotVal == 15) {
-    dotInc = -dotInc;
+  animateVal += animateInc;
+  if (animateVal == 0 || animateVal == 255) {
+    animateInc = -animateInc;
   }
-  display.setDot(8, 1, dotVal);
-  display.setDot(8, 2, dotVal);
-  display.setDot(8, 3, dotVal);
-  display.setDot(8, 4, dotVal);
-  sched.addTask(animate, nullptr, 50);
+  display.setBrigntess(animateVal);
+  sched.addTask(animate, nullptr, 10);
 }
 
 int main(void) {

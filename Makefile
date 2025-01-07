@@ -18,7 +18,7 @@ INC_DIRS := $(SRC_DIRS)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS)) -MMD -MP
 
 COMMON_FLAGS := $(INC_FLAGS) -mmcu=$(MCU) -Wall -Werror -fno-exceptions \
-  -fdata-sections -ffunction-sections -fno-threadsafe-statics -Os -flto \
+  -fdata-sections -ffunction-sections -fno-threadsafe-statics -g -O2 -flto \
   -DF_CPU=$(F_CPU) 
 CFLAGS := $(COMMON_FLAGS) -std=c11
 CXXFLAGS := $(COMMON_FLAGS) -std=c++17 
@@ -26,10 +26,11 @@ LDFLAGS := -mmcu=$(MCU) -Wl,-Map,$(BUILD_DIR)/$(BIN).map -Wl,--gc-sections -flto
 
 $(BUILD_DIR)/${BIN}.hex: $(BUILD_DIR)/${BIN}.elf
 	${OBJCOPY} -O ihex $< $@
-	avr-size $<
 
 $(BUILD_DIR)/${BIN}.elf: ${OBJS}
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
+	avr-size $@
+	avr-objdump -h -S $@ > $(BUILD_DIR)/${BIN}.lss
 
 $(BUILD_DIR)/%.c.o: %.c Makefile
 	mkdir -p $(dir $@)
