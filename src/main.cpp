@@ -4,16 +4,6 @@
 #include "driver/tone/tone.h"
 #include "sched/sched.h"
 
-static const uint8_t X = Display::c_maxPixelBrigtness;
-static const uint8_t demoBmp[Display::c_height][Display::c_width] = {
-    {0, 0, X, 0, X, X, X, 0, 0, 0, X, X, X, 0, X, X, X},
-    {0, X, X, 0, 0, 0, X, 0, X, 0, 0, 0, X, 0, 0, 0, X},
-    {0, 0, X, 0, X, X, X, 0, 0, 0, X, X, X, 0, X, X, X},
-    {0, 0, X, 0, 0, 0, X, 0, 0, 0, X, 0, 0, 0, 0, 0, X},
-    {0, 0, X, 0, X, X, X, 0, X, 0, X, X, X, 0, X, X, X},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, X, 0},
-};
-
 Time time{};
 Sched sched{time};
 Display display{};
@@ -33,7 +23,10 @@ void animate(void *p) {
 }
 
 int main(void) {
-  display.writeBmp(0, 0, Display::c_width, Display::c_height, (const uint8_t *)demoBmp);
+  display.writeNumber(1, 0, 0);
+  display.writeNumber(3, 4, 0);
+  display.writeNumber(2, 10, 0);
+  display.writeNumber(3, 14, 0);
   buzzer.beep();
   sched.addTask(animate, nullptr, 0);
   for (;;) {

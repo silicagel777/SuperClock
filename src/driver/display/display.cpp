@@ -1,9 +1,11 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
+#include <avr/pgmspace.h>
 #include <util/delay.h>
 
 #include "display.h"
 #include "driver/display/display.h"
+#include "driver/display/numbers.h"
 
 /******************************************************************************
   Ugly stuff ahead! The idea is to drive dot matrix in software by switching
@@ -162,15 +164,34 @@ uint8_t Display::readPixel(uint8_t x, uint8_t y) {
   return g_buf[y][x];
 }
 
-void Display::writeBmp(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp) {
+void Display::writeBmp(
+    const uint8_t *bmp, int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t brightness) {
   for (uint8_t i = 0; i < w; i++) {
     for (uint8_t j = 0; j < h; j++) {
       // TODO: optimize
       int16_t bufx = i + x;
       int16_t bufy = j + y;
       if (bufx >= 0 && bufx < c_width && bufy >= 0 && bufy < c_height) {
-        g_buf[bufy][bufx] = bmp[i + j * w];
+        g_buf[bufy][bufx] = bmp[i + j * w] ? brightness : 0;
       }
     }
   }
+}
+
+void Display::writeBmpProgmem(
+    const uint8_t *bmp, int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t brightness) {
+  for (uint8_t i = 0; i < w; i++) {
+    for (uint8_t j = 0; j < h; j++) {
+      // TODO: optimize
+      int16_t bufx = i + x;
+      int16_t bufy = j + y;
+      if (bufx >= 0 && bufx < c_width && bufy >= 0 && bufy < c_height) {
+        g_buf[bufy][bufx] = pgm_read_byte(bmp + i + j * w) ? brightness : 0;
+      }
+    }
+  }
+}
+
+void Display::writeNumber(uint8_t n, int16_t x, int16_t y, uint8_t brightness) {
+  writeBmpProgmem((const uint8_t *)cp_numbers[n], x, y, c_numberWidth, c_numberHeight, brightness);
 }
