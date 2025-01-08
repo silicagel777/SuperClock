@@ -1,5 +1,5 @@
-#include "driver/time/time.h"
 #include "sched/sched.h"
+#include "driver/time/time.h"
 
 Sched::Sched(Time &time) : time(time) {
   m_lastRun = time.milliseconds();
