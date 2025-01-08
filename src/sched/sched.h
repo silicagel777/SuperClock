@@ -8,7 +8,7 @@ class Sched {
 public:
   static constexpr uint8_t c_maxTasks = 8;
   typedef void (*task_cb_t)(void *data);
-  struct task_t {
+  struct Task {
     task_cb_t cb;
     void *data;
     uint32_t delayMs;
@@ -24,5 +24,5 @@ private:
   Time &time;
   uint32_t m_lastRun;
   uint8_t m_tasksTail = 0;
-  task_t m_tasks[c_maxTasks];
+  Task m_tasks[c_maxTasks];
 };

@@ -150,15 +150,27 @@ uint8_t I2C::read(uint8_t addr, uint8_t *data, uint8_t len) {
 }
 
 uint8_t I2C::writeReg(uint8_t addr, uint8_t reg, uint8_t data) {
-  uint8_t result = 0;
-  write(addr, &reg, 1, false);
-  write(addr, &data, 1);
-  return result;
+  uint8_t err;
+  err = write(addr, &reg, 1, false);
+  if (err) {
+    return err;
+  }
+  err = write(addr, &data, 1);
+  if (err) {
+    return err;
+  }
+  return 0;
 }
 
-uint8_t I2C::readReg(uint8_t addr, uint8_t reg) {
-  uint8_t result = 0;
-  write(addr, &reg, 1, false);
-  read(addr, &result, 1);
-  return result;
+uint8_t I2C::readReg(uint8_t addr, uint8_t reg, uint8_t *data) {
+  uint8_t err;
+  err = write(addr, &reg, 1, false);
+  if (err) {
+    return err;
+  }
+  err = read(addr, data, 1);
+  if (err) {
+    return err;
+  }
+  return 0;
 }
