@@ -12,6 +12,7 @@ public:
   Display();
   void setGlobalBrigntess(uint8_t brightness);
   uint8_t getGlobalBrightness();
+  void clear();
   void writePixel(uint8_t x, uint8_t y, uint8_t brigtness = c_maxPixelBrigtness);
   uint8_t readPixel(uint8_t x, uint8_t y);
   void writeBmp(const uint8_t *bmp, int16_t x, int16_t y, uint8_t w, uint8_t h,

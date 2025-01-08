@@ -1,6 +1,7 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <avr/pgmspace.h>
+#include <string.h>
 #include <util/delay.h>
 
 #include "display.h"
@@ -154,6 +155,10 @@ void Display::setGlobalBrigntess(uint8_t brightness) {
 
 uint8_t Display::getGlobalBrightness() {
   return displayGetBrigtness();
+}
+
+void Display::clear() {
+  memset((void *)g_buf, 0, c_height * c_width);
 }
 
 void Display::writePixel(uint8_t x, uint8_t y, uint8_t brigtness) {
