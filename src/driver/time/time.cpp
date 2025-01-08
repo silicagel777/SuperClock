@@ -3,21 +3,20 @@
 
 #include "driver/time/time.h"
 
-#define CTC_MATCH_OVERFLOW ((F_CPU / 1000) / 8)
-
-static volatile uint32_t g_milliseconds;
+static constexpr uint16_t c_ctcMatchOverflow = (F_CPU / 1000) / 8;
+static volatile uint32_t g_milliseconds = 0;
 
 ISR(TIMER1_COMPA_vect) {
   g_milliseconds++;
 }
 
 Time::Time() {
-  // Timer 1, CTC mode, Clock/8
+  // Timer 1, CTC mode, F_CPU/8
   TCCR1B |= (1 << WGM12) | (1 << CS11);
   // Load the high byte, then the low byte
   // into the output compare
-  OCR1AH = (CTC_MATCH_OVERFLOW >> 8) & 0xFF;
-  OCR1AL = CTC_MATCH_OVERFLOW & 0xFF;
+  OCR1AH = (c_ctcMatchOverflow >> 8) & 0xFF;
+  OCR1AL = c_ctcMatchOverflow & 0xFF;
   // Enable the compare match interrupt
   TIMSK |= (1 << OCIE1A);
   // Now enable global interrupts

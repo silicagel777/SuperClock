@@ -1,4 +1,5 @@
 # TODO list!
 
-- Find how to increase display frequency?
+- Optimize bitmap copy?
+- More levels for highest and lowest brigtness?
 - Optimize & improve scheduler?

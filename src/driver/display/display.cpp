@@ -1,58 +1,64 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
+#include <util/delay.h>
 
 #include "display.h"
 #include "driver/display/display.h"
 
-static constexpr uint8_t c_dot = 1;
-static volatile uint8_t g_col = 0;
-static volatile uint8_t g_buf[Display::c_width][Display::c_height] = {
-    {0, 0, 0, 0, 0, 0},
-    {0, c_dot, 0, 0, 0, 0},
-    {c_dot, c_dot, c_dot, c_dot, c_dot, 0},
-    {0, 0, 0, 0, 0, 0},
-    {c_dot, 0, c_dot, 0, c_dot, 0},
-    {c_dot, 0, c_dot, 0, c_dot, 0},
-    {c_dot, c_dot, c_dot, c_dot, c_dot, 0},
-    {0, 0, 0, 0, 0, 0},
-    {0, c_dot, 0, 0, c_dot, 0},
-    {0, 0, 0, 0, 0, 0},
-    {c_dot, 0, c_dot, c_dot, c_dot, 0},
-    {c_dot, 0, c_dot, 0, c_dot, 0},
-    {c_dot, c_dot, c_dot, 0, c_dot, 0},
-    {0, 0, 0, 0, 0, 0},
-    {c_dot, 0, c_dot, 0, c_dot, 0},
-    {c_dot, 0, c_dot, 0, c_dot, c_dot},
-    {c_dot, c_dot, c_dot, c_dot, c_dot, 0},
-};
+/******************************************************************************
+  Ugly stuff ahead! The idea is to drive dot matrix in software by switching
+  displayed column on timer overflow interrupt.
 
-static inline void display_init() {
+  Global brigtness is set up by disabling display on compare interrupt
+  of the same timer. If two interrupts become too close, the compare interrupt
+  is disabled and the corresponding logic is performed on overflow.
+
+  Per-pixel brigtness is set up by treating each display refresh as pixel
+  brigtness step and enabling or disabling pixels by comparing their values
+  to step number.
+******************************************************************************/
+
+static constexpr uint8_t c_compareLowest = 25;
+static constexpr uint8_t c_compareHighest = 230;
+
+static volatile uint8_t g_column = 0;
+static volatile uint8_t g_pixelBrightnessStep = 0;
+static volatile uint8_t g_buf[Display::c_height][Display::c_width];
+
+static inline void displayInit() {
   // Init outputs
   DDRA |= 0b01111111;
   DDRB |= 0b00010111;
   DDRC |= 0b11111100;
   DDRD |= 0b11111111;
 
-  // Timer 2, fast PWM mode, F_CPU/32
-  TCCR2 = (1 << WGM21) | (1 << WGM20) | (1 << CS21) | (1 << CS20);
-  // Set output compare
-  OCR2 = 1;
-  // Enable the compare match interrupt and overflow interrupt
+  // Timer 2, fast PWM mode, F_CPU/8
+  TCCR2 = (1 << WGM21) | (1 << WGM20) | (0 << CS22) | (1 << CS21) | (0 << CS20);
+  // Set output compare (medium brigtness)
+  OCR2 = 127;
+  // Enable the compare interrupt and overflow interrupt
   TIMSK |= (1 << OCIE2) | (1 << TOIE2);
   // Now enable global interrupts
   sei();
 }
 
-static inline void display_set_brigtness(uint8_t brightness) {
-  brightness = 255 - brightness;
-  if (brightness == 0) {
-    // Prevents two interrupts from clashing
-    brightness = 1;
-  }
+static inline void displaySetBrigtness(uint8_t brightness) {
   OCR2 = brightness;
+  if (OCR2 < c_compareLowest || OCR2 > c_compareHighest) {
+    // Compare and overflow interrupts are too close
+    // Let's disable compare interrupt and do everything on overflow
+    TIMSK &= ~(1 << OCIE2);
+  } else {
+    // Enable compare interrupt
+    TIMSK |= (1 << OCIE2);
+  }
 }
 
-static inline void display_off() {
+static inline uint8_t displayGetBrigtness() {
+  return OCR2;
+}
+
+static inline void displayOff() {
   // Reset outputs
   PORTA &= ~0b01111111;
   PORTB &= ~0b00010111;
@@ -60,19 +66,20 @@ static inline void display_off() {
   PORTD &= ~0b11111111;
 }
 
-static inline void display_step() {
-  // Write rows
-  PORTB |= (g_buf[g_col][1] ? 1 : 0) << 4;  // DOT0
-  PORTD |= (g_buf[g_col][4] ? 1 : 0) << 0 | // DOT1
-           (g_buf[g_col][5] ? 1 : 0) << 1 | // A5
-           (g_buf[g_col][4] ? 1 : 0) << 2 | // A4
-           (g_buf[g_col][3] ? 1 : 0) << 3 | // A3
-           (g_buf[g_col][2] ? 1 : 0) << 4 | // A2
-           (g_buf[g_col][1] ? 1 : 0) << 5 | // A1
-           (g_buf[g_col][0] ? 1 : 0) << 6;  // A0
+static inline void displayEnableRows() {
+  PORTB |= (g_buf[1][g_column] > g_pixelBrightnessStep) << 4;  // DOT0
+  PORTD |= (g_buf[4][g_column] > g_pixelBrightnessStep) << 0 | // DOT1
+           (g_buf[5][g_column] > g_pixelBrightnessStep) << 1 | // A5
+           (g_buf[4][g_column] > g_pixelBrightnessStep) << 2 | // A4
+           (g_buf[3][g_column] > g_pixelBrightnessStep) << 3 | // A3
+           (g_buf[2][g_column] > g_pixelBrightnessStep) << 4 | // A2
+           (g_buf[1][g_column] > g_pixelBrightnessStep) << 5 | // A1
+           (g_buf[0][g_column] > g_pixelBrightnessStep) << 6;  // A0
+}
 
+static inline void displayEnableColumn() {
   // Write column select
-  switch (g_col) { // clang-format off
+  switch (g_column) { // clang-format off
   case 0:  PORTD |= 1 << 7; break; // C0
   case 1:  PORTC |= 1 << 2; break; // C1
   case 2:  PORTC |= 1 << 3; break; // C2
@@ -91,32 +98,79 @@ static inline void display_step() {
   case 15: PORTB |= 1 << 1; break; // C15
   case 16: PORTB |= 1 << 2; break; // C16
   } // clang-format on
+}
 
-  if (++g_col >= Display::c_width) {
-    g_col = 0;
+static inline void displayNextPixelBrightnessStep() {
+  g_pixelBrightnessStep++;
+  if (g_pixelBrightnessStep > Display::c_maxPixelBrigtness) {
+    g_pixelBrightnessStep = 0;
   }
 }
 
-ISR(TIMER2_COMP_vect) {
-  display_step();
+static inline void displayNextColumn() {
+  g_column++;
+  if (g_column >= Display::c_width) {
+    g_column = 0;
+    displayNextPixelBrightnessStep();
+  }
 }
 
 ISR(TIMER2_OVF_vect) {
-  display_off();
+  if (OCR2 > c_compareHighest) {
+    // Highest possible brigtness
+    // Disable column immediately before enabling the next one
+    displayOff();
+  }
+
+  displayEnableRows();
+  displayEnableColumn();
+
+  if (OCR2 < c_compareLowest) {
+    // Lowest possible brigtness
+    // Disable column immediately after enabling it
+    displayOff();
+  }
+
+  displayNextColumn();
 }
+
+ISR(TIMER2_COMP_vect) {
+  displayOff();
+}
+
+/******************************************************************************
+  Slighly less ugly stuff ahead: C++ interface part
+******************************************************************************/
 
 Display::Display() {
-  display_init();
+  displayInit();
 }
 
-void Display::setDot(uint8_t x, uint8_t y, uint8_t value) {
-  g_buf[x][y] = value;
+void Display::setGlobalBrigntess(uint8_t brightness) {
+  displaySetBrigtness(brightness);
 }
 
-uint8_t Display::getDot(uint8_t x, uint8_t y) {
-  return g_buf[x][y];
+uint8_t Display::getGlobalBrightness() {
+  return displayGetBrigtness();
 }
 
-void Display::setBrigntess(uint8_t brightness) {
-  display_set_brigtness(brightness);
+void Display::writePixel(uint8_t x, uint8_t y, uint8_t brigtness) {
+  g_buf[y][x] = brigtness;
+}
+
+uint8_t Display::readPixel(uint8_t x, uint8_t y) {
+  return g_buf[y][x];
+}
+
+void Display::writeBmp(int16_t x, int16_t y, uint8_t w, uint8_t h, const uint8_t *bmp) {
+  for (uint8_t i = 0; i < w; i++) {
+    for (uint8_t j = 0; j < h; j++) {
+      // TODO: optimize
+      int16_t bufx = i + x;
+      int16_t bufy = j + y;
+      if (bufx >= 0 && bufx < c_width && bufy >= 0 && bufy < c_height) {
+        g_buf[bufy][bufx] = bmp[i + j * w];
+      }
+    }
+  }
 }
