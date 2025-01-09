@@ -69,15 +69,18 @@ static inline void displayOff() {
   PORTD &= ~0b11111111;
 }
 
-static inline void displayEnableRows() {
-  PORTB |= (g_buf[1][g_column] > g_pixelBrightnessStep) << 4;  // DOT0
-  PORTD |= (g_buf[4][g_column] > g_pixelBrightnessStep) << 0 | // DOT1
-           (g_buf[5][g_column] > g_pixelBrightnessStep) << 1 | // A5
-           (g_buf[4][g_column] > g_pixelBrightnessStep) << 2 | // A4
-           (g_buf[3][g_column] > g_pixelBrightnessStep) << 3 | // A3
-           (g_buf[2][g_column] > g_pixelBrightnessStep) << 4 | // A2
-           (g_buf[1][g_column] > g_pixelBrightnessStep) << 5 | // A1
-           (g_buf[0][g_column] > g_pixelBrightnessStep) << 6;  // A0
+static inline bool displayEnableRows() {
+  uint8_t maskB = (g_buf[1][g_column] > g_pixelBrightnessStep) << 4;  // DOT0
+  uint8_t maskD = (g_buf[4][g_column] > g_pixelBrightnessStep) << 0 | // DOT1
+                  (g_buf[5][g_column] > g_pixelBrightnessStep) << 1 | // A5
+                  (g_buf[4][g_column] > g_pixelBrightnessStep) << 2 | // A4
+                  (g_buf[3][g_column] > g_pixelBrightnessStep) << 3 | // A3
+                  (g_buf[2][g_column] > g_pixelBrightnessStep) << 4 | // A2
+                  (g_buf[1][g_column] > g_pixelBrightnessStep) << 5 | // A1
+                  (g_buf[0][g_column] > g_pixelBrightnessStep) << 6;  // A0
+  PORTB |= maskB;
+  PORTD |= maskD;
+  return maskB | maskD;
 }
 
 static inline void displayEnableColumn() {
@@ -125,8 +128,9 @@ ISR(TIMER2_OVF_vect) {
     displayOff();
   }
 
-  displayEnableRows();
-  displayEnableColumn();
+  if (displayEnableRows()) {
+    displayEnableColumn();
+  }
 
   if (OCR2 < c_compareLowest) {
     // Lowest possible brigtness

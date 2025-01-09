@@ -1,5 +1,8 @@
 # TODO list!
 
+- Hardawre issues on low brightness:
+  - Ghosting on prevous leds (FET drain capacitance?)
+  - Yellow leds make green leds dimmer
 - Optimize bitmap copy?
 - Bit-pack bitmaps
 - Free-running ADC
