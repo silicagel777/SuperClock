@@ -105,7 +105,7 @@ static inline void displayEnableColumn() {
 
 static inline void displayNextPixelBrightnessStep() {
   g_pixelBrightnessStep++;
-  if (g_pixelBrightnessStep > Display::c_maxPixelBrigtness) {
+  if (g_pixelBrightnessStep >= Display::c_maxPixelBrigtness) {
     g_pixelBrightnessStep = 0;
   }
 }
