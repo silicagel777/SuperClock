@@ -1,4 +1,5 @@
 #include "buzzer/buzzer.h"
+#include "driver/adc/adc.h"
 #include "driver/display/display.h"
 #include "driver/i2c/i2c.h"
 #include "driver/rtc/ds3231.h"
@@ -14,6 +15,7 @@ Tone tone{};
 Buzzer buzzer{sched, tone};
 I2C i2c{I2C::FreqMode::FREQ_400K};
 Ds3231 rtc{i2c};
+Adc adc{Adc::ReferenceMode::AVCC, Adc::PrescalerMode::DIV128};
 
 void animate(void *p) {
   static uint8_t animateVal = Display::c_maxPixelBrigtness - 1;
@@ -27,7 +29,7 @@ void animate(void *p) {
   sched.addTask(animate, nullptr, 30);
 }
 
-void update(void *p) {
+void updateTime(void *p) {
   IRtc::RtcTime rtcTime;
   rtc.readTime(&rtcTime);
 
@@ -40,13 +42,20 @@ void update(void *p) {
   }
   display.writePixel(rtcTime.sec / 4 + 1, 5);
 
-  sched.addTask(update, nullptr, 500);
+  sched.addTask(updateTime, nullptr, 500);
+}
+
+void updateBrigtness(void *p) {
+  constexpr uint8_t scale = (Adc::c_maxValue + 1) / (Display::c_maxGlobalBrightness + 1);
+  display.setGlobalBrigntess(adc.read(7) / scale);
+  sched.addTask(updateBrigtness, nullptr, 50);
 }
 
 int main(void) {
   buzzer.beep();
   sched.addTask(animate, nullptr, 0);
-  sched.addTask(update, nullptr, 0);
+  sched.addTask(updateTime, nullptr, 0);
+  sched.addTask(updateBrigtness, nullptr, 0);
   for (;;) {
     sched.process();
   }

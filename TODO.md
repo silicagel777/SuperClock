@@ -2,6 +2,8 @@
 
 - Optimize bitmap copy?
 - Bit-pack bitmaps
+- Free-running ADC
+- Adc filtering
 - Trsnaparent background for font
 - Display double buffering through swappabale buffers!!!
 - Justify number "1" position
