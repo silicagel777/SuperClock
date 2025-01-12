@@ -61,14 +61,6 @@ static inline uint8_t displayGetBrightness() {
   return OCR2;
 }
 
-static inline void displayOff() {
-  // Reset outputs
-  PORTA &= ~0b01111111;
-  PORTB &= ~0b00010111;
-  PORTC &= ~0b11111100;
-  PORTD &= ~0b11111111;
-}
-
 static inline bool displayEnableRows() {
   uint8_t maskB = (g_buf[1][g_column] > g_pixelBrightnessStep) << 4;  // DOT0
   uint8_t maskD = (g_buf[4][g_column] > g_pixelBrightnessStep) << 0 | // DOT1
@@ -78,8 +70,8 @@ static inline bool displayEnableRows() {
                   (g_buf[2][g_column] > g_pixelBrightnessStep) << 4 | // A2
                   (g_buf[1][g_column] > g_pixelBrightnessStep) << 5 | // A1
                   (g_buf[0][g_column] > g_pixelBrightnessStep) << 6;  // A0
-  PORTB |= maskB;
-  PORTD |= maskD;
+  PORTB = (PORTB & ~0b00010000) | maskB;
+  PORTD = (PORTD & ~0b01111111) | maskD;
   return maskB | maskD;
 }
 
@@ -106,6 +98,29 @@ static inline void displayEnableColumn() {
   } // clang-format on
 }
 
+static inline void displayDisableColumn() {
+  // Clear column select
+  switch (g_column) { // clang-format off
+  case 0:  PORTD &= ~(1 << 7); break; // C0
+  case 1:  PORTC &= ~(1 << 2); break; // C1
+  case 2:  PORTC &= ~(1 << 3); break; // C2
+  case 3:  PORTC &= ~(1 << 4); break; // C3
+  case 4:  PORTC &= ~(1 << 5); break; // C4
+  case 5:  PORTC &= ~(1 << 6); break; // C5
+  case 6:  PORTC &= ~(1 << 7); break; // C6
+  case 7:  PORTA &= ~(1 << 6); break; // C7
+  case 8:  PORTA &= ~(1 << 5); break; // C8
+  case 9:  PORTA &= ~(1 << 4); break; // C9
+  case 10: PORTA &= ~(1 << 3); break; // C10
+  case 11: PORTA &= ~(1 << 2); break; // C11
+  case 12: PORTA &= ~(1 << 1); break; // C12
+  case 13: PORTA &= ~(1 << 0); break; // C13
+  case 14: PORTB &= ~(1 << 0); break; // C14
+  case 15: PORTB &= ~(1 << 1); break; // C15
+  case 16: PORTB &= ~(1 << 2); break; // C16
+  } // clang-format on
+}
+
 static inline void displayNextPixelBrightnessStep() {
   g_pixelBrightnessStep++;
   if (g_pixelBrightnessStep >= Display::c_maxPixelBrightness) {
@@ -125,9 +140,10 @@ ISR(TIMER2_OVF_vect) {
   if (OCR2 > c_compareHighest) {
     // Highest possible brightness
     // Disable column immediately before enabling the next one
-    displayOff();
+    displayDisableColumn();
   }
 
+  displayNextColumn();
   if (displayEnableRows()) {
     displayEnableColumn();
   }
@@ -135,14 +151,12 @@ ISR(TIMER2_OVF_vect) {
   if (OCR2 < c_compareLowest) {
     // Lowest possible brightness
     // Disable column immediately after enabling it
-    displayOff();
+    displayDisableColumn();
   }
-
-  displayNextColumn();
 }
 
 ISR(TIMER2_COMP_vect) {
-  displayOff();
+  displayDisableColumn();
 }
 
 /******************************************************************************
