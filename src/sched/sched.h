@@ -23,7 +23,7 @@ private:
   Sched(const Sched &) = delete;
   void operator=(const Sched &) = delete;
   bool removeTask(uint8_t index);
-  Time &time;
+  Time &m_time;
   uint32_t m_lastRun = 0;
   uint8_t m_tasksTail = 0;
   Task m_tasks[c_maxTasks];

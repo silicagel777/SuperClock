@@ -5,13 +5,13 @@
 class IRtc {
 public:
   struct RtcTime {
-    uint8_t sec;
-    uint8_t min;
-    uint8_t hr;
-    uint8_t date;
-    uint8_t mon;
+    uint8_t second;
+    uint8_t minute;
+    uint8_t hour;
     uint8_t day;
-    uint16_t yr;
+    uint8_t week;
+    uint8_t month;
+    uint16_t year;
   };
 
   virtual uint8_t readTime(RtcTime *time) = 0;

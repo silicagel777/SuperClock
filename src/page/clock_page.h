@@ -6,11 +6,12 @@
 class Buzzer;
 class Display;
 class IRtc;
+class ITemp;
 class Sched;
 
 class ClockPage : public IPage {
 public:
-  ClockPage(Sched &sched, Display &display, Buzzer &buzzer, Button &button, IRtc &rtc);
+  ClockPage(Sched &sched, Display &display, Buzzer &buzzer, Button &button, IRtc &rtc, ITemp &temp);
   void show() override;
   void hide() override;
 
@@ -22,6 +23,8 @@ private:
   static void showTimeCallback(void *self);
   void showTime();
   void showDate();
+  void showTemp();
+  void showWeek();
   void showYear();
   static constexpr uint16_t c_timeRefreshDelay = 500;
   static constexpr uint16_t c_returnToTimeDelay = 2000;
@@ -30,4 +33,5 @@ private:
   Buzzer &m_buzzer;
   Button &m_button;
   IRtc &m_rtc;
+  ITemp &m_temp;
 };

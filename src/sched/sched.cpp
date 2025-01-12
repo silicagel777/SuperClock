@@ -1,7 +1,7 @@
 #include "sched/sched.h"
 #include "driver/time/time.h"
 
-Sched::Sched(Time &time) : time(time) {
+Sched::Sched(Time &time) : m_time(time) {
   m_lastRun = time.milliseconds();
 }
 
@@ -42,7 +42,7 @@ void Sched::run() {
   // TODO: optimize!
 
   // Decrement delays
-  uint32_t now = time.milliseconds();
+  uint32_t now = m_time.milliseconds();
   uint32_t diff = now - m_lastRun;
   if (diff >= 1) {
     m_lastRun = now;
