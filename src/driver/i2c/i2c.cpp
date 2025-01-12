@@ -103,7 +103,7 @@ uint8_t I2C::receiveByte(uint8_t *data, bool readAck) {
   return 0;
 }
 
-uint8_t I2C::write(uint8_t addr, uint8_t *data, uint8_t len, bool repeatStart) {
+uint8_t I2C::write(uint8_t addr, const uint8_t *data, uint8_t len, bool repeatStart) {
   uint8_t err;
   err = transmitStart();
   if (err) {

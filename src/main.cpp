@@ -25,6 +25,16 @@ int main(void) {
   Button button{sched};
   ClockPage clockPage{sched, display, buzzer, button, rtcTemp, rtcTemp};
 
+  // IRtc::RtcTime rtcTime{};
+  // rtcTime.second = 0;
+  // rtcTime.minute = 8;
+  // rtcTime.hour = 1;
+  // rtcTime.day = 13;
+  // rtcTime.week = 1;
+  // rtcTime.month = 1;
+  // rtcTime.year = 2025;
+  // rtcTemp.setTime(&rtcTime);
+
   clockPage.show();
   for (;;) {
     sched.run();

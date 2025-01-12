@@ -9,6 +9,7 @@ class Ds3231 : public IRtc, public ITemp {
 public:
   Ds3231(I2C &i2c);
   uint8_t readTime(RtcTime *time) override;
+  uint8_t setTime(const RtcTime *time) override;
   uint8_t readTemp(int16_t *temp) override;
 
 private:

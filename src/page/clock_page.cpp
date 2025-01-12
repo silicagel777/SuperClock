@@ -112,7 +112,7 @@ void ClockPage::showYear() {
   m_rtc.readTime(&rtcTime);
   m_display.clear();
   m_display.writeNumber(rtcTime.year / 1000, 1, 0);
-  m_display.writeNumber(rtcTime.year % 100 % 10, 5, 0);
+  m_display.writeNumber(rtcTime.year / 100 % 10, 5, 0);
   m_display.writeNumber(rtcTime.year / 10 % 10, 9, 0);
   m_display.writeNumber(rtcTime.year % 10, 13, 0);
   m_sched.addTask(showTimeCallback, this, c_returnToTimeDelay);
