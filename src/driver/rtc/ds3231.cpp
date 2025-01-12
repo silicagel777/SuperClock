@@ -26,7 +26,30 @@ uint8_t Ds3231::readTime(RtcTime *time) {
   }
   time->hr = ((data >> 4) & 0x3) * 10 + (data & 0xF);
 
-  // TODO: other fields
+  err = m_i2c.readReg(c_busAddr, 3, &data);
+  if (err) {
+    return err;
+  }
+  time->day = data & 0x7;
+
+  err = m_i2c.readReg(c_busAddr, 4, &data);
+  if (err) {
+    return err;
+  }
+  time->date = ((data >> 4) & 0x3) * 10 + (data & 0xF);
+
+  err = m_i2c.readReg(c_busAddr, 5, &data);
+  if (err) {
+    return err;
+  }
+  time->mon = ((data >> 4) & 0x1) * 10 + (data & 0xF);
+
+  err = m_i2c.readReg(c_busAddr, 6, &data);
+  if (err) {
+    return err;
+  }
+  time->yr = 2000 + ((data >> 4) & 0x7) * 10 + (data & 0xF);
+
   // TODO: prettier error handling
   // TODO: return result in bcd?
 

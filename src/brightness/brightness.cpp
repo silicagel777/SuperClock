@@ -1,0 +1,16 @@
+#include <driver/adc/adc.h>
+#include <driver/display/display.h>
+#include <sched/sched.h>
+
+#include "brightness/brightness.h"
+
+Brightness::Brightness(Sched &sched, Display &display, Adc &adc, uint8_t adcChannel)
+    : m_sched(sched), m_display(display), m_adc(adc), m_adcChannel(adcChannel) {
+  m_sched.addTask([](void *p) { ((decltype(this))p)->update(); }, this, 0);
+}
+
+void Brightness::update() {
+  constexpr uint8_t scale = (Adc::c_maxValue + 1) / (Display::c_maxGlobalBrightness + 1);
+  m_display.setGlobalBrightness(m_adc.read(m_adcChannel) / scale);
+  m_sched.addTask([](void *p) { ((decltype(this))p)->update(); }, this, c_updateDelay);
+}

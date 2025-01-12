@@ -12,12 +12,12 @@
   Ugly stuff ahead! The idea is to drive dot matrix in software by switching
   displayed column on timer overflow interrupt.
 
-  Global brigtness is set up by disabling display on compare interrupt
+  Global brightness is set up by disabling display on compare interrupt
   of the same timer. If two interrupts become too close, the compare interrupt
   is disabled and the corresponding logic is performed on overflow.
 
-  Per-pixel brigtness is set up by treating each display refresh as pixel
-  brigtness step and enabling or disabling pixels by comparing their values
+  Per-pixel brightness is set up by treating each display refresh as pixel
+  brightness step and enabling or disabling pixels by comparing their values
   to step number.
 ******************************************************************************/
 
@@ -37,7 +37,7 @@ static inline void displayInit() {
 
   // Timer 2, fast PWM mode, F_CPU/8
   TCCR2 = (1 << WGM21) | (1 << WGM20) | (0 << CS22) | (1 << CS21) | (0 << CS20);
-  // Set output compare (medium brigtness)
+  // Set output compare (medium brightness)
   OCR2 = 127;
   // Enable the compare interrupt and overflow interrupt
   TIMSK |= (1 << OCIE2) | (1 << TOIE2);
@@ -45,7 +45,7 @@ static inline void displayInit() {
   sei();
 }
 
-static inline void displaySetBrigtness(uint8_t brightness) {
+static inline void displaySetBrightness(uint8_t brightness) {
   OCR2 = brightness;
   if (OCR2 < c_compareLowest || OCR2 > c_compareHighest) {
     // Compare and overflow interrupts are too close
@@ -57,7 +57,7 @@ static inline void displaySetBrigtness(uint8_t brightness) {
   }
 }
 
-static inline uint8_t displayGetBrigtness() {
+static inline uint8_t displayGetBrightness() {
   return OCR2;
 }
 
@@ -108,7 +108,7 @@ static inline void displayEnableColumn() {
 
 static inline void displayNextPixelBrightnessStep() {
   g_pixelBrightnessStep++;
-  if (g_pixelBrightnessStep >= Display::c_maxPixelBrigtness) {
+  if (g_pixelBrightnessStep >= Display::c_maxPixelBrightness) {
     g_pixelBrightnessStep = 0;
   }
 }
@@ -123,7 +123,7 @@ static inline void displayNextColumn() {
 
 ISR(TIMER2_OVF_vect) {
   if (OCR2 > c_compareHighest) {
-    // Highest possible brigtness
+    // Highest possible brightness
     // Disable column immediately before enabling the next one
     displayOff();
   }
@@ -133,7 +133,7 @@ ISR(TIMER2_OVF_vect) {
   }
 
   if (OCR2 < c_compareLowest) {
-    // Lowest possible brigtness
+    // Lowest possible brightness
     // Disable column immediately after enabling it
     displayOff();
   }
@@ -153,20 +153,20 @@ Display::Display() {
   displayInit();
 }
 
-void Display::setGlobalBrigntess(uint8_t brightness) {
-  displaySetBrigtness(brightness);
+void Display::setGlobalBrightness(uint8_t brightness) {
+  displaySetBrightness(brightness);
 }
 
 uint8_t Display::getGlobalBrightness() {
-  return displayGetBrigtness();
+  return displayGetBrightness();
 }
 
 void Display::clear() {
   memset((void *)g_buf, 0, c_height * c_width);
 }
 
-void Display::writePixel(uint8_t x, uint8_t y, uint8_t brigtness) {
-  g_buf[y][x] = brigtness;
+void Display::writePixel(uint8_t x, uint8_t y, uint8_t brightness) {
+  g_buf[y][x] = brightness;
 }
 
 uint8_t Display::readPixel(uint8_t x, uint8_t y) {
@@ -202,5 +202,8 @@ void Display::writeBmpProgmem(
 }
 
 void Display::writeNumber(uint8_t n, int16_t x, int16_t y, uint8_t brightness) {
+  if (n >= 10) {
+    n = 0;
+  }
   writeBmpProgmem((const uint8_t *)cp_numbers[n], x, y, c_numberWidth, c_numberHeight, brightness);
 }

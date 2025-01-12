@@ -25,7 +25,7 @@ private:
   static constexpr uint16_t c_longPressCycles = 14;
   static constexpr uint16_t c_maxCycles = 255;
   Sched &m_sched;
-  uint8_t m_cycles[typeCount];
-  button_cb_t m_cb;
-  void *m_cbData;
+  uint8_t m_cycles[typeCount]{};
+  button_cb_t m_cb = nullptr;
+  void *m_cbData = nullptr;
 };
