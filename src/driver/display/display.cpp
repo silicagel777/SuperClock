@@ -232,7 +232,7 @@ void Display::writeChar(char c, int16_t x, int16_t y, uint8_t brightness) {
   writeBmpProgmem(charData.data, x, y, charData.w, charData.h, brightness);
 }
 
-void Display::writeString(char *s, int16_t x, int16_t y, Align align, uint8_t brightness) {
+void Display::writeString(const char *s, int16_t x, int16_t y, Align align, uint8_t brightness) {
   switch (align) {
   case Align::LEFT:
     break;
@@ -267,7 +267,7 @@ Display::CharData Display::getCharData(char c) {
   }
 }
 
-uint16_t Display::getStringWidth(char *s) {
+uint16_t Display::getStringWidth(const char *s) {
   uint16_t w = 0;
   while (char c = *s++) {
     w += getCharData(c).w + 1;
@@ -276,7 +276,7 @@ uint16_t Display::getStringWidth(char *s) {
   return w;
 }
 
-uint16_t Display::getStringMiddleOffset(char *s) {
+uint16_t Display::getStringMiddleOffset(const char *s) {
   uint16_t w = 0;
   auto len = strlen(s);
   auto middle = len / 2;

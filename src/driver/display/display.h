@@ -29,7 +29,7 @@ public:
   void writeBmpProgmem(const uint8_t *bmp, int16_t x, int16_t y, uint8_t w, uint8_t h,
       uint8_t brightness = c_maxPixelBrightness);
   void writeChar(char c, int16_t x, int16_t y, uint8_t brightness = c_maxPixelBrightness);
-  void writeString(char *s, int16_t x, int16_t y, Align align = Align::LEFT,
+  void writeString(const char *s, int16_t x, int16_t y, Align align = Align::LEFT,
       uint8_t brightness = c_maxPixelBrightness);
 
 private:
@@ -42,6 +42,6 @@ private:
   Display(const Display &) = delete;
   void operator=(const Display &) = delete;
   CharData getCharData(char c);
-  uint16_t getStringWidth(char *s);
-  uint16_t getStringMiddleOffset(char *s);
+  uint16_t getStringWidth(const char *s);
+  uint16_t getStringMiddleOffset(const char *s);
 };
