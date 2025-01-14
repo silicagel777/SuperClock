@@ -26,7 +26,9 @@ static constexpr uint8_t c_compareHighest = 230;
 
 static volatile uint8_t g_column = 0;
 static volatile uint8_t g_pixelBrightnessStep = 0;
-static volatile uint8_t g_buf[Display::c_height][Display::c_width];
+static volatile uint8_t g_buf[2][Display::c_height * Display::c_width];
+static volatile uint8_t *g_fgBuf = g_buf[0];
+static volatile uint8_t *g_bgBuf = g_buf[1];
 
 struct ColumnPin {
   volatile uint8_t *port;
@@ -88,14 +90,15 @@ static inline uint8_t displayGetBrightness() {
 }
 
 static inline bool displayEnableRows() {
-  uint8_t maskB = (g_buf[1][g_column] > g_pixelBrightnessStep) << 4;  // DOT0
-  uint8_t maskD = (g_buf[4][g_column] > g_pixelBrightnessStep) << 0 | // DOT1
-                  (g_buf[5][g_column] > g_pixelBrightnessStep) << 1 | // A5
-                  (g_buf[4][g_column] > g_pixelBrightnessStep) << 2 | // A4
-                  (g_buf[3][g_column] > g_pixelBrightnessStep) << 3 | // A3
-                  (g_buf[2][g_column] > g_pixelBrightnessStep) << 4 | // A2
-                  (g_buf[1][g_column] > g_pixelBrightnessStep) << 5 | // A1
-                  (g_buf[0][g_column] > g_pixelBrightnessStep) << 6;  // A0
+  const uint16_t offset = g_column * Display::c_height;
+  uint8_t maskB = (g_fgBuf[offset + 1] > g_pixelBrightnessStep) << 4;  // DOT0
+  uint8_t maskD = (g_fgBuf[offset + 4] > g_pixelBrightnessStep) << 0 | // DOT1
+                  (g_fgBuf[offset + 5] > g_pixelBrightnessStep) << 1 | // A5
+                  (g_fgBuf[offset + 4] > g_pixelBrightnessStep) << 2 | // A4
+                  (g_fgBuf[offset + 3] > g_pixelBrightnessStep) << 3 | // A3
+                  (g_fgBuf[offset + 2] > g_pixelBrightnessStep) << 4 | // A2
+                  (g_fgBuf[offset + 1] > g_pixelBrightnessStep) << 5 | // A1
+                  (g_fgBuf[offset + 0] > g_pixelBrightnessStep) << 6;  // A0
   PORTB = (PORTB & ~0b00010000) | maskB;
   PORTD = (PORTD & ~0b01111111) | maskD;
   return maskB | maskD;
@@ -168,27 +171,36 @@ uint8_t Display::getGlobalBrightness() {
   return displayGetBrightness();
 }
 
+void Display::update() {
+  auto tmp = g_fgBuf;
+  g_fgBuf = g_bgBuf;
+  g_bgBuf = tmp;
+  memcpy((void *)g_bgBuf, (void *)g_fgBuf, c_height * c_width);
+}
+
 void Display::clear() {
-  memset((void *)g_buf, 0, c_height * c_width);
+  memset((void *)g_bgBuf, 0, c_height * c_width);
 }
 
 void Display::writePixel(uint8_t x, uint8_t y, uint8_t brightness) {
-  g_buf[y][x] = brightness;
+  g_bgBuf[x * c_height + y] = brightness;
 }
 
 uint8_t Display::readPixel(uint8_t x, uint8_t y) {
-  return g_buf[y][x];
+  return g_bgBuf[x * c_height + y];
 }
 
 void Display::writeBmp(
     const uint8_t *bmp, int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t brightness) {
   for (uint8_t i = 0; i < w; i++) {
-    for (uint8_t j = 0; j < h; j++) {
-      // TODO: optimize
-      int16_t bufx = i + x;
-      int16_t bufy = j + y;
-      if (bufx >= 0 && bufx < c_width && bufy >= 0 && bufy < c_height) {
-        g_buf[bufy][bufx] = bmp[i + j * w] ? brightness : 0;
+    int16_t bufx = i + x;
+    if (bufx >= 0 && bufx < c_width) {
+      for (uint8_t j = 0; j < h; j++) {
+        // TODO: optimize
+        int16_t bufy = j + y;
+        if (bufy >= 0 && bufy < c_height) {
+          g_bgBuf[bufx * c_height + bufy] = bmp[i + j * w] ? brightness : 0;
+        }
       }
     }
   }
@@ -197,12 +209,14 @@ void Display::writeBmp(
 void Display::writeBmpProgmem(
     const uint8_t *bmp, int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t brightness) {
   for (uint8_t i = 0; i < w; i++) {
-    for (uint8_t j = 0; j < h; j++) {
-      // TODO: optimize
-      int16_t bufx = i + x;
-      int16_t bufy = j + y;
-      if (bufx >= 0 && bufx < c_width && bufy >= 0 && bufy < c_height) {
-        g_buf[bufy][bufx] = pgm_read_byte(bmp + i + j * w) ? brightness : 0;
+    int16_t bufx = i + x;
+    if (bufx >= 0 && bufx < c_width) {
+      for (uint8_t j = 0; j < h; j++) {
+        // TODO: optimize
+        int16_t bufy = j + y;
+        if (bufy >= 0 && bufy < c_height) {
+          g_bgBuf[bufx * c_height + bufy] = pgm_read_byte(bmp + i + j * w) ? brightness : 0;
+        }
       }
     }
   }
