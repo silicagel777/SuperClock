@@ -4,11 +4,9 @@
   - Ghosting on prevous leds (FET drain capacitance?)
   - Why non-uniform brigthness fix removed ghosting?!
   - Yellow leds make green leds dimmer
-- Optimize bitmap copy?
-- Bit-pack bitmaps
+- Reorganize font system
 - Free-running ADC
 - Adc filtering
-- Trsnaparent background for font
 - Justify number "1" position
 - More levels for highest and lowest brigtness?
 - Optimize & improve scheduler?

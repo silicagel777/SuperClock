@@ -20,7 +20,8 @@ public:
       uint8_t brightness = c_maxPixelBrightness);
   void writeBmpProgmem(const uint8_t *bmp, int16_t x, int16_t y, uint8_t w, uint8_t h,
       uint8_t brightness = c_maxPixelBrightness);
-  void writeNumber(uint8_t n, int16_t x, int16_t y, uint8_t brightness = c_maxPixelBrightness);
+  void writeChar(char c, int16_t x, int16_t y, uint8_t brightness = c_maxPixelBrightness);
+  void writeDigit(uint8_t n, int16_t x, int16_t y, uint8_t brightness = c_maxPixelBrightness);
 
 private:
   Display(const Display &) = delete;

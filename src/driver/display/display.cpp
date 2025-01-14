@@ -4,9 +4,8 @@
 #include <string.h>
 #include <util/delay.h>
 
-#include "display.h"
 #include "driver/display/display.h"
-#include "driver/display/numbers.h"
+#include "driver/display/font/font.h"
 
 /******************************************************************************
   Ugly stuff ahead! The idea is to drive dot matrix in software by switching
@@ -36,7 +35,7 @@ struct ColumnPin {
   uint8_t maskInv;
 };
 
-static const ColumnPin columnPins[] = {
+static const ColumnPin c_columnPins[] = {
     {&PORTD, (uint8_t)(1 << 7), (uint8_t) ~(1 << 7)}, // C0
     {&PORTC, (uint8_t)(1 << 2), (uint8_t) ~(1 << 2)}, // C1
     {&PORTC, (uint8_t)(1 << 3), (uint8_t) ~(1 << 3)}, // C2
@@ -105,7 +104,7 @@ static inline bool displayEnableRows() {
 }
 
 static inline ColumnPin displayGetColumnPin() {
-  return columnPins[g_column];
+  return c_columnPins[g_column];
 }
 
 static inline void displayEnableColumn(const ColumnPin &columnPin) {
@@ -196,10 +195,13 @@ void Display::writeBmp(
     int16_t bufx = i + x;
     if (bufx >= 0 && bufx < c_width) {
       for (uint8_t j = 0; j < h; j++) {
-        // TODO: optimize
         int16_t bufy = j + y;
         if (bufy >= 0 && bufy < c_height) {
-          g_bgBuf[bufx * c_height + bufy] = bmp[i + j * w] ? brightness : 0;
+          uint16_t bitOffset = i + j * w;
+          bool bmpPixel = (bmp[bitOffset / 8] >> (bitOffset % 8)) & 1;
+          if (bmpPixel) {
+            g_bgBuf[bufx * c_height + bufy] = brightness;
+          }
         }
       }
     }
@@ -212,19 +214,34 @@ void Display::writeBmpProgmem(
     int16_t bufx = i + x;
     if (bufx >= 0 && bufx < c_width) {
       for (uint8_t j = 0; j < h; j++) {
-        // TODO: optimize
         int16_t bufy = j + y;
         if (bufy >= 0 && bufy < c_height) {
-          g_bgBuf[bufx * c_height + bufy] = pgm_read_byte(bmp + i + j * w) ? brightness : 0;
+          uint16_t bitOffset = i + j * w;
+          bool bmpPixel = (pgm_read_byte(bmp + bitOffset / 8) >> (bitOffset % 8)) & 1;
+          if (bmpPixel) {
+            g_bgBuf[bufx * c_height + bufy] = brightness;
+          }
         }
       }
     }
   }
 }
 
-void Display::writeNumber(uint8_t n, int16_t x, int16_t y, uint8_t brightness) {
-  if (n >= 10) {
-    n = 0;
+void Display::writeChar(char c, int16_t x, int16_t y, uint8_t brightness) {
+  if (c < c_fontFirstChar && c > c_fontLastChar) {
+    return;
   }
-  writeBmpProgmem((const uint8_t *)cp_numbers[n], x, y, c_numberWidth, c_numberHeight, brightness);
+  const uint16_t charOffset = pgm_read_word(cp_fontCharOffset + (c - c_fontFirstChar));
+  const uint8_t *charData = cp_fontCharData + charOffset;
+  const uint8_t w = pgm_read_byte(charData + 0);
+  const uint8_t h = pgm_read_byte(charData + 1);
+  const uint8_t *bmp = charData + 2;
+  writeBmpProgmem(bmp, x, y, w, h, brightness);
+}
+
+void Display::writeDigit(uint8_t n, int16_t x, int16_t y, uint8_t brightness) {
+  if (n >= 10) {
+    return;
+  }
+  writeChar('0' + n, x, y, brightness);
 }

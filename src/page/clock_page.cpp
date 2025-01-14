@@ -58,12 +58,11 @@ void ClockPage::showTime() {
   IRtc::RtcTime rtcTime{};
   m_rtc.readTime(&rtcTime);
   m_display.clear();
-  m_display.writeNumber(rtcTime.hour / 10, 0, 0);
-  m_display.writeNumber(rtcTime.hour % 10, 4, 0);
-  m_display.writeNumber(rtcTime.minute / 10, 10, 0);
-  m_display.writeNumber(rtcTime.minute % 10, 14, 0);
-  m_display.writePixel(8, 1);
-  m_display.writePixel(8, 4);
+  m_display.writeDigit(rtcTime.hour / 10, 0, 0);
+  m_display.writeDigit(rtcTime.hour % 10, 4, 0);
+  m_display.writeChar(':', 8, 0);
+  m_display.writeDigit(rtcTime.minute / 10, 10, 0);
+  m_display.writeDigit(rtcTime.minute % 10, 14, 0);
   for (uint8_t i = 0; i < Display::c_width; i++) {
     m_display.writePixel(i, 5, 0);
   }
@@ -76,11 +75,11 @@ void ClockPage::showDate() {
   IRtc::RtcTime rtcTime{};
   m_rtc.readTime(&rtcTime);
   m_display.clear();
-  m_display.writeNumber(rtcTime.month / 10, 0, 0);
-  m_display.writeNumber(rtcTime.month % 10, 4, 0);
-  m_display.writeNumber(rtcTime.day / 10, 10, 0);
-  m_display.writeNumber(rtcTime.day % 10, 14, 0);
-  m_display.writePixel(8, 4);
+  m_display.writeDigit(rtcTime.month / 10, 0, 0);
+  m_display.writeDigit(rtcTime.month % 10, 4, 0);
+  m_display.writeChar('.', 8, 0);
+  m_display.writeDigit(rtcTime.day / 10, 10, 0);
+  m_display.writeDigit(rtcTime.day % 10, 14, 0);
   m_display.update();
   m_sched.addTask(showTimeCallback, this, c_returnToTimeDelay);
 }
@@ -92,11 +91,11 @@ void ClockPage::showTemp() {
   int8_t tempInt = temp / 100;
   int8_t tempFrac = temp % 100;
   m_display.clear();
-  m_display.writeNumber(tempInt / 10, 0, 0);
-  m_display.writeNumber(tempInt % 10, 4, 0);
-  m_display.writeNumber(tempFrac / 10, 10, 0);
-  m_display.writeNumber(tempFrac % 10, 14, 0);
-  m_display.writePixel(8, 4);
+  m_display.writeDigit(tempInt / 10, 0, 0);
+  m_display.writeDigit(tempInt % 10, 4, 0);
+  m_display.writeChar('.', 8, 0);
+  m_display.writeDigit(tempFrac / 10, 10, 0);
+  m_display.writeDigit(tempFrac % 10, 14, 0);
   m_display.update();
   m_sched.addTask(showTimeCallback, this, c_returnToTimeDelay);
 }
@@ -105,8 +104,8 @@ void ClockPage::showWeek() {
   IRtc::RtcTime rtcTime{};
   m_rtc.readTime(&rtcTime);
   m_display.clear();
-  m_display.writeNumber(0, 5, 0);
-  m_display.writeNumber(rtcTime.week, 9, 0);
+  m_display.writeDigit(0, 5, 0);
+  m_display.writeDigit(rtcTime.week, 9, 0);
   m_display.update();
   m_sched.addTask(showTimeCallback, this, c_returnToTimeDelay);
 }
@@ -115,10 +114,10 @@ void ClockPage::showYear() {
   IRtc::RtcTime rtcTime{};
   m_rtc.readTime(&rtcTime);
   m_display.clear();
-  m_display.writeNumber(rtcTime.year / 1000, 1, 0);
-  m_display.writeNumber(rtcTime.year / 100 % 10, 5, 0);
-  m_display.writeNumber(rtcTime.year / 10 % 10, 9, 0);
-  m_display.writeNumber(rtcTime.year % 10, 13, 0);
+  m_display.writeDigit(rtcTime.year / 1000, 1, 0);
+  m_display.writeDigit(rtcTime.year / 100 % 10, 5, 0);
+  m_display.writeDigit(rtcTime.year / 10 % 10, 9, 0);
+  m_display.writeDigit(rtcTime.year % 10, 13, 0);
   m_display.update();
   m_sched.addTask(showTimeCallback, this, c_returnToTimeDelay);
 }
