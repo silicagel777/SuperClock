@@ -46,10 +46,10 @@ clean:
 
 .PHONY: fuse
 fuse:
-	avrdude -B 125kHz -F -V -c usbasp -p $(MCU) -U hfuse:w:0xD9:m -U lfuse:w:0xBF:m
+	avrdude -B 32kHz -F -V -c usbasp -p $(MCU) -U hfuse:w:0xD9:m -U lfuse:w:0xBF:m
 
 .PHONY: flash
 flash: $(BUILD_DIR)/${BIN}.hex
-	avrdude -F -V -c usbasp -p $(MCU) -U flash:w:$<:i
+	avrdude -B 1.5Mhz -F -V -c usbasp -p $(MCU) -U flash:w:$<:i
 
 -include $(DEPS)
