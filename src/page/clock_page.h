@@ -27,7 +27,7 @@ private:
   void showWeek();
   void showYear();
   static constexpr uint16_t c_timeRefreshDelay = 500;
-  static constexpr uint16_t c_returnToTimeDelay = 2000;
+  static constexpr uint16_t c_returnToTimeDelay = 3000;
   Sched &m_sched;
   Display &m_display;
   Buzzer &m_buzzer;

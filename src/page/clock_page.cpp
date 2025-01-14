@@ -1,12 +1,12 @@
-#include <buzzer/buzzer.h>
-#include <driver/button/button.h>
-#include <driver/display/display.h>
-#include <driver/rtc/irtc.h>
-#include <driver/temp/itemp.h>
-#include <sched/sched.h>
+#include <stdio.h>
 
-#include "clock_page.h"
+#include "buzzer/buzzer.h"
+#include "driver/button/button.h"
+#include "driver/display/display.h"
+#include "driver/rtc/irtc.h"
+#include "driver/temp/itemp.h"
 #include "page/clock_page.h"
+#include "sched/sched.h"
 
 ClockPage::ClockPage(
     Sched &sched, Display &display, Buzzer &buzzer, Button &button, IRtc &rtc, ITemp &temp)
@@ -58,14 +58,9 @@ void ClockPage::showTime() {
   IRtc::RtcTime rtcTime{};
   m_rtc.readTime(&rtcTime);
   m_display.clear();
-  m_display.writeDigit(rtcTime.hour / 10, 0, 0);
-  m_display.writeDigit(rtcTime.hour % 10, 4, 0);
-  m_display.writeChar(':', 8, 0);
-  m_display.writeDigit(rtcTime.minute / 10, 10, 0);
-  m_display.writeDigit(rtcTime.minute % 10, 14, 0);
-  for (uint8_t i = 0; i < Display::c_width; i++) {
-    m_display.writePixel(i, 5, 0);
-  }
+  char s[6];
+  snprintf(s, sizeof(s), "%02d:%02d", rtcTime.hour, rtcTime.minute);
+  m_display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
   m_display.writePixel(rtcTime.second / 4 + 1, 5);
   m_display.update();
   m_sched.addTask(showTimeCallback, this, c_timeRefreshDelay);
@@ -75,11 +70,9 @@ void ClockPage::showDate() {
   IRtc::RtcTime rtcTime{};
   m_rtc.readTime(&rtcTime);
   m_display.clear();
-  m_display.writeDigit(rtcTime.month / 10, 0, 0);
-  m_display.writeDigit(rtcTime.month % 10, 4, 0);
-  m_display.writeChar('.', 8, 0);
-  m_display.writeDigit(rtcTime.day / 10, 10, 0);
-  m_display.writeDigit(rtcTime.day % 10, 14, 0);
+  char s[6];
+  snprintf(s, sizeof(s), "%02d.%02d", rtcTime.month, rtcTime.day);
+  m_display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
   m_display.update();
   m_sched.addTask(showTimeCallback, this, c_returnToTimeDelay);
 }
@@ -91,11 +84,9 @@ void ClockPage::showTemp() {
   int8_t tempInt = temp / 100;
   int8_t tempFrac = temp % 100;
   m_display.clear();
-  m_display.writeDigit(tempInt / 10, 0, 0);
-  m_display.writeDigit(tempInt % 10, 4, 0);
-  m_display.writeChar('.', 8, 0);
-  m_display.writeDigit(tempFrac / 10, 10, 0);
-  m_display.writeDigit(tempFrac % 10, 14, 0);
+  char s[6];
+  snprintf(s, sizeof(s), "%02d.%02d", tempInt, tempFrac);
+  m_display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
   m_display.update();
   m_sched.addTask(showTimeCallback, this, c_returnToTimeDelay);
 }
@@ -104,8 +95,9 @@ void ClockPage::showWeek() {
   IRtc::RtcTime rtcTime{};
   m_rtc.readTime(&rtcTime);
   m_display.clear();
-  m_display.writeDigit(0, 5, 0);
-  m_display.writeDigit(rtcTime.week, 9, 0);
+  char s[3];
+  snprintf(s, sizeof(s), "%02d", rtcTime.week);
+  m_display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
   m_display.update();
   m_sched.addTask(showTimeCallback, this, c_returnToTimeDelay);
 }
@@ -114,10 +106,9 @@ void ClockPage::showYear() {
   IRtc::RtcTime rtcTime{};
   m_rtc.readTime(&rtcTime);
   m_display.clear();
-  m_display.writeDigit(rtcTime.year / 1000, 1, 0);
-  m_display.writeDigit(rtcTime.year / 100 % 10, 5, 0);
-  m_display.writeDigit(rtcTime.year / 10 % 10, 9, 0);
-  m_display.writeDigit(rtcTime.year % 10, 13, 0);
+  char s[5];
+  snprintf(s, sizeof(s), "%04d", rtcTime.year);
+  m_display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
   m_display.update();
   m_sched.addTask(showTimeCallback, this, c_returnToTimeDelay);
 }

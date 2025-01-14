@@ -7,7 +7,6 @@
 - Reorganize font system
 - Free-running ADC
 - Adc filtering
-- Justify number "1" position
 - More levels for highest and lowest brigtness?
 - Optimize & improve scheduler?
 - Use c++ namespaces?

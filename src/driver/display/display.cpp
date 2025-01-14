@@ -228,20 +228,65 @@ void Display::writeBmpProgmem(
 }
 
 void Display::writeChar(char c, int16_t x, int16_t y, uint8_t brightness) {
-  if (c < c_fontFirstChar && c > c_fontLastChar) {
-    return;
-  }
-  const uint16_t charOffset = pgm_read_word(cp_fontCharOffset + (c - c_fontFirstChar));
-  const uint8_t *charData = cp_fontCharData + charOffset;
-  const uint8_t w = pgm_read_byte(charData + 0);
-  const uint8_t h = pgm_read_byte(charData + 1);
-  const uint8_t *bmp = charData + 2;
-  writeBmpProgmem(bmp, x, y, w, h, brightness);
+  auto charData = getCharData(c);
+  writeBmpProgmem(charData.data, x, y, charData.w, charData.h, brightness);
 }
 
-void Display::writeDigit(uint8_t n, int16_t x, int16_t y, uint8_t brightness) {
-  if (n >= 10) {
-    return;
+void Display::writeString(char *s, int16_t x, int16_t y, Align align, uint8_t brightness) {
+  switch (align) {
+  case Align::LEFT:
+    break;
+  case Align::RIGHT:
+    x -= getStringWidth(s);
+    break;
+  case Align::CENTER:
+    x -= getStringWidth(s) / 2;
+    break;
+  case Align::MIDDLE:
+    x -= getStringMiddleOffset(s);
+    break;
   }
-  writeChar('0' + n, x, y, brightness);
+
+  while (char c = *s++) {
+    auto charData = getCharData(c);
+    writeBmpProgmem(charData.data, x, y, charData.w, charData.h, brightness);
+    x += charData.w + 1;
+  }
+}
+
+Display::CharData Display::getCharData(char c) {
+  if (c >= c_fontFirstChar && c <= c_fontLastChar) {
+    const uint16_t charOffset = pgm_read_word(cp_fontCharOffset + (c - c_fontFirstChar));
+    const uint8_t *charData = cp_fontCharData + charOffset;
+    const uint8_t w = pgm_read_byte(charData + 0);
+    const uint8_t h = pgm_read_byte(charData + 1);
+    const uint8_t *data = charData + 2;
+    return {w, h, data};
+  } else {
+    return {0, 0, nullptr};
+  }
+}
+
+uint16_t Display::getStringWidth(char *s) {
+  uint16_t w = 0;
+  while (char c = *s++) {
+    w += getCharData(c).w + 1;
+  }
+  w--;
+  return w;
+}
+
+uint16_t Display::getStringMiddleOffset(char *s) {
+  uint16_t w = 0;
+  auto len = strlen(s);
+  auto middle = len / 2;
+  for (size_t i = 0; i < middle; i++) {
+    w += getCharData(s[i]).w + 1;
+  }
+  if (len % 2) {
+    w += getCharData(s[middle]).w / 2;
+  } else {
+    w--;
+  }
+  return w;
 }
