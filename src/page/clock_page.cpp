@@ -6,12 +6,13 @@
 #include "driver/rtc/irtc.h"
 #include "driver/temp/itemp.h"
 #include "page/clock_page.h"
+#include "page/page_manager.h"
 #include "sched/sched.h"
 
-ClockPage::ClockPage(
-    Sched &sched, Display &display, Buzzer &buzzer, Button &button, IRtc &rtc, ITemp &temp)
-    : m_sched(sched), m_display(display), m_buzzer(buzzer), m_button(button), m_rtc(rtc),
-      m_temp(temp) {}
+ClockPage::ClockPage(PageManager &pageManager, Sched &sched, Display &display, Buzzer &buzzer,
+    Button &button, IRtc &rtc, ITemp &temp)
+    : m_pageManager(pageManager), m_sched(sched), m_display(display), m_buzzer(buzzer),
+      m_button(button), m_rtc(rtc), m_temp(temp) {}
 
 void ClockPage::show() {
   m_button.setCallback(buttonCallback, this);
@@ -31,7 +32,11 @@ void ClockPage::handleButton(Button::Type type, Button::State state) {
   if (state == Button::State::RELEASE || state == Button::State::LONG_PRESS) {
     m_buzzer.beep();
   }
-  if (type == Button::Type::PLUS) {
+  if (type == Button::Type::MODE) {
+    if (state == Button::State::RELEASE) {
+      m_pageManager.changePage(PageManager::PageType::DEMO_PAGE);
+    }
+  } else if (type == Button::Type::PLUS) {
     if (state == Button::State::RELEASE) {
       m_sched.removeTasks(showTimeCallback, this);
       showDate();

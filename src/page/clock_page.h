@@ -7,11 +7,13 @@ class Buzzer;
 class Display;
 class IRtc;
 class ITemp;
+class PageManager;
 class Sched;
 
 class ClockPage : public IPage {
 public:
-  ClockPage(Sched &sched, Display &display, Buzzer &buzzer, Button &button, IRtc &rtc, ITemp &temp);
+  ClockPage(PageManager &pageManager, Sched &sched, Display &display, Buzzer &buzzer,
+      Button &button, IRtc &rtc, ITemp &temp);
   void show() override;
   void hide() override;
 
@@ -28,6 +30,7 @@ private:
   void showYear();
   static constexpr uint16_t c_timeRefreshDelay = 500;
   static constexpr uint16_t c_returnToTimeDelay = 3000;
+  PageManager &m_pageManager;
   Sched &m_sched;
   Display &m_display;
   Buzzer &m_buzzer;

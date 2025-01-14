@@ -8,7 +8,7 @@
 #include "driver/rtc/irtc.h"
 #include "driver/time/time.h"
 #include "driver/tone/tone.h"
-#include "page/clock_page.h"
+#include "page/page_manager.h"
 #include "sched/sched.h"
 
 int main(void) {
@@ -23,7 +23,7 @@ int main(void) {
   constexpr uint8_t brigthnessAdcChannel = 7;
   Brightness brightness{sched, display, adc, brigthnessAdcChannel};
   Button button{sched};
-  ClockPage clockPage{sched, display, buzzer, button, rtcTemp, rtcTemp};
+  PageManager pageManager{sched, display, buzzer, button, rtcTemp, rtcTemp};
 
   // IRtc::RtcTime rtcTime{};
   // rtcTime.second = 0;
@@ -35,7 +35,7 @@ int main(void) {
   // rtcTime.year = 2025;
   // rtcTemp.setTime(&rtcTime);
 
-  clockPage.show();
+  pageManager.changePage(PageManager::PageType::CLOCK_PAGE);
   for (;;) {
     sched.run();
   }
