@@ -28,6 +28,32 @@ static volatile uint8_t g_column = 0;
 static volatile uint8_t g_pixelBrightnessStep = 0;
 static volatile uint8_t g_buf[Display::c_height][Display::c_width];
 
+struct ColumnPin {
+  volatile uint8_t *port;
+  uint8_t mask;
+  uint8_t maskInv;
+};
+
+static const ColumnPin columnPins[] = {
+    {&PORTD, (uint8_t)(1 << 7), (uint8_t) ~(1 << 7)}, // C0
+    {&PORTC, (uint8_t)(1 << 2), (uint8_t) ~(1 << 2)}, // C1
+    {&PORTC, (uint8_t)(1 << 3), (uint8_t) ~(1 << 3)}, // C2
+    {&PORTC, (uint8_t)(1 << 4), (uint8_t) ~(1 << 4)}, // C3
+    {&PORTC, (uint8_t)(1 << 5), (uint8_t) ~(1 << 5)}, // C4
+    {&PORTC, (uint8_t)(1 << 6), (uint8_t) ~(1 << 6)}, // C5
+    {&PORTC, (uint8_t)(1 << 7), (uint8_t) ~(1 << 7)}, // C6
+    {&PORTA, (uint8_t)(1 << 6), (uint8_t) ~(1 << 6)}, // C7
+    {&PORTA, (uint8_t)(1 << 5), (uint8_t) ~(1 << 5)}, // C8
+    {&PORTA, (uint8_t)(1 << 4), (uint8_t) ~(1 << 4)}, // C9
+    {&PORTA, (uint8_t)(1 << 3), (uint8_t) ~(1 << 3)}, // C10
+    {&PORTA, (uint8_t)(1 << 2), (uint8_t) ~(1 << 2)}, // C11
+    {&PORTA, (uint8_t)(1 << 1), (uint8_t) ~(1 << 1)}, // C12
+    {&PORTA, (uint8_t)(1 << 0), (uint8_t) ~(1 << 0)}, // C13
+    {&PORTB, (uint8_t)(1 << 0), (uint8_t) ~(1 << 0)}, // C14
+    {&PORTB, (uint8_t)(1 << 1), (uint8_t) ~(1 << 1)}, // C15
+    {&PORTB, (uint8_t)(1 << 2), (uint8_t) ~(1 << 2)}, // C16
+};
+
 static inline void displayInit() {
   // Init outputs
   DDRA |= 0b01111111;
@@ -75,50 +101,16 @@ static inline bool displayEnableRows() {
   return maskB | maskD;
 }
 
-static inline void displayEnableColumn() {
-  // Write column select
-  switch (g_column) { // clang-format off
-  case 0:  PORTD |= 1 << 7; break; // C0
-  case 1:  PORTC |= 1 << 2; break; // C1
-  case 2:  PORTC |= 1 << 3; break; // C2
-  case 3:  PORTC |= 1 << 4; break; // C3
-  case 4:  PORTC |= 1 << 5; break; // C4
-  case 5:  PORTC |= 1 << 6; break; // C5
-  case 6:  PORTC |= 1 << 7; break; // C6
-  case 7:  PORTA |= 1 << 6; break; // C7
-  case 8:  PORTA |= 1 << 5; break; // C8
-  case 9:  PORTA |= 1 << 4; break; // C9
-  case 10: PORTA |= 1 << 3; break; // C10
-  case 11: PORTA |= 1 << 2; break; // C11
-  case 12: PORTA |= 1 << 1; break; // C12
-  case 13: PORTA |= 1 << 0; break; // C13
-  case 14: PORTB |= 1 << 0; break; // C14
-  case 15: PORTB |= 1 << 1; break; // C15
-  case 16: PORTB |= 1 << 2; break; // C16
-  } // clang-format on
+static inline ColumnPin displayGetColumnPin() {
+  return columnPins[g_column];
 }
 
-static inline void displayDisableColumn() {
-  // Clear column select
-  switch (g_column) { // clang-format off
-  case 0:  PORTD &= ~(1 << 7); break; // C0
-  case 1:  PORTC &= ~(1 << 2); break; // C1
-  case 2:  PORTC &= ~(1 << 3); break; // C2
-  case 3:  PORTC &= ~(1 << 4); break; // C3
-  case 4:  PORTC &= ~(1 << 5); break; // C4
-  case 5:  PORTC &= ~(1 << 6); break; // C5
-  case 6:  PORTC &= ~(1 << 7); break; // C6
-  case 7:  PORTA &= ~(1 << 6); break; // C7
-  case 8:  PORTA &= ~(1 << 5); break; // C8
-  case 9:  PORTA &= ~(1 << 4); break; // C9
-  case 10: PORTA &= ~(1 << 3); break; // C10
-  case 11: PORTA &= ~(1 << 2); break; // C11
-  case 12: PORTA &= ~(1 << 1); break; // C12
-  case 13: PORTA &= ~(1 << 0); break; // C13
-  case 14: PORTB &= ~(1 << 0); break; // C14
-  case 15: PORTB &= ~(1 << 1); break; // C15
-  case 16: PORTB &= ~(1 << 2); break; // C16
-  } // clang-format on
+static inline void displayEnableColumn(const ColumnPin &columnPin) {
+  *columnPin.port |= columnPin.mask;
+}
+
+static inline void displayDisableColumn(const ColumnPin &columnPin) {
+  *columnPin.port &= columnPin.maskInv;
 }
 
 static inline void displayNextPixelBrightnessStep() {
@@ -140,23 +132,24 @@ ISR(TIMER2_OVF_vect) {
   if (OCR2 > c_compareHighest) {
     // Highest possible brightness
     // Disable column immediately before enabling the next one
-    displayDisableColumn();
+    displayDisableColumn(displayGetColumnPin());
   }
 
   displayNextColumn();
+  ColumnPin columnPin = displayGetColumnPin();
   if (displayEnableRows()) {
-    displayEnableColumn();
+    displayEnableColumn(columnPin);
   }
 
   if (OCR2 < c_compareLowest) {
     // Lowest possible brightness
     // Disable column immediately after enabling it
-    displayDisableColumn();
+    displayDisableColumn(columnPin);
   }
 }
 
 ISR(TIMER2_COMP_vect) {
-  displayDisableColumn();
+  displayDisableColumn(displayGetColumnPin());
 }
 
 /******************************************************************************
