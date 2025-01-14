@@ -10,12 +10,20 @@ class IRtc;
 class ITemp;
 class Sched;
 
+struct PageEnv {
+  Sched &sched;
+  Display &display;
+  Buzzer &buzzer;
+  Button &button;
+  IRtc &rtc;
+  ITemp &temp;
+};
+
 class PageManager {
 public:
   enum class PageType { EMPTY_PAGE, CLOCK_PAGE, DEMO_PAGE };
 
-  PageManager(
-      Sched &sched, Display &display, Buzzer &buzzer, Button &button, IRtc &rtc, ITemp &temp);
+  PageManager(PageEnv &env);
   void changePage(PageType nextPageType);
 
 private:
@@ -31,11 +39,5 @@ private:
   };
   AnyPage m_currentPage{EmptyPage{}};
   PageType m_currentPageType = PageType::EMPTY_PAGE;
-
-  Sched &m_sched;
-  Display &m_display;
-  Buzzer &m_buzzer;
-  Button &m_button;
-  IRtc &m_rtc;
-  ITemp &m_temp;
+  PageEnv &m_env;
 };

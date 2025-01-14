@@ -3,17 +3,12 @@
 #include <driver/button/button.h>
 #include <page/ipage.h>
 
-class Buzzer;
-class Display;
-class IRtc;
-class ITemp;
 class PageManager;
-class Sched;
+class PageEnv;
 
 class ClockPage : public IPage {
 public:
-  ClockPage(PageManager &pageManager, Sched &sched, Display &display, Buzzer &buzzer,
-      Button &button, IRtc &rtc, ITemp &temp);
+  ClockPage(PageManager &pageManager, PageEnv &env);
   void show() override;
   void hide() override;
 
@@ -31,10 +26,5 @@ private:
   static constexpr uint16_t c_timeRefreshDelay = 500;
   static constexpr uint16_t c_returnToTimeDelay = 3000;
   PageManager &m_pageManager;
-  Sched &m_sched;
-  Display &m_display;
-  Buzzer &m_buzzer;
-  Button &m_button;
-  IRtc &m_rtc;
-  ITemp &m_temp;
+  PageEnv &m_env;
 };

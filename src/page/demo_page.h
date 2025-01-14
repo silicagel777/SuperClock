@@ -3,17 +3,12 @@
 #include <driver/button/button.h>
 #include <page/ipage.h>
 
-class Buzzer;
-class Display;
-class IRtc;
-class ITemp;
 class PageManager;
-class Sched;
+class PageEnv;
 
 class DemoPage : public IPage {
 public:
-  DemoPage(
-      PageManager &PageManager, Sched &sched, Display &display, Buzzer &buzzer, Button &button);
+  DemoPage(PageManager &PageManager, PageEnv &env);
   void show() override;
   void hide() override;
 
@@ -26,9 +21,6 @@ private:
   void showDemo();
   static constexpr uint16_t c_demoRefreshDelay = 1000;
   PageManager &m_pageManager;
-  Sched &m_sched;
-  Display &m_display;
-  Buzzer &m_buzzer;
-  Button &m_button;
+  PageEnv &m_env;
   uint16_t m_counter = 0;
 };

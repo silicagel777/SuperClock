@@ -23,7 +23,8 @@ int main(void) {
   constexpr uint8_t brigthnessAdcChannel = 7;
   Brightness brightness{sched, display, adc, brigthnessAdcChannel};
   Button button{sched};
-  PageManager pageManager{sched, display, buzzer, button, rtcTemp, rtcTemp};
+  PageEnv pageEnv{sched, display, buzzer, button, rtcTemp, rtcTemp};
+  PageManager pageManager{pageEnv};
 
   // IRtc::RtcTime rtcTime{};
   // rtcTime.second = 0;

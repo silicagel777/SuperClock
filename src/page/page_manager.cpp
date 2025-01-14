@@ -1,10 +1,7 @@
 #include "page/page_manager.h"
-#include "env/new.h"
+#include "sys/new.h"
 
-PageManager::PageManager(
-    Sched &sched, Display &display, Buzzer &buzzer, Button &button, IRtc &rtc, ITemp &temp)
-    : m_sched(sched), m_display(display), m_buzzer(buzzer), m_button(button), m_rtc(rtc),
-      m_temp(temp) {}
+PageManager::PageManager(PageEnv &env) : m_env(env) {}
 
 void PageManager::changePage(PageType nextPageType) {
   destoryPage(m_currentPageType);
@@ -19,11 +16,11 @@ void PageManager::createPage(PageType type) {
     m_currentPage.emptyPage.show();
     break;
   case PageType::CLOCK_PAGE:
-    new (&m_currentPage) ClockPage{*this, m_sched, m_display, m_buzzer, m_button, m_rtc, m_temp};
+    new (&m_currentPage) ClockPage{*this, m_env};
     m_currentPage.clockPage.show();
     break;
   case PageType::DEMO_PAGE:
-    new (&m_currentPage) DemoPage{*this, m_sched, m_display, m_buzzer, m_button};
+    new (&m_currentPage) DemoPage{*this, m_env};
     m_currentPage.demoPage.show();
     break;
   }
