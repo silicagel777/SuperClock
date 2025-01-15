@@ -16,7 +16,7 @@ public:
   void resetCallback();
 
   template <class C, void (C::*M)(Type type, State state)>
-  void setCallback(void *ctx) {
+  void setCallback(C *ctx) {
     auto cb = [](void *ctx, Type type, State state) { (((C *)ctx)->*M)(type, state); };
     return setCallback(cb, ctx);
   }

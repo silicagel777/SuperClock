@@ -1,12 +1,9 @@
 #pragma once
 
-#include <page/ipage.h>
-
-class EmptyPage : public IPage {
+class EmptyPage {
 public:
   EmptyPage() {};
-  void show() override {};
-  void hide() override {};
+  ~EmptyPage() {};
 
 private:
   EmptyPage(const EmptyPage &) = delete;

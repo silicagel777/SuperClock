@@ -1,16 +1,14 @@
 #pragma once
 
 #include <driver/button/button.h>
-#include <page/ipage.h>
 
 class PageManager;
 class PageEnv;
 
-class DemoPage : public IPage {
+class DemoPage {
 public:
   DemoPage(PageManager &PageManager, PageEnv &env);
-  void show() override;
-  void hide() override;
+  ~DemoPage();
 
 private:
   DemoPage(const DemoPage &) = delete;

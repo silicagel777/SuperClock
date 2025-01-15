@@ -4,11 +4,12 @@
 #include "page/demo_page.h"
 #include "page/empty_page.h"
 
-class Buzzer;
+class Sched;
 class Display;
+class Buzzer;
+class Button;
 class IRtc;
 class ITemp;
-class Sched;
 
 struct PageEnv {
   Sched &sched;
@@ -24,6 +25,7 @@ public:
   enum class PageType { EMPTY_PAGE, CLOCK_PAGE, DEMO_PAGE };
 
   PageManager(PageEnv &env);
+  ~PageManager();
   void changePage(PageType nextPageType);
 
 private:
@@ -33,6 +35,7 @@ private:
   void destoryPage(PageType type);
 
   union AnyPage {
+    ~AnyPage() {}
     EmptyPage emptyPage;
     ClockPage clockPage;
     DemoPage demoPage;

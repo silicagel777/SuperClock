@@ -1,16 +1,14 @@
 #pragma once
 
 #include <driver/button/button.h>
-#include <page/ipage.h>
 
 class PageManager;
 class PageEnv;
 
-class ClockPage : public IPage {
+class ClockPage {
 public:
   ClockPage(PageManager &pageManager, PageEnv &env);
-  void show() override;
-  void hide() override;
+  ~ClockPage();
 
 private:
   ClockPage(const ClockPage &) = delete;

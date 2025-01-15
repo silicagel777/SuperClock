@@ -19,7 +19,7 @@ public:
   bool addTask(task_cb_t cb, void *ctx, uint32_t delayMs);
 
   template <class C, void (C::*M)()>
-  bool addTask(void *ctx, uint32_t delayMs) {
+  bool addTask(C *ctx, uint32_t delayMs) {
     auto cb = [](void *ctx) { (((C *)ctx)->*M)(); };
     return addTask(cb, ctx, delayMs);
   }

@@ -8,14 +8,12 @@
 #include "sched/sched.h"
 
 DemoPage::DemoPage(PageManager &pageManager, PageEnv &env)
-    : m_pageManager(pageManager), m_env(env) {}
-
-void DemoPage::show() {
+    : m_pageManager(pageManager), m_env(env) {
   m_env.button.setCallback<DemoPage, &DemoPage::handleButton>(this);
   m_env.sched.addTask<DemoPage, &DemoPage::showDemo>(this, 0);
 }
 
-void DemoPage::hide() {
+DemoPage::~DemoPage() {
   m_env.button.resetCallback();
   m_env.sched.removeTasks(this);
 }

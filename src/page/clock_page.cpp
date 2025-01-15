@@ -10,14 +10,12 @@
 #include "sched/sched.h"
 
 ClockPage::ClockPage(PageManager &pageManager, PageEnv &env)
-    : m_pageManager(pageManager), m_env(env) {}
-
-void ClockPage::show() {
+    : m_pageManager(pageManager), m_env(env) {
   m_env.button.setCallback<ClockPage, &ClockPage::handleButton>(this);
   m_env.sched.addTask<ClockPage, &ClockPage::showTime>(this, 0);
 }
 
-void ClockPage::hide() {
+ClockPage::~ClockPage() {
   m_env.button.resetCallback();
   m_env.sched.removeTasks(this);
 }
