@@ -3,7 +3,7 @@
 #include "buzzer/buzzer.h"
 #include "driver/button/button.h"
 #include "driver/display/display.h"
-#include "page/demo_page.h"
+#include "page/demo/demo_page.h"
 #include "page/page_manager.h"
 #include "sched/sched.h"
 

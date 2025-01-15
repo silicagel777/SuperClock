@@ -5,7 +5,7 @@
 #include "driver/display/display.h"
 #include "driver/rtc/irtc.h"
 #include "driver/temp/itemp.h"
-#include "page/clock_page.h"
+#include "page/clock/clock_page.h"
 #include "page/page_manager.h"
 #include "sched/sched.h"
 

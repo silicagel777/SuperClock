@@ -1,7 +1,7 @@
 #pragma once
 
-#include "page/clock_page.h"
-#include "page/demo_page.h"
+#include "page/clock/clock_page.h"
+#include "page/demo/demo_page.h"
 
 class Sched;
 class Display;
