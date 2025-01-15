@@ -7,3 +7,4 @@ AccessModifierOffset: -2
 AlignAfterOpenBracket: false
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortBlocksOnASingleLine: Empty
+AlwaysBreakTemplateDeclarations: Yes

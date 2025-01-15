@@ -6,11 +6,11 @@ Sched::Sched(Time &time) : m_time(time) {
   m_lastRun = time.milliseconds();
 }
 
-bool Sched::addTask(task_cb_t cb, void *data, uint32_t delayMs) {
+bool Sched::addTask(task_cb_t cb, void *ctx, uint32_t delayMs) {
   if (m_tasksTail >= c_maxTasks) {
     return false;
   }
-  m_tasks[m_tasksTail] = {cb, data, delayMs};
+  m_tasks[m_tasksTail] = {cb, ctx, delayMs};
   m_tasksTail++;
   return true;
 }
@@ -26,10 +26,10 @@ inline bool Sched::removeTask(uint8_t index) {
   return true;
 }
 
-bool Sched::removeTasks(task_cb_t cb, void *data, bool useCb, bool useData) {
+bool Sched::removeTasks(task_cb_t cb, void *ctx, bool useCb, bool useCtx) {
   bool result = false;
   for (uint8_t i = 0; i < m_tasksTail;) {
-    if ((!useCb || m_tasks[i].cb == cb) && (!useData || m_tasks[i].data == data)) {
+    if ((!useCb || m_tasks[i].cb == cb) && (!useCtx || m_tasks[i].ctx == ctx)) {
       result = true;
       removeTask(i);
     } else {
@@ -61,7 +61,7 @@ void Sched::run() {
     if (m_tasks[i].delayMs == 0) {
       Task task = m_tasks[i];
       removeTask(i);
-      task.cb(task.data);
+      task.cb(task.ctx);
       break;
     }
   }

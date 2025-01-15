@@ -9,11 +9,17 @@ public:
   static constexpr uint8_t typeCount = 3;
   enum class Type : uint8_t { MODE, PLUS, MINUS, _TYPE_MAX };
   enum class State { NONE, PRESS, RELEASE, LONG_PRESS, LONG_RELEASE };
-  typedef void (*button_cb_t)(void *data, Type type, State state);
+  typedef void (*button_cb_t)(void *ctx, Type type, State state);
 
   Button(Sched &sched);
-  void setCallback(button_cb_t cb, void *data);
+  void setCallback(button_cb_t cb, void *ctx);
   void resetCallback();
+
+  template <class C, void (C::*M)(Type type, State state)>
+  void setCallback(void *ctx) {
+    auto cb = [](void *ctx, Type type, State state) { (((C *)ctx)->*M)(type, state); };
+    return setCallback(cb, ctx);
+  }
 
 private:
   Button(const Button &) = delete;
@@ -27,5 +33,5 @@ private:
   Sched &m_sched;
   uint8_t m_cycles[typeCount]{};
   button_cb_t m_cb = nullptr;
-  void *m_cbData = nullptr;
+  void *m_cbCtx = nullptr;
 };

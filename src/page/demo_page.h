@@ -15,9 +15,7 @@ public:
 private:
   DemoPage(const DemoPage &) = delete;
   void operator=(const DemoPage &) = delete;
-  static void buttonCallback(void *self, Button::Type type, Button::State state);
   void handleButton(Button::Type type, Button::State state);
-  static void showDemoCallback(void *self);
   void showDemo();
   static constexpr uint16_t c_demoRefreshDelay = 1000;
   PageManager &m_pageManager;

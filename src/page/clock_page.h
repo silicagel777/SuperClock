@@ -15,9 +15,7 @@ public:
 private:
   ClockPage(const ClockPage &) = delete;
   void operator=(const ClockPage &) = delete;
-  static void buttonCallback(void *self, Button::Type type, Button::State state);
   void handleButton(Button::Type type, Button::State state);
-  static void showTimeCallback(void *self);
   void showTime();
   void showDate();
   void showTemp();

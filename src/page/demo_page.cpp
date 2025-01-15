@@ -11,17 +11,13 @@ DemoPage::DemoPage(PageManager &pageManager, PageEnv &env)
     : m_pageManager(pageManager), m_env(env) {}
 
 void DemoPage::show() {
-  m_env.button.setCallback(buttonCallback, this);
-  m_env.sched.addTask(showDemoCallback, this, 0);
+  m_env.button.setCallback<DemoPage, &DemoPage::handleButton>(this);
+  m_env.sched.addTask<DemoPage, &DemoPage::showDemo>(this, 0);
 }
 
 void DemoPage::hide() {
   m_env.button.resetCallback();
   m_env.sched.removeTasks(this);
-}
-
-void DemoPage::buttonCallback(void *self, Button::Type type, Button::State state) {
-  ((DemoPage *)self)->handleButton(type, state);
 }
 
 void DemoPage::handleButton(Button::Type type, Button::State state) {
@@ -33,10 +29,6 @@ void DemoPage::handleButton(Button::Type type, Button::State state) {
       m_pageManager.changePage(PageManager::PageType::CLOCK_PAGE);
     }
   }
-}
-
-void DemoPage::showDemoCallback(void *self) {
-  ((DemoPage *)self)->showDemo();
 }
 
 void DemoPage::showDemo() {
@@ -53,5 +45,5 @@ void DemoPage::showDemo() {
   if (++m_counter > 9999) {
     m_counter = 0;
   }
-  m_env.sched.addTask(showDemoCallback, this, c_demoRefreshDelay);
+  m_env.sched.addTask<DemoPage, &DemoPage::showDemo>(this, c_demoRefreshDelay);
 }

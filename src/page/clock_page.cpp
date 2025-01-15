@@ -13,17 +13,13 @@ ClockPage::ClockPage(PageManager &pageManager, PageEnv &env)
     : m_pageManager(pageManager), m_env(env) {}
 
 void ClockPage::show() {
-  m_env.button.setCallback(buttonCallback, this);
-  m_env.sched.addTask(showTimeCallback, this, 0);
+  m_env.button.setCallback<ClockPage, &ClockPage::handleButton>(this);
+  m_env.sched.addTask<ClockPage, &ClockPage::showTime>(this, 0);
 }
 
 void ClockPage::hide() {
   m_env.button.resetCallback();
   m_env.sched.removeTasks(this);
-}
-
-void ClockPage::buttonCallback(void *self, Button::Type type, Button::State state) {
-  ((ClockPage *)self)->handleButton(type, state);
 }
 
 void ClockPage::handleButton(Button::Type type, Button::State state) {
@@ -53,10 +49,6 @@ void ClockPage::handleButton(Button::Type type, Button::State state) {
   }
 }
 
-void ClockPage::showTimeCallback(void *self) {
-  ((ClockPage *)self)->showTime();
-}
-
 void ClockPage::showTime() {
   IRtc::RtcTime rtcTime{};
   m_env.rtc.readTime(&rtcTime);
@@ -72,7 +64,7 @@ void ClockPage::showTime() {
   m_env.display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
   m_env.display.writePixel(rtcTime.second / 4 + 1, 5);
   m_env.display.update();
-  m_env.sched.addTask(showTimeCallback, this, c_timeRefreshDelay);
+  m_env.sched.addTask<ClockPage, &ClockPage::showTime>(this, c_timeRefreshDelay);
 }
 
 void ClockPage::showDate() {
@@ -89,7 +81,7 @@ void ClockPage::showDate() {
   };
   m_env.display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
   m_env.display.update();
-  m_env.sched.addTask(showTimeCallback, this, c_returnToTimeDelay);
+  m_env.sched.addTask<ClockPage, &ClockPage::showTime>(this, c_returnToTimeDelay);
 }
 
 void ClockPage::showTemp() {
@@ -109,7 +101,7 @@ void ClockPage::showTemp() {
   };
   m_env.display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
   m_env.display.update();
-  m_env.sched.addTask(showTimeCallback, this, c_returnToTimeDelay);
+  m_env.sched.addTask<ClockPage, &ClockPage::showTime>(this, c_returnToTimeDelay);
 }
 
 void ClockPage::showWeek() {
@@ -123,7 +115,7 @@ void ClockPage::showWeek() {
   };
   m_env.display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
   m_env.display.update();
-  m_env.sched.addTask(showTimeCallback, this, c_returnToTimeDelay);
+  m_env.sched.addTask<ClockPage, &ClockPage::showTime>(this, c_returnToTimeDelay);
 }
 
 void ClockPage::showYear() {
@@ -139,5 +131,5 @@ void ClockPage::showYear() {
   };
   m_env.display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
   m_env.display.update();
-  m_env.sched.addTask(showTimeCallback, this, c_returnToTimeDelay);
+  m_env.sched.addTask<ClockPage, &ClockPage::showTime>(this, c_returnToTimeDelay);
 }

@@ -12,19 +12,19 @@ Button::Button(Sched &sched) : m_sched(sched) {
   poll();
 }
 
-void Button::setCallback(button_cb_t cb, void *data) {
+void Button::setCallback(button_cb_t cb, void *ctx) {
   m_cb = cb;
-  m_cbData = data;
+  m_cbCtx = ctx;
 }
 
 void Button::resetCallback() {
   m_cb = nullptr;
-  m_cbData = nullptr;
+  m_cbCtx = nullptr;
 }
 
 inline void Button::runCallback(Type type, State state) {
   if (m_cb) {
-    m_cb(m_cbData, type, state);
+    m_cb(m_cbCtx, type, state);
   }
 }
 
