@@ -1,5 +1,5 @@
 #include "page/page_manager.h"
-#include "sys/new.h"
+#include "util/new.h"
 
 PageManager::PageManager(PageEnv &env, PageType startPageType)
     : m_env(env), m_currentPageType(startPageType) {
