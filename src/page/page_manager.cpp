@@ -1,4 +1,6 @@
 #include "page/page_manager.h"
+#include "page_manager.h"
+#include "sched/sched.h"
 #include "util/new.h"
 
 PageManager::PageManager(PageEnv &env, PageType startPageType)
@@ -11,8 +13,14 @@ PageManager::~PageManager() {
 }
 
 void PageManager::changePage(PageType nextPageType) {
+  m_nextPageType = nextPageType;
+  // Run through scheduler to be sure that no page code is running
+  m_env.sched.addTask<PageManager, &PageManager::nextPage>(this, 0);
+}
+
+void PageManager::nextPage() {
   destoryPage();
-  m_currentPageType = nextPageType;
+  m_currentPageType = m_nextPageType;
   createPage();
 }
 

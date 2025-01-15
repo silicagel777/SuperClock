@@ -40,10 +40,12 @@ public:
 private:
   PageManager(const PageManager &) = delete;
   void operator=(const PageManager &) = delete;
+  void nextPage();
   void createPage();
   void destoryPage();
 
   PageEnv &m_env;
   PageType m_currentPageType;
+  PageType m_nextPageType;
   PageBuf m_currentPage;
 };
