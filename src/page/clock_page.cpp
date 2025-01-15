@@ -19,7 +19,7 @@ void ClockPage::show() {
 
 void ClockPage::hide() {
   m_env.button.resetCallback();
-  m_env.sched.removeTasks(showTimeCallback, this);
+  m_env.sched.removeTasks(this);
 }
 
 void ClockPage::buttonCallback(void *self, Button::Type type, Button::State state) {
@@ -36,18 +36,18 @@ void ClockPage::handleButton(Button::Type type, Button::State state) {
     }
   } else if (type == Button::Type::PLUS) {
     if (state == Button::State::RELEASE) {
-      m_env.sched.removeTasks(showTimeCallback, this);
+      m_env.sched.removeTasks(this);
       showDate();
     } else if (state == Button::State::LONG_PRESS) {
-      m_env.sched.removeTasks(showTimeCallback, this);
+      m_env.sched.removeTasks(this);
       showYear();
     }
   } else if (type == Button::Type::MINUS) {
     if (state == Button::State::RELEASE) {
-      m_env.sched.removeTasks(showTimeCallback, this);
+      m_env.sched.removeTasks(this);
       showWeek();
     } else if (state == Button::State::LONG_PRESS) {
-      m_env.sched.removeTasks(showTimeCallback, this);
+      m_env.sched.removeTasks(this);
       showTemp();
     }
   }

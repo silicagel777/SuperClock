@@ -1,5 +1,6 @@
 #include "sched/sched.h"
 #include "driver/time/time.h"
+#include "sched.h"
 
 Sched::Sched(Time &time) : m_time(time) {
   m_lastRun = time.milliseconds();
@@ -25,10 +26,10 @@ inline bool Sched::removeTask(uint8_t index) {
   return true;
 }
 
-bool Sched::removeTasks(task_cb_t cb, void *data) {
+bool Sched::removeTasks(task_cb_t cb, void *data, bool useCb, bool useData) {
   bool result = false;
   for (uint8_t i = 0; i < m_tasksTail;) {
-    if (m_tasks[i].cb == cb && m_tasks[i].data == data) {
+    if ((!useCb || m_tasks[i].cb == cb) && (!useData || m_tasks[i].data == data)) {
       result = true;
       removeTask(i);
     } else {

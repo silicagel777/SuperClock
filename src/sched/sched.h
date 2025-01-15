@@ -16,13 +16,23 @@ public:
 
   explicit Sched(Time &time);
   bool addTask(task_cb_t cb, void *data, uint32_t delayMs);
-  bool removeTasks(task_cb_t cb, void *data);
+  inline bool removeTasks(void *data) {
+    return removeTasks(nullptr, data, false, true);
+  }
+  inline bool removeTasks(task_cb_t cb) {
+    return removeTasks(cb, nullptr, true, false);
+  }
+  inline bool removeTasks(task_cb_t cb, void *data) {
+    return removeTasks(cb, data, true, true);
+  }
   void run();
 
 private:
   Sched(const Sched &) = delete;
   void operator=(const Sched &) = delete;
   bool removeTask(uint8_t index);
+  bool removeTasks(task_cb_t cb, void *data, bool useCb, bool useData);
+
   Time &m_time;
   uint32_t m_lastRun = 0;
   uint8_t m_tasksTail = 0;

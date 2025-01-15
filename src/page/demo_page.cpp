@@ -17,7 +17,7 @@ void DemoPage::show() {
 
 void DemoPage::hide() {
   m_env.button.resetCallback();
-  m_env.sched.removeTasks(showDemoCallback, this);
+  m_env.sched.removeTasks(this);
 }
 
 void DemoPage::buttonCallback(void *self, Button::Type type, Button::State state) {
