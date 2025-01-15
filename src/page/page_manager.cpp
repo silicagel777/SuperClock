@@ -1,23 +1,23 @@
 #include "page/page_manager.h"
 #include "sys/new.h"
 
-PageManager::PageManager(PageEnv &env) : m_env(env) {}
+PageManager::PageManager(PageEnv &env, PageType startPageType)
+    : m_env(env), m_currentPageType(startPageType) {
+  createPage();
+}
 
 PageManager::~PageManager() {
-  destoryPage(m_currentPageType);
+  destoryPage();
 }
 
 void PageManager::changePage(PageType nextPageType) {
-  destoryPage(m_currentPageType);
+  destoryPage();
   m_currentPageType = nextPageType;
-  createPage(m_currentPageType);
+  createPage();
 }
 
-void PageManager::createPage(PageType type) {
-  switch (type) {
-  case PageType::EMPTY_PAGE:
-    new (&m_currentPage) EmptyPage{};
-    break;
+void PageManager::createPage() {
+  switch (m_currentPageType) {
   case PageType::CLOCK_PAGE:
     new (&m_currentPage) ClockPage{*this, m_env};
     break;
@@ -27,11 +27,8 @@ void PageManager::createPage(PageType type) {
   }
 }
 
-void PageManager::destoryPage(PageType type) {
-  switch (type) {
-  case PageType::EMPTY_PAGE:
-    m_currentPage.emptyPage.~EmptyPage();
-    break;
+void PageManager::destoryPage() {
+  switch (m_currentPageType) {
   case PageType::CLOCK_PAGE:
     m_currentPage.clockPage.~ClockPage();
     break;

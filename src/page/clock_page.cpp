@@ -26,7 +26,7 @@ void ClockPage::handleButton(Button::Type type, Button::State state) {
   }
   if (type == Button::Type::MODE) {
     if (state == Button::State::RELEASE) {
-      m_pageManager.changePage(PageManager::PageType::DEMO_PAGE);
+      m_pageManager.changePage(PageType::DEMO_PAGE);
     }
   } else if (type == Button::Type::PLUS) {
     if (state == Button::State::RELEASE) {

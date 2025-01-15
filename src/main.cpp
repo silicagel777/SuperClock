@@ -24,7 +24,8 @@ int main(void) {
   Brightness brightness{sched, display, adc, brigthnessAdcChannel};
   Button button{sched};
   PageEnv pageEnv{sched, display, buzzer, button, rtcTemp, rtcTemp};
-  PageManager pageManager{pageEnv};
+  constexpr PageType startPageType = PageType::CLOCK_PAGE;
+  PageManager pageManager{pageEnv, startPageType};
 
   // IRtc::RtcTime rtcTime{};
   // rtcTime.second = 0;
@@ -36,7 +37,6 @@ int main(void) {
   // rtcTime.year = 2025;
   // rtcTemp.setTime(&rtcTime);
 
-  pageManager.changePage(PageManager::PageType::CLOCK_PAGE);
   for (;;) {
     sched.run();
   }

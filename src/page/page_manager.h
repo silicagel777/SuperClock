@@ -2,7 +2,6 @@
 
 #include "page/clock_page.h"
 #include "page/demo_page.h"
-#include "page/empty_page.h"
 
 class Sched;
 class Display;
@@ -20,27 +19,31 @@ struct PageEnv {
   ITemp &temp;
 };
 
+enum class PageType {
+  CLOCK_PAGE,
+  DEMO_PAGE,
+};
+
+union PageBuf {
+  PageBuf() {}
+  ~PageBuf() {}
+  ClockPage clockPage;
+  DemoPage demoPage;
+};
+
 class PageManager {
 public:
-  enum class PageType { EMPTY_PAGE, CLOCK_PAGE, DEMO_PAGE };
-
-  PageManager(PageEnv &env);
+  PageManager(PageEnv &env, PageType startPageType);
   ~PageManager();
   void changePage(PageType nextPageType);
 
 private:
   PageManager(const PageManager &) = delete;
   void operator=(const PageManager &) = delete;
-  void createPage(PageType type);
-  void destoryPage(PageType type);
+  void createPage();
+  void destoryPage();
 
-  union AnyPage {
-    ~AnyPage() {}
-    EmptyPage emptyPage;
-    ClockPage clockPage;
-    DemoPage demoPage;
-  };
-  AnyPage m_currentPage{EmptyPage{}};
-  PageType m_currentPageType = PageType::EMPTY_PAGE;
   PageEnv &m_env;
+  PageType m_currentPageType;
+  PageBuf m_currentPage;
 };
