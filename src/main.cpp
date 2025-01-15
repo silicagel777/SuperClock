@@ -20,8 +20,8 @@ int main(void) {
   I2C i2c{I2C::FreqMode::FREQ_400K};
   Ds3231 rtcTemp{i2c};
   Adc adc{Adc::ReferenceMode::AVCC, Adc::PrescalerMode::DIV128};
-  constexpr uint8_t brigthnessAdcChannel = 7;
-  Brightness brightness{sched, display, adc, brigthnessAdcChannel};
+  constexpr uint8_t brightnessAdcChannel = 7;
+  Brightness brightness{sched, display, adc, brightnessAdcChannel};
   Button button{sched};
   PageEnv pageEnv{sched, display, buzzer, button, rtcTemp, rtcTemp};
   constexpr PageType startPageType = PageType::CLOCK_PAGE;
