@@ -6,7 +6,7 @@ Buzzer::Buzzer(Sched &sched, Tone &tone) : m_sched(sched), m_tone(tone) {}
 
 void Buzzer::beep() {
   m_tone.run(1000);
-  m_sched.addTask([](void *p) { ((decltype(this))p)->stop(); }, this, 100);
+  m_sched.addTask<Buzzer, &Buzzer::stop>(this, 100);
 }
 
 void Buzzer::stop() {

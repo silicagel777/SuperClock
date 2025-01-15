@@ -20,7 +20,7 @@ public:
 
   template <class C, void (C::*M)()>
   bool addTask(C *ctx, uint32_t delayMs) {
-    auto cb = [](void *ctx) { (((C *)ctx)->*M)(); };
+    auto cb = [](void *ctx) { (static_cast<C *>(ctx)->*M)(); };
     return addTask(cb, ctx, delayMs);
   }
 
