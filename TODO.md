@@ -5,9 +5,9 @@
   - Why non-uniform brigthness fix removed ghosting?!
   - Yellow leds make green leds dimmer
 - Reorganize font system
-- Reorganize page system
 - Free-running ADC
 - Adc filtering
 - More levels for highest and lowest brigtness?
-- Optimize & improve scheduler?
 - Use c++ namespaces?
+- Free-running RTC data collector
+- Alarm module

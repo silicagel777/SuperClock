@@ -140,6 +140,9 @@ ISR(TIMER2_OVF_vect) {
   displayNextColumn();
   ColumnPin columnPin = displayGetColumnPin();
   if (displayEnableRows()) {
+    // Enable column only if there is something to display: this counteracts capacitance-related
+    // ghosting for empty columns. The same issue for non-empty columns is counteracted by keeping
+    // rows active even when column is already disabled.
     displayEnableColumn(columnPin);
   }
 
