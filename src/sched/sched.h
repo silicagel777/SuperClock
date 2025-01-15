@@ -6,7 +6,7 @@ class Time;
 
 class Sched {
 public:
-  static constexpr uint8_t c_maxTasks = 8;
+  static constexpr uint8_t c_maxTasks = 12;
   typedef void (*task_cb_t)(void *ctx);
   struct Task {
     task_cb_t cb;
