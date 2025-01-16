@@ -8,7 +8,7 @@ class PageEnv;
 
 class ClockSetupPage {
 public:
-  ClockSetupPage(PageManager &pageManager, PageEnv &env);
+  ClockSetupPage(PageManager &pageManager, PageEnv &env, uintptr_t arg);
   ~ClockSetupPage();
 
 private:

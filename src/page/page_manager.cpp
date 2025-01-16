@@ -11,8 +11,9 @@ PageManager::~PageManager() {
   destoryPage();
 }
 
-void PageManager::changePage(PageType nextPageType) {
+void PageManager::changePage(PageType nextPageType, uintptr_t arg) {
   m_nextPageType = nextPageType;
+  m_pageArg = arg;
   // Run through scheduler to be sure that no page code is running
   m_env.sched.addTask<PageManager, &PageManager::nextPage>(this, 0);
 }
@@ -26,16 +27,16 @@ void PageManager::nextPage() {
 void PageManager::createPage() {
   switch (m_currentPageType) {
   case PageType::CLOCK_MAIN_PAGE:
-    new (&m_currentPage) ClockMainPage{*this, m_env};
+    new (&m_currentPage) ClockMainPage{*this, m_env, m_pageArg};
     break;
   case PageType::CLOCK_SETUP_PAGE:
-    new (&m_currentPage) ClockSetupPage{*this, m_env};
+    new (&m_currentPage) ClockSetupPage{*this, m_env, m_pageArg};
     break;
   case PageType::ALARM_VIEW_PAGE:
-    new (&m_currentPage) AlarmViewPage{*this, m_env};
+    new (&m_currentPage) AlarmViewPage{*this, m_env, m_pageArg};
     break;
   case PageType::TEST_PAGE:
-    new (&m_currentPage) TestPage{*this, m_env};
+    new (&m_currentPage) TestPage{*this, m_env, m_pageArg};
     break;
   }
 }

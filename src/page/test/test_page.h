@@ -7,7 +7,7 @@ class PageEnv;
 
 class TestPage {
 public:
-  TestPage(PageManager &PageManager, PageEnv &env);
+  TestPage(PageManager &PageManager, PageEnv &env, uintptr_t arg);
   ~TestPage();
 
 private:

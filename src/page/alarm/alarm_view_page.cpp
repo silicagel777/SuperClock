@@ -8,7 +8,7 @@
 #include "page/page_manager.h"
 #include "sched/sched.h"
 
-AlarmViewPage::AlarmViewPage(PageManager &pageManager, PageEnv &env)
+AlarmViewPage::AlarmViewPage(PageManager &pageManager, PageEnv &env, uintptr_t)
     : m_pageManager(pageManager), m_env(env) {
   m_env.button.setCallback<AlarmViewPage, &AlarmViewPage::handleButton>(this);
   m_env.sched.addTask<AlarmViewPage, &AlarmViewPage::showAlarm>(this, 0);

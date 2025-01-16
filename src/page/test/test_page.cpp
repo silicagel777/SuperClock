@@ -7,7 +7,7 @@
 #include "page/test/test_page.h"
 #include "sched/sched.h"
 
-TestPage::TestPage(PageManager &pageManager, PageEnv &env)
+TestPage::TestPage(PageManager &pageManager, PageEnv &env, uintptr_t)
     : m_pageManager(pageManager), m_env(env) {
   m_env.button.setCallback<TestPage, &TestPage::handleButton>(this);
   m_env.sched.addTask<TestPage, &TestPage::showTest>(this, 0, c_testRefreshDelay);

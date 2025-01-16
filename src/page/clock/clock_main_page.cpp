@@ -9,7 +9,7 @@
 #include "page/page_manager.h"
 #include "sched/sched.h"
 
-ClockMainPage::ClockMainPage(PageManager &pageManager, PageEnv &env)
+ClockMainPage::ClockMainPage(PageManager &pageManager, PageEnv &env, uintptr_t)
     : m_pageManager(pageManager), m_env(env) {
   m_env.button.setCallback<ClockMainPage, &ClockMainPage::handleButton>(this);
   m_env.sched.addTask<ClockMainPage, &ClockMainPage::showTime>(this, 0, c_timeRefreshDelay);

@@ -7,7 +7,7 @@ class PageEnv;
 
 class ClockMainPage {
 public:
-  ClockMainPage(PageManager &pageManager, PageEnv &env);
+  ClockMainPage(PageManager &pageManager, PageEnv &env, uintptr_t arg);
   ~ClockMainPage();
 
 private:

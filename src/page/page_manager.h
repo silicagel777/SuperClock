@@ -43,7 +43,7 @@ class PageManager {
 public:
   PageManager(PageEnv &env, PageType startPageType);
   ~PageManager();
-  void changePage(PageType nextPageType);
+  void changePage(PageType nextPageType, uintptr_t arg = 0);
 
 private:
   PageManager(const PageManager &) = delete;
@@ -55,5 +55,6 @@ private:
   PageEnv &m_env;
   PageType m_currentPageType;
   PageType m_nextPageType;
+  uintptr_t m_pageArg;
   PageBuf m_currentPage;
 };

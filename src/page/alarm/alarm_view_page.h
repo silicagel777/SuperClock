@@ -7,7 +7,7 @@ class PageEnv;
 
 class AlarmViewPage {
 public:
-  AlarmViewPage(PageManager &PageManager, PageEnv &env);
+  AlarmViewPage(PageManager &PageManager, PageEnv &env, uintptr_t arg);
   ~AlarmViewPage();
 
 private:

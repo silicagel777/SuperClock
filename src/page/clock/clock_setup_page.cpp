@@ -8,7 +8,7 @@
 #include "page/page_manager.h"
 #include "sched/sched.h"
 
-ClockSetupPage::ClockSetupPage(PageManager &pageManager, PageEnv &env)
+ClockSetupPage::ClockSetupPage(PageManager &pageManager, PageEnv &env, uintptr_t)
     : m_pageManager(pageManager), m_env(env) {
   m_env.rtc.readTime(m_time);
   m_time.second = 0;
