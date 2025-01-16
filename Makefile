@@ -18,7 +18,7 @@ INC_DIRS := $(SRC_DIRS)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS)) -MMD -MP
 
 COMMON_FLAGS := $(INC_FLAGS) -mmcu=$(MCU) -Wall -Werror -fno-exceptions \
-  -fdata-sections -ffunction-sections -fno-threadsafe-statics -g -O2 -flto \
+  -fdata-sections -ffunction-sections -fno-threadsafe-statics -g -Os -flto \
   -DF_CPU=$(F_CPU) 
 CFLAGS := $(COMMON_FLAGS) -std=c11
 CXXFLAGS := $(COMMON_FLAGS) -std=c++17 
