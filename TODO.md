@@ -9,5 +9,4 @@
 - Adc filtering
 - More levels for highest and lowest brigtness?
 - Use c++ namespaces?
-- Free-running RTC data collector
 - Alarm module
