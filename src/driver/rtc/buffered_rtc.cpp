@@ -5,6 +5,7 @@
 
 BufferedRtc::BufferedRtc(Sched &sched, IRtc &rtc) : m_sched(sched), m_rtc(rtc) {
   update();
+  m_sched.addTask<BufferedRtc, &BufferedRtc::update>(this, c_updateDelay, c_updateDelay);
 }
 
 uint8_t BufferedRtc::readTime(RtcTime *time) {
@@ -23,5 +24,4 @@ uint8_t BufferedRtc::setTime(const RtcTime *time) {
 
 void BufferedRtc::update() {
   m_lastErr = m_rtc.readTime(&m_lastTime);
-  m_sched.addTask<BufferedRtc, &BufferedRtc::update>(this, c_updateDelay);
 }

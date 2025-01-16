@@ -10,7 +10,7 @@
 DemoPage::DemoPage(PageManager &pageManager, PageEnv &env)
     : m_pageManager(pageManager), m_env(env) {
   m_env.button.setCallback<DemoPage, &DemoPage::handleButton>(this);
-  m_env.sched.addTask<DemoPage, &DemoPage::showDemo>(this, 0);
+  m_env.sched.addTask<DemoPage, &DemoPage::showDemo>(this, 0, c_demoRefreshDelay);
 }
 
 DemoPage::~DemoPage() {
@@ -43,5 +43,4 @@ void DemoPage::showDemo() {
   if (++m_counter > 9999) {
     m_counter = 0;
   }
-  m_env.sched.addTask<DemoPage, &DemoPage::showDemo>(this, c_demoRefreshDelay);
 }

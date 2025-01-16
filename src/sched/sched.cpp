@@ -6,11 +6,11 @@ Sched::Sched(Time &time) : m_time(time) {
   m_lastRun = time.milliseconds();
 }
 
-bool Sched::addTask(task_cb_t cb, void *ctx, uint16_t delayMs) {
+bool Sched::addTask(task_cb_t cb, void *ctx, uint16_t delayMs, uint16_t reloadMs) {
   if (m_tasksTail >= c_maxTasks) {
     return false;
   }
-  m_tasks[m_tasksTail] = {cb, ctx, delayMs};
+  m_tasks[m_tasksTail] = {cb, ctx, delayMs, reloadMs};
   m_tasksTail++;
   return true;
 }
@@ -61,6 +61,9 @@ void Sched::run() {
     if (m_tasks[i].delayMs == 0) {
       Task task = m_tasks[i];
       removeTask(i);
+      if (task.reloadMs > 0) {
+        addTask(task.cb, task.ctx, task.reloadMs, task.reloadMs);
+      }
       task.cb(task.ctx);
       break;
     }

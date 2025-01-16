@@ -12,7 +12,7 @@
 ClockMainPage::ClockMainPage(PageManager &pageManager, PageEnv &env)
     : m_pageManager(pageManager), m_env(env) {
   m_env.button.setCallback<ClockMainPage, &ClockMainPage::handleButton>(this);
-  m_env.sched.addTask<ClockMainPage, &ClockMainPage::showTime>(this, 0);
+  m_env.sched.addTask<ClockMainPage, &ClockMainPage::showTime>(this, 0, c_timeRefreshDelay);
 }
 
 ClockMainPage::~ClockMainPage() {
@@ -33,17 +33,25 @@ void ClockMainPage::handleButton(Button::Type type, Button::State state) {
   } else if (type == Button::Type::PLUS) {
     if (state == Button::State::RELEASE) {
       m_env.sched.removeTasks<ClockMainPage, &ClockMainPage::showTime>(this);
+      m_env.sched.addTask<ClockMainPage, &ClockMainPage::showTime>(
+          this, c_returnToTimeDelay, c_timeRefreshDelay);
       showDate();
     } else if (state == Button::State::LONG_PRESS) {
       m_env.sched.removeTasks<ClockMainPage, &ClockMainPage::showTime>(this);
+      m_env.sched.addTask<ClockMainPage, &ClockMainPage::showTime>(
+          this, c_returnToTimeDelay, c_timeRefreshDelay);
       showYear();
     }
   } else if (type == Button::Type::MINUS) {
     if (state == Button::State::RELEASE) {
       m_env.sched.removeTasks<ClockMainPage, &ClockMainPage::showTime>(this);
+      m_env.sched.addTask<ClockMainPage, &ClockMainPage::showTime>(
+          this, c_returnToTimeDelay, c_timeRefreshDelay);
       showWeek();
     } else if (state == Button::State::LONG_PRESS) {
       m_env.sched.removeTasks<ClockMainPage, &ClockMainPage::showTime>(this);
+      m_env.sched.addTask<ClockMainPage, &ClockMainPage::showTime>(
+          this, c_returnToTimeDelay, c_timeRefreshDelay);
       showTemp();
     }
   }
@@ -56,7 +64,6 @@ void ClockMainPage::showTime() {
   m_env.display.writeClockNums(rtcTime.hour, ':', rtcTime.minute);
   m_env.display.writePixel(rtcTime.second / 4 + 1, 5);
   m_env.display.update();
-  m_env.sched.addTask<ClockMainPage, &ClockMainPage::showTime>(this, c_timeRefreshDelay);
 }
 
 void ClockMainPage::showDate() {
@@ -65,7 +72,6 @@ void ClockMainPage::showDate() {
   m_env.display.clear();
   m_env.display.writeClockNums(rtcTime.month, '.', rtcTime.day);
   m_env.display.update();
-  m_env.sched.addTask<ClockMainPage, &ClockMainPage::showTime>(this, c_returnToTimeDelay);
 }
 
 void ClockMainPage::showTemp() {
@@ -77,7 +83,6 @@ void ClockMainPage::showTemp() {
   m_env.display.clear();
   m_env.display.writeClockNums(tempInt, '.', tempFrac);
   m_env.display.update();
-  m_env.sched.addTask<ClockMainPage, &ClockMainPage::showTime>(this, c_returnToTimeDelay);
 }
 
 void ClockMainPage::showWeek() {
@@ -91,7 +96,6 @@ void ClockMainPage::showWeek() {
   };
   m_env.display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
   m_env.display.update();
-  m_env.sched.addTask<ClockMainPage, &ClockMainPage::showTime>(this, c_returnToTimeDelay);
 }
 
 void ClockMainPage::showYear() {
@@ -100,5 +104,4 @@ void ClockMainPage::showYear() {
   m_env.display.clear();
   m_env.display.writeYearNum(rtcTime.year);
   m_env.display.update();
-  m_env.sched.addTask<ClockMainPage, &ClockMainPage::showTime>(this, c_returnToTimeDelay);
 }

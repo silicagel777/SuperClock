@@ -16,9 +16,7 @@ private:
   void operator=(const ClockSetupPage &) = delete;
   void handleButton(Button::Type type, Button::State state);
   void setupIncrease();
-  void setupAutoIncrease();
   void setupDecrease();
-  void setupAutoDecrease();
   void setupRefresh();
   void showSetup();
   static uint8_t getMonthDays(const uint8_t month, const uint16_t year);

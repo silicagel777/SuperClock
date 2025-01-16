@@ -12,15 +12,16 @@ public:
     task_cb_t cb;
     void *ctx;
     uint16_t delayMs;
+    uint16_t reloadMs; // zero is no reload
   };
 
   explicit Sched(Time &time);
   void run();
-  bool addTask(task_cb_t cb, void *ctx, uint16_t delayMs);
+  bool addTask(task_cb_t cb, void *ctx, uint16_t delayMs, uint16_t reloadMs = 0);
 
   template <class C, void (C::*M)()>
-  bool addTask(C *ctx, uint16_t delayMs) {
-    return addTask(memberCb<C, M>, ctx, delayMs);
+  bool addTask(C *ctx, uint16_t delayMs, uint16_t reloadMs = 0) {
+    return addTask(memberCb<C, M>, ctx, delayMs, reloadMs);
   }
 
   template <class C, void (C::*M)()>

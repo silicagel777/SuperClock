@@ -13,7 +13,7 @@ ClockSetupPage::ClockSetupPage(PageManager &pageManager, PageEnv &env)
   m_env.rtc.readTime(&m_time);
   m_time.second = 0;
   m_env.button.setCallback<ClockSetupPage, &ClockSetupPage::handleButton>(this);
-  m_env.sched.addTask<ClockSetupPage, &ClockSetupPage::showSetup>(this, 0);
+  m_env.sched.addTask<ClockSetupPage, &ClockSetupPage::showSetup>(this, 0, c_setupRefreshDelay);
 }
 
 ClockSetupPage::~ClockSetupPage() {
@@ -43,9 +43,10 @@ void ClockSetupPage::handleButton(Button::Type type, Button::State state) {
       setupIncrease();
     } else if (state == Button::State::LONG_PRESS) {
       m_env.buzzer.beep();
-      setupAutoIncrease();
+      m_env.sched.addTask<ClockSetupPage, &ClockSetupPage::setupIncrease>(
+          this, 0, c_autoChangeDelay);
     } else if (state == Button::State::LONG_RELEASE) {
-      m_env.sched.removeTasks<ClockSetupPage, &ClockSetupPage::setupAutoIncrease>(this);
+      m_env.sched.removeTasks<ClockSetupPage, &ClockSetupPage::setupIncrease>(this);
     }
   } else if (type == Button::Type::MINUS) {
     if (state == Button::State::PRESS) {
@@ -53,9 +54,10 @@ void ClockSetupPage::handleButton(Button::Type type, Button::State state) {
       setupDecrease();
     } else if (state == Button::State::LONG_PRESS) {
       m_env.buzzer.beep();
-      setupAutoDecrease();
+      m_env.sched.addTask<ClockSetupPage, &ClockSetupPage::setupDecrease>(
+          this, 0, c_autoChangeDelay);
     } else if (state == Button::State::LONG_RELEASE) {
-      m_env.sched.removeTasks<ClockSetupPage, &ClockSetupPage::setupAutoDecrease>(this);
+      m_env.sched.removeTasks<ClockSetupPage, &ClockSetupPage::setupDecrease>(this);
     }
   }
 }
@@ -84,11 +86,6 @@ void ClockSetupPage::setupIncrease() {
   setupRefresh();
 }
 
-void ClockSetupPage::setupAutoIncrease() {
-  setupIncrease();
-  m_env.sched.addTask<ClockSetupPage, &ClockSetupPage::setupAutoIncrease>(this, c_autoChangeDelay);
-}
-
 void ClockSetupPage::setupDecrease() {
   switch (m_mode) {
   case Mode::HOURS:
@@ -111,11 +108,6 @@ void ClockSetupPage::setupDecrease() {
   }
   m_time.week = getWeek(m_time.day, m_time.month, m_time.year);
   setupRefresh();
-}
-
-void ClockSetupPage::setupAutoDecrease() {
-  setupDecrease();
-  m_env.sched.addTask<ClockSetupPage, &ClockSetupPage::setupAutoDecrease>(this, c_autoChangeDelay);
 }
 
 void ClockSetupPage::setupRefresh() {
@@ -158,7 +150,6 @@ void ClockSetupPage::setupRefresh() {
 void ClockSetupPage::showSetup() {
   setupRefresh();
   m_blinkFlag = !m_blinkFlag;
-  m_env.sched.addTask<ClockSetupPage, &ClockSetupPage::showSetup>(this, c_setupRefreshDelay);
 }
 
 uint8_t ClockSetupPage::getMonthDays(const uint8_t month, const uint16_t year) {

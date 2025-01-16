@@ -9,7 +9,7 @@ Button::Button(Sched &sched) : m_sched(sched) {
   // Enable pull-ups
   PORTB |= (1 << 5) | (1 << 6) | (1 << 7);
 
-  m_sched.addTask<Button, &Button::poll>(this, 0);
+  m_sched.addTask<Button, &Button::poll>(this, 0, c_delayCycle);
 }
 
 void Button::setCallback(button_cb_t cb, void *ctx) {
@@ -62,6 +62,4 @@ void Button::poll() {
       m_cycles[i] = 0;
     }
   }
-
-  m_sched.addTask<Button, &Button::poll>(this, c_delayCycle);
 }
