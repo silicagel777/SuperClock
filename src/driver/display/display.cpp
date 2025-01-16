@@ -291,8 +291,9 @@ void Display::writeBottomLine(uint8_t start, uint8_t end, uint8_t brightness) {
 }
 
 Display::CharData Display::getCharData(char c) {
-  if (c >= c_fontFirstChar && c <= c_fontLastChar) {
-    const uint16_t charOffset = pgm_read_word(cp_fontCharOffset + (c - c_fontFirstChar));
+  uint8_t n = (uint8_t)c;
+  if (n >= c_fontFirstChar && n <= c_fontLastChar) {
+    const uint16_t charOffset = pgm_read_word(cp_fontCharOffset + (n - c_fontFirstChar));
     const uint8_t *charData = cp_fontCharData + charOffset;
     const uint8_t w = pgm_read_byte(charData + 0);
     const uint8_t h = pgm_read_byte(charData + 1);

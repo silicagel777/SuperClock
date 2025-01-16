@@ -79,9 +79,15 @@ void ClockMainPage::showTemp() {
   m_env.temp.readTemp(&temp);
   temp = temp < 0 ? -temp : temp;
   int8_t tempInt = temp / 100;
-  int8_t tempFrac = temp % 100;
   m_env.display.clear();
-  m_env.display.writeClockNums(tempInt, '.', tempFrac);
+  char s[] = {
+      '+',
+      (char)('0' + tempInt / 10),
+      (char)('0' + tempInt % 10),
+      '\xB0', // degree sign
+      '\0',
+  };
+  m_env.display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
   m_env.display.update();
 }
 
@@ -89,12 +95,9 @@ void ClockMainPage::showWeek() {
   IRtc::RtcTime rtcTime{};
   m_env.rtc.readTime(&rtcTime);
   m_env.display.clear();
-  char s[] = {
-      '0',
-      (char)('0' + rtcTime.week),
-      '\0',
-  };
-  m_env.display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
+  const char *labels[] = {"MON ", "TUE ", "WED ", "THU ", "FRI ", "SAT ", "SUN "};
+  m_env.display.writeString(
+      labels[rtcTime.week - 1], Display::c_centerX, 0, Display::Align::MIDDLE);
   m_env.display.update();
 }
 
