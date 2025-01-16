@@ -1,5 +1,4 @@
 #include "page/page_manager.h"
-#include "page_manager.h"
 #include "sched/sched.h"
 #include "util/new.h"
 
@@ -32,6 +31,9 @@ void PageManager::createPage() {
   case PageType::CLOCK_SETUP_PAGE:
     new (&m_currentPage) ClockSetupPage{*this, m_env};
     break;
+  case PageType::ALARM_VIEW_PAGE:
+    new (&m_currentPage) AlarmViewPage{*this, m_env};
+    break;
   case PageType::DEMO_PAGE:
     new (&m_currentPage) DemoPage{*this, m_env};
     break;
@@ -45,6 +47,9 @@ void PageManager::destoryPage() {
     break;
   case PageType::CLOCK_SETUP_PAGE:
     m_currentPage.clockSetupPage.~ClockSetupPage();
+    break;
+  case PageType::ALARM_VIEW_PAGE:
+    m_currentPage.alarmViewPage.~AlarmViewPage();
     break;
   case PageType::DEMO_PAGE:
     m_currentPage.demoPage.~DemoPage();

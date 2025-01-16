@@ -26,7 +26,7 @@ void ClockMainPage::handleButton(Button::Type type, Button::State state) {
   }
   if (type == Button::Type::MODE) {
     if (state == Button::State::RELEASE) {
-      m_pageManager.changePage(PageType::DEMO_PAGE);
+      m_pageManager.changePage(PageType::ALARM_VIEW_PAGE);
     } else if (state == Button::State::LONG_PRESS) {
       m_pageManager.changePage(PageType::CLOCK_SETUP_PAGE);
     }

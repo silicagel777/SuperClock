@@ -1,5 +1,6 @@
 #pragma once
 
+#include "page/alarm/alarm_view_page.h"
 #include "page/clock/clock_main_page.h"
 #include "page/clock/clock_setup_page.h"
 #include "page/demo/demo_page.h"
@@ -10,6 +11,7 @@ class Buzzer;
 class Button;
 class IRtc;
 class ITemp;
+class Alarm;
 
 struct PageEnv {
   Sched &sched;
@@ -18,11 +20,13 @@ struct PageEnv {
   Button &button;
   IRtc &rtc;
   ITemp &temp;
+  Alarm &alarm;
 };
 
 enum class PageType {
   CLOCK_MAIN_PAGE,
   CLOCK_SETUP_PAGE,
+  ALARM_VIEW_PAGE,
   DEMO_PAGE,
 };
 
@@ -31,6 +35,7 @@ union PageBuf {
   ~PageBuf() {}
   ClockMainPage clockMainPage;
   ClockSetupPage clockSetupPage;
+  AlarmViewPage alarmViewPage;
   DemoPage demoPage;
 };
 

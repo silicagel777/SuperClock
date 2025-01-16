@@ -8,6 +8,7 @@ class IRtc;
 class Alarm {
 public:
   static constexpr uint8_t c_alarmCount = 5;
+  static constexpr uint8_t c_alarmMax = c_alarmCount - 1;
   struct AlarmTime {
     bool enabled : 1;
     uint8_t hour : 7;
