@@ -20,8 +20,16 @@ public:
 
   template <class C, void (C::*M)()>
   bool addTask(C *ctx, uint16_t delayMs) {
-    auto cb = [](void *ctx) { (static_cast<C *>(ctx)->*M)(); };
-    return addTask(cb, ctx, delayMs);
+    return addTask(memberCb<C, M>, ctx, delayMs);
+  }
+
+  template <class C, void (C::*M)()>
+  bool removeTasks(C *ctx) {
+    return removeTasks(memberCb<C, M>, ctx, true, true);
+  }
+
+  inline bool removeTasks(task_cb_t cb, void *ctx) {
+    return removeTasks(cb, ctx, true, true);
   }
 
   inline bool removeTasks(void *ctx) {
@@ -32,15 +40,16 @@ public:
     return removeTasks(cb, nullptr, true, false);
   }
 
-  inline bool removeTasks(task_cb_t cb, void *ctx) {
-    return removeTasks(cb, ctx, true, true);
-  }
-
 private:
   Sched(const Sched &) = delete;
   void operator=(const Sched &) = delete;
   bool removeTask(uint8_t index);
   bool removeTasks(task_cb_t cb, void *ctx, bool useCb, bool useCtx);
+
+  template <class C, void (C::*M)()>
+  static void memberCb(void *ctx) {
+    (static_cast<C *>(ctx)->*M)();
+  }
 
   Time &m_time;
   uint16_t m_lastRun = 0;

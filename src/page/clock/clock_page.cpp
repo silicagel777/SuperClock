@@ -30,18 +30,18 @@ void ClockPage::handleButton(Button::Type type, Button::State state) {
     }
   } else if (type == Button::Type::PLUS) {
     if (state == Button::State::RELEASE) {
-      m_env.sched.removeTasks(this);
+      m_env.sched.removeTasks<ClockPage, &ClockPage::showTime>(this);
       showDate();
     } else if (state == Button::State::LONG_PRESS) {
-      m_env.sched.removeTasks(this);
+      m_env.sched.removeTasks<ClockPage, &ClockPage::showTime>(this);
       showYear();
     }
   } else if (type == Button::Type::MINUS) {
     if (state == Button::State::RELEASE) {
-      m_env.sched.removeTasks(this);
+      m_env.sched.removeTasks<ClockPage, &ClockPage::showTime>(this);
       showWeek();
     } else if (state == Button::State::LONG_PRESS) {
-      m_env.sched.removeTasks(this);
+      m_env.sched.removeTasks<ClockPage, &ClockPage::showTime>(this);
       showTemp();
     }
   }
