@@ -11,15 +11,15 @@ public:
   struct Task {
     task_cb_t cb;
     void *ctx;
-    uint32_t delayMs;
+    uint16_t delayMs;
   };
 
   explicit Sched(Time &time);
   void run();
-  bool addTask(task_cb_t cb, void *ctx, uint32_t delayMs);
+  bool addTask(task_cb_t cb, void *ctx, uint16_t delayMs);
 
   template <class C, void (C::*M)()>
-  bool addTask(C *ctx, uint32_t delayMs) {
+  bool addTask(C *ctx, uint16_t delayMs) {
     auto cb = [](void *ctx) { (static_cast<C *>(ctx)->*M)(); };
     return addTask(cb, ctx, delayMs);
   }
@@ -43,7 +43,7 @@ private:
   bool removeTasks(task_cb_t cb, void *ctx, bool useCb, bool useCtx);
 
   Time &m_time;
-  uint32_t m_lastRun = 0;
+  uint16_t m_lastRun = 0;
   uint8_t m_tasksTail = 0;
   Task m_tasks[c_maxTasks];
 };

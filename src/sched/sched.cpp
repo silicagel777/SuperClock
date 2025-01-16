@@ -6,7 +6,7 @@ Sched::Sched(Time &time) : m_time(time) {
   m_lastRun = time.milliseconds();
 }
 
-bool Sched::addTask(task_cb_t cb, void *ctx, uint32_t delayMs) {
+bool Sched::addTask(task_cb_t cb, void *ctx, uint16_t delayMs) {
   if (m_tasksTail >= c_maxTasks) {
     return false;
   }
@@ -43,8 +43,8 @@ void Sched::run() {
   // TODO: optimize!
 
   // Decrement delays
-  uint32_t now = m_time.milliseconds();
-  uint32_t diff = now - m_lastRun;
+  uint16_t now = m_time.milliseconds();
+  uint16_t diff = now - m_lastRun;
   if (diff >= 1) {
     m_lastRun = now;
     for (uint8_t i = 0; i < m_tasksTail; i++) {

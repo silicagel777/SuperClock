@@ -4,7 +4,7 @@
 #include "driver/time/time.h"
 
 static constexpr uint16_t c_ctcMatchOverflow = (F_CPU / 1000) / 8;
-static volatile uint32_t g_milliseconds = 0;
+static volatile uint16_t g_milliseconds = 0;
 
 ISR(TIMER1_COMPA_vect) {
   g_milliseconds++;
@@ -23,8 +23,8 @@ Time::Time() {
   sei();
 }
 
-uint32_t Time::milliseconds() {
-  uint32_t result;
+uint16_t Time::milliseconds() {
+  uint16_t result;
   do {
     result = g_milliseconds;
   } while (result != g_milliseconds);

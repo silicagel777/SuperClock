@@ -6,7 +6,7 @@ class Time {
 public:
   Time();
 
-  uint32_t milliseconds();
+  uint16_t milliseconds();
 
 private:
   Time(const Time &) = delete;
