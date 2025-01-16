@@ -31,7 +31,7 @@ int main(void) {
   constexpr PageType startPageType = PageType::CLOCK_MAIN_PAGE;
   PageManager pageManager{pageEnv, startPageType};
 
-  auto alarmCb = [](void *p) { static_cast<PageManager *>(p)->changePage(PageType::DEMO_PAGE); };
+  auto alarmCb = [](void *p) { static_cast<PageManager *>(p)->changePage(PageType::TEST_PAGE); };
   alarm.setCallback(alarmCb, &pageManager);
   for (;;) {
     sched.run();

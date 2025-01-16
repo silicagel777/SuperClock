@@ -3,24 +3,24 @@
 #include "buzzer/buzzer.h"
 #include "driver/button/button.h"
 #include "driver/display/display.h"
-#include "page/demo/demo_page.h"
 #include "page/page_manager.h"
+#include "page/test/test_page.h"
 #include "sched/sched.h"
 
-DemoPage::DemoPage(PageManager &pageManager, PageEnv &env)
+TestPage::TestPage(PageManager &pageManager, PageEnv &env)
     : m_pageManager(pageManager), m_env(env) {
-  m_env.button.setCallback<DemoPage, &DemoPage::handleButton>(this);
-  m_env.sched.addTask<DemoPage, &DemoPage::showDemo>(this, 0, c_demoRefreshDelay);
+  m_env.button.setCallback<TestPage, &TestPage::handleButton>(this);
+  m_env.sched.addTask<TestPage, &TestPage::showTest>(this, 0, c_testRefreshDelay);
   m_brightness = Display::c_maxPixelBrightness;
   m_brightnessInc = -1;
 }
 
-DemoPage::~DemoPage() {
+TestPage::~TestPage() {
   m_env.button.resetCallback();
   m_env.sched.removeTasks(this);
 }
 
-void DemoPage::handleButton(Button::Type type, Button::State state) {
+void TestPage::handleButton(Button::Type type, Button::State state) {
   if (state == Button::State::RELEASE || state == Button::State::LONG_PRESS) {
     m_env.buzzer.beep();
   }
@@ -31,7 +31,7 @@ void DemoPage::handleButton(Button::Type type, Button::State state) {
   }
 }
 
-void DemoPage::showDemo() {
+void TestPage::showTest() {
   m_env.display.clear();
   m_env.display.writeString("TEST", Display::c_centerX, 0, Display::Align::MIDDLE, m_brightness);
   const uint8_t values[] = {0, 1, 2, 3, 4, 5, 6, 7, 7, 7, 6, 5, 4, 3, 2, 1, 0};

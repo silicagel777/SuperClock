@@ -3,7 +3,7 @@
 #include "page/alarm/alarm_view_page.h"
 #include "page/clock/clock_main_page.h"
 #include "page/clock/clock_setup_page.h"
-#include "page/demo/demo_page.h"
+#include "page/test/test_page.h"
 
 class Sched;
 class Display;
@@ -27,7 +27,7 @@ enum class PageType {
   CLOCK_MAIN_PAGE,
   CLOCK_SETUP_PAGE,
   ALARM_VIEW_PAGE,
-  DEMO_PAGE,
+  TEST_PAGE,
 };
 
 union PageBuf {
@@ -36,7 +36,7 @@ union PageBuf {
   ClockMainPage clockMainPage;
   ClockSetupPage clockSetupPage;
   AlarmViewPage alarmViewPage;
-  DemoPage demoPage;
+  TestPage testPage;
 };
 
 class PageManager {

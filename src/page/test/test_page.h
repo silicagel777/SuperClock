@@ -5,17 +5,17 @@
 class PageManager;
 class PageEnv;
 
-class DemoPage {
+class TestPage {
 public:
-  DemoPage(PageManager &PageManager, PageEnv &env);
-  ~DemoPage();
+  TestPage(PageManager &PageManager, PageEnv &env);
+  ~TestPage();
 
 private:
-  DemoPage(const DemoPage &) = delete;
-  void operator=(const DemoPage &) = delete;
+  TestPage(const TestPage &) = delete;
+  void operator=(const TestPage &) = delete;
   void handleButton(Button::Type type, Button::State state);
-  void showDemo();
-  static constexpr uint16_t c_demoRefreshDelay = 40;
+  void showTest();
+  static constexpr uint16_t c_testRefreshDelay = 40;
   PageManager &m_pageManager;
   PageEnv &m_env;
   uint8_t m_brightness;

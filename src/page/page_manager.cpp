@@ -34,8 +34,8 @@ void PageManager::createPage() {
   case PageType::ALARM_VIEW_PAGE:
     new (&m_currentPage) AlarmViewPage{*this, m_env};
     break;
-  case PageType::DEMO_PAGE:
-    new (&m_currentPage) DemoPage{*this, m_env};
+  case PageType::TEST_PAGE:
+    new (&m_currentPage) TestPage{*this, m_env};
     break;
   }
 }
@@ -51,8 +51,8 @@ void PageManager::destoryPage() {
   case PageType::ALARM_VIEW_PAGE:
     m_currentPage.alarmViewPage.~AlarmViewPage();
     break;
-  case PageType::DEMO_PAGE:
-    m_currentPage.demoPage.~DemoPage();
+  case PageType::TEST_PAGE:
+    m_currentPage.testPage.~TestPage();
     break;
   }
 }
