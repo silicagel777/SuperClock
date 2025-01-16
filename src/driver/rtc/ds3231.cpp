@@ -62,7 +62,7 @@ uint8_t Ds3231::setTime(const RtcTime &time) {
   return 0;
 }
 
-uint8_t Ds3231::readTemp(int16_t &temp) {
+uint8_t Ds3231::readTemp(TempValue &temp) {
   const uint8_t dataStart = 0x11;
   uint8_t data[2];
   uint8_t err;
@@ -76,6 +76,7 @@ uint8_t Ds3231::readTemp(int16_t &temp) {
     return err;
   }
 
-  temp = (int16_t)data[0] * 100 + (data[1] >> 6) * 25;
+  temp.integer = (int8_t)data[0];
+  temp.fractional = (data[1] >> 6) * 25;
   return 0;
 }

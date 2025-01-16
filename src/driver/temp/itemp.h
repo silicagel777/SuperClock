@@ -4,8 +4,12 @@
 
 class ITemp {
 public:
-  // Result is celsius*100
-  virtual uint8_t readTemp(int16_t &temp) = 0;
+  struct TempValue {
+    int8_t integer;
+    uint8_t fractional; // 1/100
+  };
+
+  virtual uint8_t readTemp(TempValue &temp) = 0;
 
 protected:
   ~ITemp() = default;

@@ -75,15 +75,14 @@ void ClockMainPage::showDate() {
 }
 
 void ClockMainPage::showTemp() {
-  int16_t temp;
-  m_env.temp.readTemp(temp);
-  temp = temp < 0 ? -temp : temp;
-  int8_t tempInt = temp / 100;
+  ITemp::TempValue tempValue;
+  m_env.temp.readTemp(tempValue);
+  int8_t sign = tempValue.integer < 0 ? -1 : 1;
   m_env.display.clear();
   char s[] = {
-      '+',
-      (char)('0' + tempInt / 10),
-      (char)('0' + tempInt % 10),
+      sign < 0 ? '-' : '+',
+      (char)('0' + sign * tempValue.integer / 10),
+      (char)('0' + sign * tempValue.integer % 10),
       '\xB0', // degree sign
       '\0',
   };
