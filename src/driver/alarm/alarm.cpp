@@ -43,7 +43,7 @@ uint8_t Alarm::setAlarm(uint8_t num, const AlarmTime &time) {
   return 0;
 }
 
-uint8_t Alarm::getAlarm(uint8_t num, AlarmTime &time) {
+uint8_t Alarm::readAlarm(uint8_t num, AlarmTime &time) {
   if (num >= c_alarmCount) {
     return 1;
   }
@@ -56,7 +56,7 @@ void Alarm::check() {
   m_rtc.readTime(rtcTime);
   for (uint8_t i = 0; i < c_alarmCount; i++) {
     AlarmTime alarmTime{};
-    getAlarm(i, alarmTime);
+    readAlarm(i, alarmTime);
     if (alarmTime.enabled && alarmTime.hour == rtcTime.hour && alarmTime.minute == rtcTime.minute) {
       alarmTime.enabled = false;
       setAlarm(i, alarmTime);

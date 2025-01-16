@@ -20,7 +20,7 @@ public:
   void setCallback(alarm_cb_t cb, void *ctx);
   void resetCallback();
   uint8_t setAlarm(uint8_t num, const AlarmTime &time);
-  uint8_t getAlarm(uint8_t num, AlarmTime &time);
+  uint8_t readAlarm(uint8_t num, AlarmTime &time);
 
   template <class C, void (C::*M)()>
   void setCallback(C *ctx) {

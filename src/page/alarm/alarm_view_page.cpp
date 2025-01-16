@@ -8,8 +8,8 @@
 #include "page/page_manager.h"
 #include "sched/sched.h"
 
-AlarmViewPage::AlarmViewPage(PageManager &pageManager, PageEnv &env, uintptr_t)
-    : m_pageManager(pageManager), m_env(env) {
+AlarmViewPage::AlarmViewPage(PageManager &pageManager, PageEnv &env, uintptr_t arg)
+    : m_pageManager(pageManager), m_env(env), m_currentAlarm(arg) {
   m_env.button.setCallback<AlarmViewPage, &AlarmViewPage::handleButton>(this);
   m_env.sched.addTask<AlarmViewPage, &AlarmViewPage::showAlarm>(this, 0);
 }
@@ -26,6 +26,8 @@ void AlarmViewPage::handleButton(Button::Type type, Button::State state) {
   if (type == Button::Type::MODE) {
     if (state == Button::State::RELEASE) {
       m_pageManager.changePage(PageType::TEST_PAGE);
+    } else if (state == Button::State::LONG_PRESS) {
+      m_pageManager.changePage(PageType::ALARM_SETUP_PAGE, m_currentAlarm);
     }
   } else if (type == Button::Type::PLUS) {
     if (state == Button::State::RELEASE) {
@@ -45,7 +47,7 @@ void AlarmViewPage::handleButton(Button::Type type, Button::State state) {
 
 void AlarmViewPage::showAlarm() {
   Alarm::AlarmTime alarmTime{};
-  m_env.alarm.getAlarm(m_currentAlarm, alarmTime);
+  m_env.alarm.readAlarm(m_currentAlarm, alarmTime);
   m_env.display.clear();
   m_env.display.writeClockNums(alarmTime.hour, ':', alarmTime.minute);
   constexpr uint8_t lineLength = Display::c_width / Alarm::c_alarmCount;
@@ -60,7 +62,7 @@ void AlarmViewPage::showAlarm() {
 
 void AlarmViewPage::toggleAlarm() {
   Alarm::AlarmTime alarmTime{};
-  m_env.alarm.getAlarm(m_currentAlarm, alarmTime);
+  m_env.alarm.readAlarm(m_currentAlarm, alarmTime);
   alarmTime.enabled = !alarmTime.enabled;
   m_env.alarm.setAlarm(m_currentAlarm, alarmTime);
 }
