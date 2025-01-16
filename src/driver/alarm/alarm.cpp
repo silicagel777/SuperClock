@@ -53,7 +53,7 @@ uint8_t Alarm::getAlarm(uint8_t num, AlarmTime &time) {
 
 void Alarm::check() {
   IRtc::RtcTime rtcTime{};
-  m_rtc.readTime(&rtcTime);
+  m_rtc.readTime(rtcTime);
   for (uint8_t i = 0; i < c_alarmCount; i++) {
     AlarmTime alarmTime{};
     getAlarm(i, alarmTime);

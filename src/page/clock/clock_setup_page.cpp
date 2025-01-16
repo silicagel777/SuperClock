@@ -10,14 +10,14 @@
 
 ClockSetupPage::ClockSetupPage(PageManager &pageManager, PageEnv &env)
     : m_pageManager(pageManager), m_env(env) {
-  m_env.rtc.readTime(&m_time);
+  m_env.rtc.readTime(m_time);
   m_time.second = 0;
   m_env.button.setCallback<ClockSetupPage, &ClockSetupPage::handleButton>(this);
   m_env.sched.addTask<ClockSetupPage, &ClockSetupPage::showSetup>(this, 0, c_setupRefreshDelay);
 }
 
 ClockSetupPage::~ClockSetupPage() {
-  m_env.rtc.setTime(&m_time);
+  m_env.rtc.setTime(m_time);
   m_env.button.resetCallback();
   m_env.sched.removeTasks(this);
 }

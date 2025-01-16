@@ -59,7 +59,7 @@ void ClockMainPage::handleButton(Button::Type type, Button::State state) {
 
 void ClockMainPage::showTime() {
   IRtc::RtcTime rtcTime{};
-  m_env.rtc.readTime(&rtcTime);
+  m_env.rtc.readTime(rtcTime);
   m_env.display.clear();
   m_env.display.writeClockNums(rtcTime.hour, ':', rtcTime.minute);
   m_env.display.writePixel(rtcTime.second / 4 + 1, 5);
@@ -68,7 +68,7 @@ void ClockMainPage::showTime() {
 
 void ClockMainPage::showDate() {
   IRtc::RtcTime rtcTime{};
-  m_env.rtc.readTime(&rtcTime);
+  m_env.rtc.readTime(rtcTime);
   m_env.display.clear();
   m_env.display.writeClockNums(rtcTime.month, '.', rtcTime.day);
   m_env.display.update();
@@ -76,7 +76,7 @@ void ClockMainPage::showDate() {
 
 void ClockMainPage::showTemp() {
   int16_t temp;
-  m_env.temp.readTemp(&temp);
+  m_env.temp.readTemp(temp);
   temp = temp < 0 ? -temp : temp;
   int8_t tempInt = temp / 100;
   m_env.display.clear();
@@ -93,7 +93,7 @@ void ClockMainPage::showTemp() {
 
 void ClockMainPage::showWeek() {
   IRtc::RtcTime rtcTime{};
-  m_env.rtc.readTime(&rtcTime);
+  m_env.rtc.readTime(rtcTime);
   m_env.display.clear();
   const char *labels[] = {"MON ", "TUE ", "WED ", "THU ", "FRI ", "SAT ", "SUN "};
   m_env.display.writeString(
@@ -103,7 +103,7 @@ void ClockMainPage::showWeek() {
 
 void ClockMainPage::showYear() {
   IRtc::RtcTime rtcTime{};
-  m_env.rtc.readTime(&rtcTime);
+  m_env.rtc.readTime(rtcTime);
   m_env.display.clear();
   m_env.display.writeYearNum(rtcTime.year);
   m_env.display.update();

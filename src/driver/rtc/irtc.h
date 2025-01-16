@@ -14,8 +14,8 @@ public:
     uint16_t year;
   };
 
-  virtual uint8_t readTime(RtcTime *time) = 0;
-  virtual uint8_t setTime(const RtcTime *time) = 0;
+  virtual uint8_t readTime(RtcTime &time) = 0;
+  virtual uint8_t setTime(const RtcTime &time) = 0;
 
 protected:
   ~IRtc() = default;
