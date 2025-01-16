@@ -15,8 +15,9 @@ private:
   void operator=(const DemoPage &) = delete;
   void handleButton(Button::Type type, Button::State state);
   void showDemo();
-  static constexpr uint16_t c_demoRefreshDelay = 1000;
+  static constexpr uint16_t c_demoRefreshDelay = 40;
   PageManager &m_pageManager;
   PageEnv &m_env;
-  uint16_t m_counter = 0;
+  uint8_t m_brightness;
+  int8_t m_brightnessInc;
 };

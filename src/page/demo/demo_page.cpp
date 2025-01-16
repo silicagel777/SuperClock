@@ -11,6 +11,8 @@ DemoPage::DemoPage(PageManager &pageManager, PageEnv &env)
     : m_pageManager(pageManager), m_env(env) {
   m_env.button.setCallback<DemoPage, &DemoPage::handleButton>(this);
   m_env.sched.addTask<DemoPage, &DemoPage::showDemo>(this, 0, c_demoRefreshDelay);
+  m_brightness = Display::c_maxPixelBrightness;
+  m_brightnessInc = -1;
 }
 
 DemoPage::~DemoPage() {
@@ -31,16 +33,16 @@ void DemoPage::handleButton(Button::Type type, Button::State state) {
 
 void DemoPage::showDemo() {
   m_env.display.clear();
-  char s[] = {
-      (char)('0' + m_counter / 1000 % 10),
-      (char)('0' + m_counter / 100 % 10),
-      (char)('0' + m_counter / 10 % 10),
-      (char)('0' + m_counter % 10),
-      '\0',
-  };
-  m_env.display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
-  m_env.display.update();
-  if (++m_counter > 9999) {
-    m_counter = 0;
+  m_env.display.writeString("TEST", Display::c_centerX, 0, Display::Align::MIDDLE, m_brightness);
+  const uint8_t values[] = {0, 1, 2, 3, 4, 5, 6, 7, 7, 7, 6, 5, 4, 3, 2, 1, 0};
+  for (uint8_t x = 0; x < sizeof(values); x++) {
+    m_env.display.writePixel(x, Display::c_maxY, values[x]);
   }
+  m_env.display.update();
+
+  if ((m_brightness == 0 && m_brightnessInc < 0) ||
+      (m_brightness == Display::c_maxPixelBrightness && m_brightnessInc > 0)) {
+    m_brightnessInc = -m_brightnessInc;
+  }
+  m_brightness += m_brightnessInc;
 }

@@ -185,7 +185,9 @@ void Display::clear() {
 }
 
 void Display::writePixel(uint8_t x, uint8_t y, uint8_t brightness) {
-  g_bgBuf[x * c_height + y] = brightness;
+  if (x < c_width && y < c_height) {
+    g_bgBuf[x * c_height + y] = brightness;
+  }
 }
 
 uint8_t Display::readPixel(uint8_t x, uint8_t y) {
@@ -257,7 +259,7 @@ void Display::writeString(const char *s, int16_t x, int16_t y, Align align, uint
   }
 }
 
-void Display::writeClockNums(uint8_t leftNum, char sep, uint8_t rightNum) {
+void Display::writeClockNums(uint8_t leftNum, char sep, uint8_t rightNum, uint8_t brightness) {
   char s[] = {
       (char)('0' + leftNum / 10),
       (char)('0' + leftNum % 10),
@@ -266,10 +268,10 @@ void Display::writeClockNums(uint8_t leftNum, char sep, uint8_t rightNum) {
       (char)('0' + rightNum % 10),
       '\0',
   };
-  writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
+  writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE, brightness);
 }
 
-void Display::writeYearNum(uint16_t year) {
+void Display::writeYearNum(uint16_t year, uint8_t brightness) {
   char s[] = {
       (char)('0' + year / 1000 % 10),
       (char)('0' + year / 100 % 10),
@@ -277,12 +279,14 @@ void Display::writeYearNum(uint16_t year) {
       (char)('0' + year % 10),
       '\0',
   };
-  writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
+  writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE, brightness);
 }
 
-void Display::writeBottomLine(uint8_t start, uint8_t end) {
+void Display::writeBottomLine(uint8_t start, uint8_t end, uint8_t brightness) {
+  start = start >= c_width ? c_width - 1 : start;
+  end = end >= c_width ? c_width - 1 : end;
   for (uint8_t i = start; i <= end; i++) {
-    writePixel(i, Display::c_height - 1);
+    writePixel(i, Display::c_height - 1, brightness);
   }
 }
 

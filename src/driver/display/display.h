@@ -6,6 +6,8 @@ class Display {
 public:
   static constexpr uint8_t c_width = 17;
   static constexpr uint8_t c_height = 6;
+  static constexpr uint8_t c_maxX = c_width - 1;
+  static constexpr uint8_t c_maxY = c_height - 1;
   static constexpr uint8_t c_centerX = c_width / 2;
   static constexpr uint8_t c_centerY = c_height / 2;
   static constexpr uint8_t c_maxPixelBrightness = 7;
@@ -31,9 +33,10 @@ public:
   void writeChar(char c, int16_t x, int16_t y, uint8_t brightness = c_maxPixelBrightness);
   void writeString(const char *s, int16_t x, int16_t y, Align align = Align::LEFT,
       uint8_t brightness = c_maxPixelBrightness);
-  void writeClockNums(uint8_t leftNum, char sep, uint8_t rightNum);
-  void writeYearNum(uint16_t year);
-  void writeBottomLine(uint8_t start, uint8_t end);
+  void writeClockNums(
+      uint8_t leftNum, char sep, uint8_t rightNum, uint8_t brightness = c_maxPixelBrightness);
+  void writeYearNum(uint16_t year, uint8_t brightness = c_maxPixelBrightness);
+  void writeBottomLine(uint8_t start, uint8_t end, uint8_t brightness = c_maxPixelBrightness);
 
 private:
   struct CharData {
