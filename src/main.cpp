@@ -1,6 +1,7 @@
 #include "brightness/brightness.h"
 #include "buzzer/buzzer.h"
 #include "driver/adc/adc.h"
+#include "driver/alarm/alarm.h"
 #include "driver/button/button.h"
 #include "driver/display/display.h"
 #include "driver/i2c/i2c.h"
@@ -25,10 +26,13 @@ int main(void) {
   constexpr uint8_t brightnessAdcChannel = 7;
   Brightness brightness{sched, display, adc, brightnessAdcChannel};
   Button button{sched};
+  Alarm alarm{sched, rtc};
   PageEnv pageEnv{sched, display, buzzer, button, rtc, Ds3231};
   constexpr PageType startPageType = PageType::CLOCK_MAIN_PAGE;
   PageManager pageManager{pageEnv, startPageType};
 
+  auto alarmCb = [](void *p) { static_cast<PageManager *>(p)->changePage(PageType::DEMO_PAGE); };
+  alarm.setCallback(alarmCb, &pageManager);
   for (;;) {
     sched.run();
   }
