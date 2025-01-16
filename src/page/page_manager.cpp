@@ -32,6 +32,9 @@ void PageManager::createPage() {
   case PageType::CLOCK_SETUP_PAGE:
     new (&m_currentPage) ClockSetupPage{*this, m_env, m_pageArg};
     break;
+  case PageType::ALARM_ALERT_PAGE:
+    new (&m_currentPage) AlarmAlertPage{*this, m_env, m_pageArg};
+    break;
   case PageType::ALARM_VIEW_PAGE:
     new (&m_currentPage) AlarmViewPage{*this, m_env, m_pageArg};
     break;
@@ -51,6 +54,9 @@ void PageManager::destoryPage() {
     break;
   case PageType::CLOCK_SETUP_PAGE:
     m_currentPage.clockSetupPage.~ClockSetupPage();
+    break;
+  case PageType::ALARM_ALERT_PAGE:
+    m_currentPage.alarmAlertPage.~AlarmAlertPage();
     break;
   case PageType::ALARM_VIEW_PAGE:
     m_currentPage.alarmViewPage.~AlarmViewPage();

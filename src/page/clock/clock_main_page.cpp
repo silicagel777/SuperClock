@@ -62,7 +62,7 @@ void ClockMainPage::showTime() {
   m_env.rtc.readTime(rtcTime);
   m_env.display.clear();
   m_env.display.writeClockNums(rtcTime.hour, ':', rtcTime.minute);
-  m_env.display.writePixel(rtcTime.second / 4 + 1, 5);
+  m_env.display.writePixel(rtcTime.second / 4 + 1, Display::c_maxY);
   m_env.display.update();
 }
 

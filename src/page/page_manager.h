@@ -1,5 +1,6 @@
 #pragma once
 
+#include "page/alarm/alarm_alert_page.h"
 #include "page/alarm/alarm_view_page.h"
 #include "page/alarm/alarm_setup_page.h"
 #include "page/clock/clock_main_page.h"
@@ -27,6 +28,7 @@ struct PageEnv {
 enum class PageType {
   CLOCK_MAIN_PAGE,
   CLOCK_SETUP_PAGE,
+  ALARM_ALERT_PAGE,
   ALARM_VIEW_PAGE,
   ALARM_SETUP_PAGE,
   TEST_PAGE,
@@ -37,6 +39,7 @@ union PageBuf {
   ~PageBuf() {}
   ClockMainPage clockMainPage;
   ClockSetupPage clockSetupPage;
+  AlarmAlertPage alarmAlertPage;
   AlarmViewPage alarmViewPage;
   AlarmSetupPage alarmSetupPage;
   TestPage testPage;
