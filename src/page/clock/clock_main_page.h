@@ -5,14 +5,14 @@
 class PageManager;
 class PageEnv;
 
-class ClockPage {
+class ClockMainPage {
 public:
-  ClockPage(PageManager &pageManager, PageEnv &env);
-  ~ClockPage();
+  ClockMainPage(PageManager &pageManager, PageEnv &env);
+  ~ClockMainPage();
 
 private:
-  ClockPage(const ClockPage &) = delete;
-  void operator=(const ClockPage &) = delete;
+  ClockMainPage(const ClockMainPage &) = delete;
+  void operator=(const ClockMainPage &) = delete;
   void handleButton(Button::Type type, Button::State state);
   void showTime();
   void showDate();

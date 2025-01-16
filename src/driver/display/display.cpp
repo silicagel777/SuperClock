@@ -257,6 +257,35 @@ void Display::writeString(const char *s, int16_t x, int16_t y, Align align, uint
   }
 }
 
+void Display::writeClockNums(uint8_t leftNum, char sep, uint8_t rightNum) {
+  char s[] = {
+      (char)('0' + leftNum / 10),
+      (char)('0' + leftNum % 10),
+      sep,
+      (char)('0' + rightNum / 10),
+      (char)('0' + rightNum % 10),
+      '\0',
+  };
+  writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
+}
+
+void Display::writeYearNum(uint16_t year) {
+  char s[] = {
+      (char)('0' + year / 1000 % 10),
+      (char)('0' + year / 100 % 10),
+      (char)('0' + year / 10 % 10),
+      (char)('0' + year % 10),
+      '\0',
+  };
+  writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
+}
+
+void Display::writeBottomLine(uint8_t start, uint8_t end) {
+  for (uint8_t i = start; i <= end; i++) {
+    writePixel(i, Display::c_height - 1);
+  }
+}
+
 Display::CharData Display::getCharData(char c) {
   if (c >= c_fontFirstChar && c <= c_fontLastChar) {
     const uint16_t charOffset = pgm_read_word(cp_fontCharOffset + (c - c_fontFirstChar));

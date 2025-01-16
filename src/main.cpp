@@ -26,18 +26,8 @@ int main(void) {
   Brightness brightness{sched, display, adc, brightnessAdcChannel};
   Button button{sched};
   PageEnv pageEnv{sched, display, buzzer, button, rtc, Ds3231};
-  constexpr PageType startPageType = PageType::CLOCK_PAGE;
+  constexpr PageType startPageType = PageType::CLOCK_MAIN_PAGE;
   PageManager pageManager{pageEnv, startPageType};
-
-  // IRtc::RtcTime rtcTime{};
-  // rtcTime.second = 0;
-  // rtcTime.minute = 8;
-  // rtcTime.hour = 1;
-  // rtcTime.day = 13;
-  // rtcTime.week = 1;
-  // rtcTime.month = 1;
-  // rtcTime.year = 2025;
-  // rtcTemp.setTime(&rtcTime);
 
   for (;;) {
     sched.run();

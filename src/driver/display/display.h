@@ -31,6 +31,9 @@ public:
   void writeChar(char c, int16_t x, int16_t y, uint8_t brightness = c_maxPixelBrightness);
   void writeString(const char *s, int16_t x, int16_t y, Align align = Align::LEFT,
       uint8_t brightness = c_maxPixelBrightness);
+  void writeClockNums(uint8_t leftNum, char sep, uint8_t rightNum);
+  void writeYearNum(uint16_t year);
+  void writeBottomLine(uint8_t start, uint8_t end);
 
 private:
   struct CharData {

@@ -26,8 +26,11 @@ void PageManager::nextPage() {
 
 void PageManager::createPage() {
   switch (m_currentPageType) {
-  case PageType::CLOCK_PAGE:
-    new (&m_currentPage) ClockPage{*this, m_env};
+  case PageType::CLOCK_MAIN_PAGE:
+    new (&m_currentPage) ClockMainPage{*this, m_env};
+    break;
+  case PageType::CLOCK_SETUP_PAGE:
+    new (&m_currentPage) ClockSetupPage{*this, m_env};
     break;
   case PageType::DEMO_PAGE:
     new (&m_currentPage) DemoPage{*this, m_env};
@@ -37,8 +40,11 @@ void PageManager::createPage() {
 
 void PageManager::destoryPage() {
   switch (m_currentPageType) {
-  case PageType::CLOCK_PAGE:
-    m_currentPage.clockPage.~ClockPage();
+  case PageType::CLOCK_MAIN_PAGE:
+    m_currentPage.clockMainPage.~ClockMainPage();
+    break;
+  case PageType::CLOCK_SETUP_PAGE:
+    m_currentPage.clockSetupPage.~ClockSetupPage();
     break;
   case PageType::DEMO_PAGE:
     m_currentPage.demoPage.~DemoPage();

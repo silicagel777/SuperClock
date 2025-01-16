@@ -1,6 +1,7 @@
 #pragma once
 
-#include "page/clock/clock_page.h"
+#include "page/clock/clock_main_page.h"
+#include "page/clock/clock_setup_page.h"
 #include "page/demo/demo_page.h"
 
 class Sched;
@@ -20,14 +21,16 @@ struct PageEnv {
 };
 
 enum class PageType {
-  CLOCK_PAGE,
+  CLOCK_MAIN_PAGE,
+  CLOCK_SETUP_PAGE,
   DEMO_PAGE,
 };
 
 union PageBuf {
   PageBuf() {}
   ~PageBuf() {}
-  ClockPage clockPage;
+  ClockMainPage clockMainPage;
+  ClockSetupPage clockSetupPage;
   DemoPage demoPage;
 };
 
