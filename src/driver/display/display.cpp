@@ -1,11 +1,11 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
-#include <avr/pgmspace.h>
 #include <string.h>
 #include <util/delay.h>
 
 #include "driver/display/display.h"
 #include "driver/display/font/font.h"
+#include "driver/progmem/progmem.h"
 
 /******************************************************************************
   Ugly stuff ahead! The idea is to drive dot matrix in software by switching
@@ -214,7 +214,7 @@ void Display::writeBmp(
 }
 
 void Display::writeBmpProgmem(
-    const uint8_t *bmp, int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t brightness) {
+    const uint8_t *bmpProgmem, int16_t x, int16_t y, uint8_t w, uint8_t h, uint8_t brightness) {
   for (uint8_t i = 0; i < w; i++) {
     int16_t bufx = i + x;
     if (bufx >= 0 && bufx < c_width) {
@@ -222,7 +222,7 @@ void Display::writeBmpProgmem(
         int16_t bufy = j + y;
         if (bufy >= 0 && bufy < c_height) {
           uint16_t bitOffset = i + j * w;
-          bool bmpPixel = (pgm_read_byte(bmp + bitOffset / 8) >> (bitOffset % 8)) & 1;
+          bool bmpPixel = (Progmem::readU8(bmpProgmem + bitOffset / 8) >> (bitOffset % 8)) & 1;
           if (bmpPixel) {
             g_bgBuf[bufx * c_height + bufy] = brightness;
           }
@@ -234,7 +234,7 @@ void Display::writeBmpProgmem(
 
 void Display::writeChar(char c, int16_t x, int16_t y, uint8_t brightness) {
   auto charData = getCharData(c);
-  writeBmpProgmem(charData.data, x, y, charData.w, charData.h, brightness);
+  writeBmpProgmem(charData.bmpProgmem, x, y, charData.w, charData.h, brightness);
 }
 
 void Display::writeString(const char *s, int16_t x, int16_t y, Align align, uint8_t brightness) {
@@ -254,7 +254,7 @@ void Display::writeString(const char *s, int16_t x, int16_t y, Align align, uint
 
   while (char c = *s++) {
     auto charData = getCharData(c);
-    writeBmpProgmem(charData.data, x, y, charData.w, charData.h, brightness);
+    writeBmpProgmem(charData.bmpProgmem, x, y, charData.w, charData.h, brightness);
     x += charData.w + 1;
   }
 }
@@ -293,10 +293,10 @@ void Display::writeBottomLine(uint8_t start, uint8_t end, uint8_t brightness) {
 Display::CharData Display::getCharData(char c) {
   uint8_t n = (uint8_t)c;
   if (n >= c_fontFirstChar && n <= c_fontLastChar) {
-    const uint16_t charOffset = pgm_read_word(cp_fontCharOffset + (n - c_fontFirstChar));
+    const uint16_t charOffset = Progmem::readU16(cp_fontCharOffset + (n - c_fontFirstChar));
     const uint8_t *charData = cp_fontCharData + charOffset;
-    const uint8_t w = pgm_read_byte(charData + 0);
-    const uint8_t h = pgm_read_byte(charData + 1);
+    const uint8_t w = Progmem::readU8(charData + 0);
+    const uint8_t h = Progmem::readU8(charData + 1);
     const uint8_t *data = charData + 2;
     return {w, h, data};
   } else {

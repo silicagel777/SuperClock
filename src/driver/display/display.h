@@ -42,7 +42,7 @@ private:
   struct CharData {
     uint8_t w;
     uint8_t h;
-    const uint8_t *data;
+    const uint8_t *bmpProgmem;
   };
 
   Display(const Display &) = delete;

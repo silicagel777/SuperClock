@@ -22,6 +22,6 @@ private:
   static constexpr uint16_t c_reloadDelay = 500;
   Sched &m_sched;
   Tone &m_tone;
-  const Note *m_note = nullptr;
-  const Note *m_reload = nullptr;
+  const Note *mp_note = nullptr;
+  const Note *mp_reload = nullptr;
 };
