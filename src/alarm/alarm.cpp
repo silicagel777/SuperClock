@@ -1,19 +1,18 @@
-#include <avr/eeprom.h>
-
-#include "driver/alarm/alarm.h"
+#include "alarm/alarm.h"
+#include "driver/mem/eeprom.h"
 #include "driver/rtc/irtc.h"
 #include "sched/sched.h"
 
-static uint8_t EEMEM g_alarmEepromSignature;
-static uint8_t EEMEM g_alarmEepromData[sizeof(Alarm::AlarmTime) * Alarm::c_alarmCount];
+static uint8_t EEMEM ge_alarmEepromSignature;
+static uint8_t EEMEM ge_alarmEepromData[sizeof(Alarm::AlarmTime) * Alarm::c_alarmCount];
 
 Alarm::Alarm(Sched &sched, IRtc &rtc) : m_sched(sched), m_rtc(rtc) {
-  if (eeprom_read_byte(&g_alarmEepromSignature) != c_alarmSignature) {
+  if (EepromMem::readU8(&ge_alarmEepromSignature) != c_alarmSignature) {
     // Clear EEPROM data if it's wrong
-    eeprom_update_block(m_alarms, &g_alarmEepromData, sizeof(m_alarms));
-    eeprom_update_byte(&g_alarmEepromSignature, c_alarmSignature);
+    EepromMem::writeBlock(m_alarms, &ge_alarmEepromData, sizeof(m_alarms));
+    EepromMem::writeU8(&ge_alarmEepromSignature, c_alarmSignature);
   }
-  eeprom_read_block(m_alarms, &g_alarmEepromData, sizeof(m_alarms));
+  EepromMem::readBlock(m_alarms, &ge_alarmEepromData, sizeof(m_alarms));
   m_sched.addTask<Alarm, &Alarm::check>(this, 0, c_checkDelay);
 }
 
@@ -42,7 +41,7 @@ uint8_t Alarm::setAlarm(uint8_t num, const AlarmTime &time) {
     return 1;
   }
   m_alarms[num] = time;
-  eeprom_update_block(&m_alarms[num], &g_alarmEepromData[num], sizeof(AlarmTime));
+  EepromMem::writeBlock(&m_alarms[num], &ge_alarmEepromData[num], sizeof(AlarmTime));
   return 0;
 }
 

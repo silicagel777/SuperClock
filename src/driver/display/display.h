@@ -28,7 +28,7 @@ public:
   uint8_t readPixel(uint8_t x, uint8_t y);
   void writeBmp(const uint8_t *bmp, int16_t x, int16_t y, uint8_t w, uint8_t h,
       uint8_t brightness = c_maxPixelBrightness);
-  void writeBmpProgmem(const uint8_t *bmp, int16_t x, int16_t y, uint8_t w, uint8_t h,
+  void writeBmpProgMem(const uint8_t *bmp, int16_t x, int16_t y, uint8_t w, uint8_t h,
       uint8_t brightness = c_maxPixelBrightness);
   void writeChar(char c, int16_t x, int16_t y, uint8_t brightness = c_maxPixelBrightness);
   void writeString(const char *s, int16_t x, int16_t y, Align align = Align::LEFT,
@@ -42,7 +42,7 @@ private:
   struct CharData {
     uint8_t w;
     uint8_t h;
-    const uint8_t *bmpProgmem;
+    const uint8_t *bmpProgMem;
   };
 
   Display(const Display &) = delete;

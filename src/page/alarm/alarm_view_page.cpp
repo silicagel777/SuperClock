@@ -1,7 +1,7 @@
 #include <stdio.h>
 
+#include "alarm/alarm.h"
 #include "buzzer/buzzer.h"
-#include "driver/alarm/alarm.h"
 #include "driver/button/button.h"
 #include "driver/display/display.h"
 #include "page/alarm/alarm_view_page.h"

@@ -1,7 +1,7 @@
+#include "alarm/alarm.h"
 #include "brightness/brightness.h"
 #include "buzzer/buzzer.h"
 #include "driver/adc/adc.h"
-#include "driver/alarm/alarm.h"
 #include "driver/button/button.h"
 #include "driver/display/display.h"
 #include "driver/i2c/i2c.h"

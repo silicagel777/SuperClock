@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 class Tone {
 public:
   explicit Tone();

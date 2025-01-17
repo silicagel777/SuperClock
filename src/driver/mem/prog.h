@@ -4,9 +4,9 @@
 
 // Annotate constants with PROGMEM and use the following stuff to read them
 
-class Progmem {
+class ProgMem {
 public:
-  Progmem() = delete;
+  ProgMem() = delete;
 
   static inline void memcpy(void *dest, const void *src, size_t len) {
     memcpy_PF(dest, reinterpret_cast<uint_farptr_t>(src), len);

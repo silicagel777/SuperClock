@@ -1,6 +1,6 @@
 #pragma once
 
-#include <driver/alarm/alarm.h>
+#include <alarm/alarm.h>
 #include <driver/button/button.h>
 
 class PageManager;

@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-#include "driver/progmem/progmem.h"
+#include "driver/mem/prog.h"
 
 struct Note {
   uint16_t freq;

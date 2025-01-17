@@ -1,6 +1,6 @@
 #include "buzzer/buzzer.h"
 #include "buzzer/melody.h"
-#include "driver/progmem/progmem.h"
+#include "driver/mem/prog.h"
 #include "driver/tone/tone.h"
 #include "sched/sched.h"
 
@@ -38,7 +38,7 @@ void Buzzer::alarm() {
 
 void Buzzer::play() {
   Note note;
-  Progmem::memcpy(&note, mp_note, sizeof(Note));
+  ProgMem::memcpy(&note, mp_note, sizeof(Note));
   if (note.freq > 0) {
     m_tone.run(note.freq);
   } else {
