@@ -34,6 +34,9 @@ void AlarmAlertPage::showAlert() {
   m_env.display.clear();
   m_env.display.writeClockNums(rtcTime.hour, ':', rtcTime.minute);
   m_env.display.writePixel(m_counter, Display::c_maxY);
-  m_counter = m_counter >= Display::c_maxX ? 0 : m_counter + 1;
+  m_counter += m_counterDirection;
+  if (m_counter == 0 || m_counter == Display::c_maxX) {
+    m_counterDirection = -m_counterDirection;
+  }
   m_env.display.update();
 }

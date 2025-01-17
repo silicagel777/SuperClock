@@ -19,4 +19,5 @@ private:
   PageManager &m_pageManager;
   PageEnv &m_env;
   uint8_t m_counter = 0;
+  int8_t m_counterDirection = 1;
 };
