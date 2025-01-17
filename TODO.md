@@ -9,4 +9,3 @@
 - Adc filtering
 - More levels for highest and lowest brightness?
 - Use c++ namespaces?
-- Add proper destructors or mark them deleted?

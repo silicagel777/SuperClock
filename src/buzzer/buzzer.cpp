@@ -6,6 +6,10 @@
 
 Buzzer::Buzzer(Sched &sched, Tone &tone) : m_sched(sched), m_tone(tone) {}
 
+Buzzer::~Buzzer() {
+  stop();
+}
+
 void Buzzer::stop() {
   m_tone.stop();
   m_sched.removeTasks<Buzzer, &Buzzer::play>(this);

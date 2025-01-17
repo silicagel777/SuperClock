@@ -5,7 +5,7 @@
 class Time {
 public:
   Time();
-
+  ~Time();
   uint16_t milliseconds();
 
 private:

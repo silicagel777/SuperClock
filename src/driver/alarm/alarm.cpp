@@ -1,6 +1,5 @@
 #include <avr/eeprom.h>
 
-#include "alarm.h"
 #include "driver/alarm/alarm.h"
 #include "driver/rtc/irtc.h"
 #include "sched/sched.h"
@@ -16,6 +15,10 @@ Alarm::Alarm(Sched &sched, IRtc &rtc) : m_sched(sched), m_rtc(rtc) {
   }
   eeprom_read_block(m_alarms, &g_alarmEepromData, sizeof(m_alarms));
   m_sched.addTask<Alarm, &Alarm::check>(this, 0, c_checkDelay);
+}
+
+Alarm::~Alarm() {
+  m_sched.removeTasks(this);
 }
 
 void Alarm::setCallback(alarm_cb_t cb, void *ctx) {

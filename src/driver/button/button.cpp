@@ -1,6 +1,6 @@
 #include <avr/io.h>
 
-#include "button.h"
+#include "driver/button/button.h"
 #include "sched/sched.h"
 
 #define UNSIGNED_MAX(var) ((1 << (sizeof(var) * 8)) - 1)
@@ -10,6 +10,10 @@ Button::Button(Sched &sched) : m_sched(sched) {
   PORTB |= (1 << 5) | (1 << 6) | (1 << 7);
 
   m_sched.addTask<Button, &Button::poll>(this, 0, c_delayCycle);
+}
+
+Button::~Button() {
+  m_sched.removeTasks(this);
 }
 
 void Button::setCallback(button_cb_t cb, void *ctx) {

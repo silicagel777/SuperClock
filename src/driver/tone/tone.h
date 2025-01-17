@@ -3,6 +3,7 @@
 class Tone {
 public:
   explicit Tone();
+  ~Tone();
   virtual void run(uint16_t freq);
   virtual void stop();
 

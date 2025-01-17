@@ -12,6 +12,7 @@ public:
   typedef void (*button_cb_t)(void *ctx, Type type, State state);
 
   Button(Sched &sched);
+  ~Button();
   void setCallback(button_cb_t cb, void *ctx);
   void resetCallback();
 

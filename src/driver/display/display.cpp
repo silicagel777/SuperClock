@@ -54,13 +54,17 @@ static const ColumnPin c_columnPins[] = {
     {&PORTB, (uint8_t)(1 << 1), (uint8_t) ~(1 << 1)}, // C15
     {&PORTB, (uint8_t)(1 << 2), (uint8_t) ~(1 << 2)}, // C16
 };
+static constexpr uint8_t c_pinMaskA = 0b01111111;
+static constexpr uint8_t c_pinMaskB = 0b00010111;
+static constexpr uint8_t c_pinMaskC = 0b11111100;
+static constexpr uint8_t c_pinMaskD = 0b11111111;
 
 static inline void displayInit() {
   // Init outputs
-  DDRA |= 0b01111111;
-  DDRB |= 0b00010111;
-  DDRC |= 0b11111100;
-  DDRD |= 0b11111111;
+  DDRA |= c_pinMaskA;
+  DDRB |= c_pinMaskB;
+  DDRC |= c_pinMaskC;
+  DDRD |= c_pinMaskD;
 
   // Timer 2, fast PWM mode, F_CPU/8
   TCCR2 = (1 << WGM21) | (1 << WGM20) | (0 << CS22) | (1 << CS21) | (0 << CS20);
@@ -68,8 +72,23 @@ static inline void displayInit() {
   OCR2 = 127;
   // Enable the compare interrupt and overflow interrupt
   TIMSK |= (1 << OCIE2) | (1 << TOIE2);
-  // Now enable global interrupts
-  sei();
+}
+
+static inline void displayDeinit() {
+  // De-init outputs
+  PORTA &= ~c_pinMaskA;
+  PORTB &= ~c_pinMaskB;
+  PORTC &= ~c_pinMaskC;
+  PORTD &= ~c_pinMaskD;
+  DDRA &= ~c_pinMaskA;
+  DDRB &= ~c_pinMaskB;
+  DDRC &= ~c_pinMaskC;
+  DDRD &= ~c_pinMaskD;
+
+  // De-init timer
+  TCCR2 = 0;
+  OCR2 = 0;
+  TIMSK &= ~(1 << OCIE2) | ~(1 << TOIE2);
 }
 
 static inline void displaySetBrightness(uint8_t brightness) {

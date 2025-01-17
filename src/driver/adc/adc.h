@@ -18,6 +18,7 @@ public:
   };
 
   Adc(ReferenceMode referenceMode, PrescalerMode prescalerMode);
+  ~Adc();
   uint16_t read(uint8_t channel);
 
 private:

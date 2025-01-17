@@ -19,8 +19,13 @@ Time::Time() {
   OCR1AL = c_ctcMatchOverflow & 0xFF;
   // Enable the compare match interrupt
   TIMSK |= (1 << OCIE1A);
-  // Now enable global interrupts
-  sei();
+}
+
+Time::~Time() {
+  TCCR1B = 0;
+  OCR1AH = 0;
+  OCR1AL = 0;
+  TIMSK &= ~(1 << OCIE1A);
 }
 
 uint16_t Time::milliseconds() {

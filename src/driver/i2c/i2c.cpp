@@ -1,7 +1,7 @@
 #include <avr/io.h>
 #include <util/twi.h>
 
-#include "i2c.h"
+#include "driver/i2c/i2c.h"
 
 #define TW_PORT PORTC
 #define TW_DDR DDRC
@@ -34,6 +34,12 @@ I2C::I2C(FreqMode freqMode, bool pullup) {
     TWBR = ((F_CPU / 400000) - 16) / 2;
     break;
   }
+}
+
+I2C::~I2C() {
+  TW_DDR &= ~(1 << TW_PIN_SDA) | ~(1 << TW_PIN_SCL);
+  TW_PORT &= ~((1 << TW_PIN_SDA) | (1 << TW_PIN_SCL));
+  TWBR = 0;
 }
 
 uint8_t I2C::transmitStart(void) {

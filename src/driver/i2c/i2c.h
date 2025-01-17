@@ -7,6 +7,7 @@ public:
   enum class FreqMode { FREQ_100K, FREQ_250K, FREQ_400K };
 
   I2C(FreqMode freqMode, bool pullup = false);
+  ~I2C();
   uint8_t write(uint8_t addr, const uint8_t *data, uint8_t len, bool repeatStart = false);
   uint8_t read(uint8_t addr, uint8_t *data, uint8_t len);
 

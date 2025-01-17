@@ -9,6 +9,7 @@ struct Note;
 class Buzzer {
 public:
   Buzzer(Sched &sched, Tone &tone);
+  ~Buzzer();
   void stop();
   void beep();
   void success();

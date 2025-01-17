@@ -5,6 +5,7 @@
 #include "driver/button/button.h"
 #include "driver/display/display.h"
 #include "driver/i2c/i2c.h"
+#include "driver/init/init.h"
 #include "driver/rtc/buffered_rtc.h"
 #include "driver/rtc/ds3231.h"
 #include "driver/rtc/irtc.h"
@@ -14,6 +15,7 @@
 #include "sched/sched.h"
 
 int main(void) {
+  Init init{};
   Time time{};
   Sched sched{time};
   Display display{};
@@ -31,10 +33,11 @@ int main(void) {
   constexpr PageType startPageType = PageType::CLOCK_MAIN_PAGE;
   PageManager pageManager{pageEnv, startPageType};
 
-  const auto alarmCb = [](void *p) {
-    static_cast<PageManager *>(p)->changePage(PageType::ALARM_ALERT_PAGE);
+  const auto alarmCb = [](void *ctx) {
+    static_cast<PageManager *>(ctx)->changePage(PageType::ALARM_ALERT_PAGE);
   };
   alarm.setCallback(alarmCb, &pageManager);
+
   for (;;) {
     sched.run();
   }

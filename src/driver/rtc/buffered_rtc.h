@@ -9,6 +9,7 @@ class BufferedRtc : public IRtc {
 public:
   static constexpr uint16_t c_updateDelay = 500;
   BufferedRtc(Sched &sched, IRtc &rtc);
+  ~BufferedRtc();
   uint8_t readTime(RtcTime &time) override;
   uint8_t setTime(const RtcTime &time) override;
 

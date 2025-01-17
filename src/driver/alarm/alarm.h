@@ -17,6 +17,7 @@ public:
   typedef void (*alarm_cb_t)(void *ctx);
 
   Alarm(Sched &sched, IRtc &rtc);
+  ~Alarm();
   void setCallback(alarm_cb_t cb, void *ctx);
   void resetCallback();
   uint8_t setAlarm(uint8_t num, const AlarmTime &time);

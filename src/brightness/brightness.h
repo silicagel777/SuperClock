@@ -9,6 +9,7 @@ class Sched;
 class Brightness {
 public:
   Brightness(Sched &sched, Display &display, Adc &adc, uint8_t adcChannel);
+  ~Brightness();
 
 private:
   Brightness(const Brightness &) = delete;
