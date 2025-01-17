@@ -3,17 +3,28 @@
 #include "driver/button/button.h"
 #include "sched/sched.h"
 
-#define UNSIGNED_MAX(var) ((1 << (sizeof(var) * 8)) - 1)
-
 Button::Button(Sched &sched) : m_sched(sched) {
   // Enable pull-ups
   PORTB |= (1 << 5) | (1 << 6) | (1 << 7);
-
   m_sched.addTask<Button, &Button::poll>(this, 0, c_delayCycle);
 }
 
 Button::~Button() {
+  PORTB &= ~(1 << 5) | ~(1 << 6) | ~(1 << 7);
   m_sched.removeTasks(this);
+}
+
+bool Button::read(Type type) {
+  switch (type) {
+  case Type::MODE:
+    return !(PINB & (1 << 5));
+  case Type::PLUS:
+    return !(PINB & (1 << 7));
+  case Type::MINUS:
+    return !(PINB & (1 << 6));
+  default:
+    return false;
+  }
 }
 
 void Button::setCallback(button_cb_t cb, void *ctx) {
@@ -29,19 +40,6 @@ void Button::resetCallback() {
 inline void Button::runCallback(Type type, State state) {
   if (m_cb) {
     m_cb(m_cbCtx, type, state);
-  }
-}
-
-bool Button::read(Type type) {
-  switch (type) {
-  case Type::MODE:
-    return !(PINB & (1 << 5));
-  case Type::PLUS:
-    return !(PINB & (1 << 7));
-  case Type::MINUS:
-    return !(PINB & (1 << 6));
-  default:
-    return false;
   }
 }
 
