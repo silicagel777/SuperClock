@@ -13,16 +13,17 @@ AlarmAlertPage::AlarmAlertPage(PageManager &pageManager, PageEnv &env, uintptr_t
     : m_pageManager(pageManager), m_env(env) {
   m_env.button.setCallback<AlarmAlertPage, &AlarmAlertPage::handleButton>(this);
   m_env.sched.addTask<AlarmAlertPage, &AlarmAlertPage::showAlert>(this, 0, c_alertRefreshDelay);
+  m_env.buzzer.alarm();
 }
 
 AlarmAlertPage::~AlarmAlertPage() {
   m_env.button.resetCallback();
   m_env.sched.removeTasks(this);
+  m_env.buzzer.stop();
 }
 
 void AlarmAlertPage::handleButton(Button::Type type, Button::State state) {
   if (state == Button::State::RELEASE) {
-    m_env.buzzer.beep();
     m_pageManager.changePage(PageType::CLOCK_MAIN_PAGE);
   }
 }

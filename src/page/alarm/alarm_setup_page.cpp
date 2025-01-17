@@ -24,16 +24,17 @@ AlarmSetupPage::~AlarmSetupPage() {
 void AlarmSetupPage::handleButton(Button::Type type, Button::State state) {
   if (type == Button::Type::MODE) {
     if (state == Button::State::RELEASE) {
-      m_env.buzzer.beep();
       if (m_mode == Mode::MINUTES) {
+        m_env.buzzer.success();
         m_pageManager.changePage(PageType::ALARM_VIEW_PAGE, m_currentAlarm);
       } else {
+        m_env.buzzer.beep();
         ((uint8_t &)m_mode)++;
         m_blinkFlag = true;
         setupRefresh();
       }
     } else if (state == Button::State::LONG_PRESS) {
-      m_env.buzzer.beep();
+      m_env.buzzer.success();
       m_pageManager.changePage(PageType::ALARM_VIEW_PAGE, m_currentAlarm);
     }
   } else if (type == Button::Type::PLUS) {

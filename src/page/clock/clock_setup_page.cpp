@@ -25,16 +25,17 @@ ClockSetupPage::~ClockSetupPage() {
 void ClockSetupPage::handleButton(Button::Type type, Button::State state) {
   if (type == Button::Type::MODE) {
     if (state == Button::State::RELEASE) {
-      m_env.buzzer.beep();
       if (m_mode == Mode::YEAR) {
+        m_env.buzzer.success();
         m_pageManager.changePage(PageType::CLOCK_MAIN_PAGE);
       } else {
+        m_env.buzzer.beep();
         ((uint8_t &)m_mode)++;
         m_blinkFlag = true;
         setupRefresh();
       }
     } else if (state == Button::State::LONG_PRESS) {
-      m_env.buzzer.beep();
+      m_env.buzzer.success();
       m_pageManager.changePage(PageType::CLOCK_MAIN_PAGE);
     }
   } else if (type == Button::Type::PLUS) {

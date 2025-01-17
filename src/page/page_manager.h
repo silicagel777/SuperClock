@@ -1,8 +1,8 @@
 #pragma once
 
 #include "page/alarm/alarm_alert_page.h"
-#include "page/alarm/alarm_view_page.h"
 #include "page/alarm/alarm_setup_page.h"
+#include "page/alarm/alarm_view_page.h"
 #include "page/clock/clock_main_page.h"
 #include "page/clock/clock_setup_page.h"
 #include "page/test/test_page.h"
