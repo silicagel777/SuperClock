@@ -47,7 +47,7 @@ void Button::poll() {
   for (uint8_t i = 0; i < (uint8_t)Type::_TYPE_MAX; i++) {
     bool isPressed = read((Type)i);
     if (isPressed) {
-      if (m_cycles[i] == 0) {
+      if (m_cycles[i] == c_shortPressCycles) {
         runCallback((Type)i, State::PRESS);
       } else if (m_cycles[i] == c_longPressCycles) {
         runCallback((Type)i, State::LONG_PRESS);
@@ -58,7 +58,7 @@ void Button::poll() {
     } else {
       if (m_cycles[i] >= c_longPressCycles) {
         runCallback((Type)i, State::LONG_RELEASE);
-      } else if (m_cycles[i] > 0) {
+      } else if (m_cycles[i] >= c_shortPressCycles) {
         runCallback((Type)i, State::RELEASE);
       }
       m_cycles[i] = 0;

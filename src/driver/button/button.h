@@ -28,8 +28,9 @@ private:
   void operator=(const Button &) = delete;
   void runCallback(Type type, State state);
   void poll();
-  static constexpr uint16_t c_delayCycle = 50;
-  static constexpr uint16_t c_longPressCycles = 14;
+  static constexpr uint16_t c_delayCycle = 25;
+  static constexpr uint16_t c_shortPressCycles = 2;
+  static constexpr uint16_t c_longPressCycles = 28;
   static constexpr uint16_t c_maxCycles = 255;
   Sched &m_sched;
   uint8_t m_cycles[typeCount]{};
