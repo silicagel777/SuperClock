@@ -18977,7 +18977,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Passive Buzzer"
+		(property "Value" "Passive Buzzer 42R"
 			(at 62.23 152.3999 0)
 			(effects
 				(font
