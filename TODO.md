@@ -9,3 +9,6 @@
 - Adc filtering
 - More levels for highest and lowest brightness?
 - Use c++ namespaces?
+- Abstractions for pins and timers?
+- Snake mode? :D
+- Animated minute/hour transitions
