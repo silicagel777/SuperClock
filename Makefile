@@ -23,7 +23,7 @@ COMMON_FLAGS := $(INC_FLAGS) -mmcu=$(MCU) -Wall -Werror -fno-exceptions \
   -DF_CPU=$(F_CPU) 
 CFLAGS := $(COMMON_FLAGS) -std=c11
 CXXFLAGS := $(COMMON_FLAGS) -std=c++17 
-LDFLAGS := -mmcu=$(MCU) -Wl,-Map,$(BUILD_DIR)/$(BIN).map -Wl,--gc-sections -flto
+LDFLAGS := -mmcu=$(MCU) -Wl,-Map,$(BUILD_DIR)/$(BIN).map -Wl,--gc-sections -flto -lm
 
 $(BUILD_DIR)/${BIN}.hex: $(BUILD_DIR)/${BIN}.elf
 	${OBJCOPY} -O ihex $< $@
