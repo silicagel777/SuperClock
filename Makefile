@@ -30,7 +30,7 @@ $(BUILD_DIR)/${BIN}.hex: $(BUILD_DIR)/${BIN}.elf
 
 $(BUILD_DIR)/${BIN}.elf: ${OBJS}
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
-	avr-size $@
+	avr-size --format=avr --mcu=$(MCU) $@
 	avr-objdump -h -S $@ > $(BUILD_DIR)/${BIN}.lss
 
 $(BUILD_DIR)/%.c.o: %.c Makefile
