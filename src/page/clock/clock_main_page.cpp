@@ -70,7 +70,7 @@ void ClockMainPage::showDate() {
   IRtc::RtcTime rtcTime{};
   m_env.rtc.readTime(rtcTime);
   m_env.display.clear();
-  m_env.display.writeClockNums(rtcTime.month, '.', rtcTime.day);
+  m_env.display.writeClockNums(rtcTime.day, '.', rtcTime.month);
   m_env.display.update();
 }
 

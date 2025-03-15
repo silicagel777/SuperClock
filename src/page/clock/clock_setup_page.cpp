@@ -127,13 +127,13 @@ void ClockSetupPage::setupRefresh() {
     }
     break;
   case Mode::DAY:
-    m_env.display.writeClockNums(m_time.month, '.', m_time.day);
+    m_env.display.writeClockNums(m_time.day, '.', m_time.month);
     if (m_blinkFlag) {
       m_env.display.writeBottomLine(0, 6);
     }
     break;
   case Mode::MONTH:
-    m_env.display.writeClockNums(m_time.month, '.', m_time.day);
+    m_env.display.writeClockNums(m_time.day, '.', m_time.month);
     if (m_blinkFlag) {
       m_env.display.writeBottomLine(10, 16);
     }
