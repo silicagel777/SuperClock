@@ -11,6 +11,7 @@
 #include "driver/rtc/irtc.h"
 #include "driver/time/time.h"
 #include "driver/tone/tone.h"
+#include "filter/exponential_filter.h"
 #include "page/page_manager.h"
 #include "sched/sched.h"
 
@@ -26,7 +27,8 @@ int main(void) {
   BufferedRtc rtc{sched, Ds3231};
   Adc adc{Adc::ReferenceMode::AVCC, Adc::PrescalerMode::DIV128};
   constexpr uint8_t brightnessAdcChannel = 7;
-  Brightness brightness{sched, display, adc, brightnessAdcChannel};
+  ExponentialFilter filter{150};
+  Brightness brightness{sched, display, filter, adc, brightnessAdcChannel};
   Button button{sched};
   Alarm alarm{sched, rtc};
   PageEnv pageEnv{sched, display, buzzer, button, rtc, Ds3231, alarm};
