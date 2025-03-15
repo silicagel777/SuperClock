@@ -5,7 +5,7 @@
 
 class ExponentialFilter : public IFilter {
 public:
-  ExponentialFilter(uint8_t alpha);
+  ExponentialFilter(float cutoffFrequency, float deltaT);
   virtual void reset(uint16_t initialValue);
   virtual uint16_t filter(uint16_t input);
 

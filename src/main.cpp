@@ -27,7 +27,7 @@ int main(void) {
   BufferedRtc rtc{sched, Ds3231};
   Adc adc{Adc::ReferenceMode::AVCC, Adc::PrescalerMode::DIV128};
   constexpr uint8_t brightnessAdcChannel = 7;
-  ExponentialFilter filter{150};
+  ExponentialFilter filter{5.0f, Brightness::c_updateDelay / 1000.0f};
   Brightness brightness{sched, display, filter, adc, brightnessAdcChannel};
   Button button{sched};
   Alarm alarm{sched, rtc};

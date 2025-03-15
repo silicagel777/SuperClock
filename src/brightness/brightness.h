@@ -9,6 +9,7 @@ class Sched;
 
 class Brightness {
 public:
+  static constexpr uint16_t c_updateDelay = 50;
   Brightness(Sched &sched, Display &display, IFilter &filter, Adc &adc, uint8_t adcChannel);
   ~Brightness();
 
@@ -17,7 +18,6 @@ private:
   void operator=(const Brightness &) = delete;
   uint16_t getInput();
   void update();
-  static constexpr uint16_t c_updateDelay = 50;
   Sched &m_sched;
   Display &m_display;
   IFilter &m_filter;
