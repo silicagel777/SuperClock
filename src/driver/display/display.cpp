@@ -36,23 +36,23 @@ struct ColumnPin {
 };
 
 static const ColumnPin c_columnPins[] = {
-    {&PORTD, (uint8_t)(1 << 7), (uint8_t) ~(1 << 7)}, // C0
-    {&PORTC, (uint8_t)(1 << 2), (uint8_t) ~(1 << 2)}, // C1
-    {&PORTC, (uint8_t)(1 << 3), (uint8_t) ~(1 << 3)}, // C2
-    {&PORTC, (uint8_t)(1 << 4), (uint8_t) ~(1 << 4)}, // C3
-    {&PORTC, (uint8_t)(1 << 5), (uint8_t) ~(1 << 5)}, // C4
-    {&PORTC, (uint8_t)(1 << 6), (uint8_t) ~(1 << 6)}, // C5
-    {&PORTC, (uint8_t)(1 << 7), (uint8_t) ~(1 << 7)}, // C6
-    {&PORTA, (uint8_t)(1 << 6), (uint8_t) ~(1 << 6)}, // C7
-    {&PORTA, (uint8_t)(1 << 5), (uint8_t) ~(1 << 5)}, // C8
-    {&PORTA, (uint8_t)(1 << 4), (uint8_t) ~(1 << 4)}, // C9
-    {&PORTA, (uint8_t)(1 << 3), (uint8_t) ~(1 << 3)}, // C10
-    {&PORTA, (uint8_t)(1 << 2), (uint8_t) ~(1 << 2)}, // C11
-    {&PORTA, (uint8_t)(1 << 1), (uint8_t) ~(1 << 1)}, // C12
-    {&PORTA, (uint8_t)(1 << 0), (uint8_t) ~(1 << 0)}, // C13
-    {&PORTB, (uint8_t)(1 << 0), (uint8_t) ~(1 << 0)}, // C14
-    {&PORTB, (uint8_t)(1 << 1), (uint8_t) ~(1 << 1)}, // C15
-    {&PORTB, (uint8_t)(1 << 2), (uint8_t) ~(1 << 2)}, // C16
+    {&PORTC, (uint8_t)(1 << 2), (uint8_t) ~(1 << 2)}, // C0
+    {&PORTC, (uint8_t)(1 << 3), (uint8_t) ~(1 << 3)}, // C1
+    {&PORTC, (uint8_t)(1 << 4), (uint8_t) ~(1 << 4)}, // C2
+    {&PORTC, (uint8_t)(1 << 5), (uint8_t) ~(1 << 5)}, // C3
+    {&PORTC, (uint8_t)(1 << 6), (uint8_t) ~(1 << 6)}, // C4
+    {&PORTC, (uint8_t)(1 << 7), (uint8_t) ~(1 << 7)}, // C5
+    {&PORTA, (uint8_t)(1 << 6), (uint8_t) ~(1 << 6)}, // C6
+    {&PORTA, (uint8_t)(1 << 5), (uint8_t) ~(1 << 5)}, // C7
+    {&PORTA, (uint8_t)(1 << 4), (uint8_t) ~(1 << 4)}, // C8
+    {&PORTA, (uint8_t)(1 << 3), (uint8_t) ~(1 << 3)}, // C9
+    {&PORTA, (uint8_t)(1 << 2), (uint8_t) ~(1 << 2)}, // C10
+    {&PORTA, (uint8_t)(1 << 1), (uint8_t) ~(1 << 1)}, // C11
+    {&PORTA, (uint8_t)(1 << 0), (uint8_t) ~(1 << 0)}, // C12
+    {&PORTB, (uint8_t)(1 << 0), (uint8_t) ~(1 << 0)}, // C13
+    {&PORTB, (uint8_t)(1 << 1), (uint8_t) ~(1 << 1)}, // C14
+    {&PORTB, (uint8_t)(1 << 2), (uint8_t) ~(1 << 2)}, // C15
+    {&PORTB, (uint8_t)(1 << 4), (uint8_t) ~(1 << 4)}, // C16
 };
 static constexpr uint8_t c_pinMaskA = 0b01111111;
 static constexpr uint8_t c_pinMaskB = 0b00010111;
@@ -109,17 +109,16 @@ static inline uint8_t displayGetBrightness() {
 
 static inline bool displayEnableRows() {
   const uint16_t offset = g_column * Display::c_height;
-  uint8_t maskB = (g_fgBuf[offset + 1] > g_pixelBrightnessStep) << 4;  // DOT0
   uint8_t maskD = (g_fgBuf[offset + 4] > g_pixelBrightnessStep) << 0 | // DOT1
-                  (g_fgBuf[offset + 5] > g_pixelBrightnessStep) << 1 | // A5
-                  (g_fgBuf[offset + 4] > g_pixelBrightnessStep) << 2 | // A4
-                  (g_fgBuf[offset + 3] > g_pixelBrightnessStep) << 3 | // A3
-                  (g_fgBuf[offset + 2] > g_pixelBrightnessStep) << 4 | // A2
-                  (g_fgBuf[offset + 1] > g_pixelBrightnessStep) << 5 | // A1
-                  (g_fgBuf[offset + 0] > g_pixelBrightnessStep) << 6;  // A0
-  PORTB = (PORTB & ~0b00010000) | maskB;
-  PORTD = (PORTD & ~0b01111111) | maskD;
-  return maskB | maskD;
+                  (g_fgBuf[offset + 1] > g_pixelBrightnessStep) << 1 | // DOT0
+                  (g_fgBuf[offset + 5] > g_pixelBrightnessStep) << 2 | // A5
+                  (g_fgBuf[offset + 4] > g_pixelBrightnessStep) << 3 | // A4
+                  (g_fgBuf[offset + 3] > g_pixelBrightnessStep) << 4 | // A3
+                  (g_fgBuf[offset + 2] > g_pixelBrightnessStep) << 5 | // A2
+                  (g_fgBuf[offset + 1] > g_pixelBrightnessStep) << 6 | // A1
+                  (g_fgBuf[offset + 0] > g_pixelBrightnessStep) << 7;  // A0
+  PORTD = maskD;
+  return maskD;
 }
 
 static inline ColumnPin displayGetColumnPin() {
