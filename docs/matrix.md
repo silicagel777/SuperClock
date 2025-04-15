@@ -6,7 +6,7 @@ Driving a bunch of LEDs... What could have been easier? Well, turns out the real
 
 LED matrix driving relies on phenomenon called "[persistence of vision](https://en.wikipedia.org/wiki/Persistence_of_vision)". There is a really nice [animation](https://en.wikipedia.org/wiki/Persistence_of_vision ) on Wikipedia that I feel obliged to attach:
 
-<p><img alt="An animated picture of LED matrix" src="img/matrix_animation.gif" width=30%/></p>
+<p><img alt="An animated picture of LED matrix" src="img/matrix_animation.gif" width=30% height=30%/></p>
 
 The LED matrix in this project is driven left to right, just like on the picture! The algorithm is simple: enable rows (LED anodes) and then enable one column (LED cathodes). Once the time comes for another column, switch the old column off, update rows and enable the new column. If you do it fast enough, you'll get an illusion of all columns working simultaneously. But the devil is, of course, in the details!
 

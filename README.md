@@ -2,8 +2,8 @@
 
 A DIY desk clock with retro-style dot matrix display
 
-<a href="docs/img/front.jpg"><img alt="Front photo" src="docs/img/front.jpg" width=49%></a>
-<a href="docs/img/back.jpg"><img alt="Back photo" src="docs/img/back.jpg" width=49%></a>
+<a href="docs/img/front.jpg"><img alt="Front photo" src="docs/img/front.jpg" width=49% height=49%></a>
+<a href="docs/img/back.jpg"><img alt="Back photo" src="docs/img/back.jpg" width=49% height=49%></a>
 
 ## Features
 
@@ -35,7 +35,7 @@ A DIY desk clock with retro-style dot matrix display
     - Includes schematics, design files, parts list and even assembly tips
 - [Frame docs](docs/frame.md)
     - Describes the acrylic glass frame
-- [Software docs](docs/software.md)
+- [Software docs](docs/firmware.md)
     - How to flash firmware or set up development tools if you want to modify it
 - [LED matrix notes](docs/matrix.md)
     - Notes on how the LED matrix works

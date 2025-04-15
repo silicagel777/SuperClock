@@ -2,17 +2,17 @@
 
 ## PCBs
 
-<a href="img/pcbs_outside.jpg"><img alt="Photo of PCBs (outside)" src="img/pcbs_outside.jpg" width=49%></a>
-<a href="img/pcbs_inside.jpg"><img alt="Photo of PCBs (inside)" src="img/pcbs_inside.jpg" width=49%></a>
+<a href="img/pcbs_outside.jpg"><img alt="Photo of PCBs (outside)" src="img/pcbs_outside.jpg" width=49% height=49%></a>
+<a href="img/pcbs_inside.jpg"><img alt="Photo of PCBs (inside)" src="img/pcbs_inside.jpg" width=49% height=49%></a>
 
 The clock is built with two PCBs: the front one that houses LEDs (matrix) and the back one that contains everything else (controller). You can find schematic PDFs, KiCAD design files and Gerber archives here:
 
-- [Matrix board files](hw/matrix/)
-    - [PDF schematic](hw/matrix/SuperClockMatrix.pdf)
-    - [Gerber archive](hw/matrix/gerber/superclockmatrix.zip)
-- [Controller board files](hw/controller/)
-    - [PDF schematic](hw/controller/SuperClockController.pdf)
-    - [Gerber archive](hw/controller/gerber/superclockcontroller.zip)
+- [Matrix board files](../hw/matrix/)
+    - [PDF schematic](../hw/matrix/SuperClockMatrix.pdf)
+    - [Gerber archive](../hw/matrix/gerber/superclockmatrix.zip)
+- [Controller board files](../hw/controller/)
+    - [PDF schematic](../hw/controller/SuperClockController.pdf)
+    - [Gerber archive](../hw/controller/gerber/superclockcontroller.zip)
 
 The provided Gerber files can be used to order the boards from a multitude of Chinese PCB prototyping factories. I've ordered mine from [Elecrow](https://www.elecrow.com/), but you can also try [JLCPCB](https://jlcpcb.com/) or anything else. Note that these PCBs are wider than the typical 100mm limit, so you are going to pay a little bit more than usual. But it's worth it, I promise!
 
@@ -70,8 +70,8 @@ Reference | Quantity | Part name | Notes
 Assembling the boards should be fairly straightforward, but here are a few hints:
 
 - Square pads on matrix board are LED cathodes, and round pads are LED anodes. All the LEDs are soldered in the same direction.
-- LED legs from the matrix board act as connector pins for the controller boards. This means that, looking at matrix board from behind, you **must not** cut the LED cathode pins on the top, LED anode pins on the right, and number separator LED anode pins at the center. Instead, carefully trim them to something about 9mm (that's for 10mm standoffs, adjust accordingly if your PCB spacers are different length).
+- LED legs from the matrix board act as connector pins for the controller board. This means that, looking at matrix board from behind, you **must not** cut the LED cathode pins on the top, LED anode pins on the right, and number separator LED anode pins at the center. Instead, carefully trim them to something about 9mm (that's for 10mm standoffs, adjust accordingly if your PCB spacers are different length).
 - Mating the boards for the first time might be tricky: the round-pin machined connectors don't like misaligned stuff. To resolve this, carefully align LED legs with tweezers until they all go into the corresponding holes. Once the pins are properly aligned, further board separation/mating cycles should be much easier.
 - The hole near USB socket is to provide some additional strength when the cable in inserted: you can put standoffs here to protect the controller PCB and acrylic frame from being bent too much. But don't worry if you don't have spare standoffs anymore: it seems that there is enough rigidity anyway.
-- If you've never soldered SMD parts before: don't be intimidated by them! Working with SMDs is actually way easier than with through-hole ones. All the parts used here are big enough to not be annoying, and the probability of soldering bridges becomes very low with a good flux. I recommend buying a hot-air soldering gun if you don't have it already, but you can assemble the controller board easily with soldering iron alone. Remember to solder the SMD parts first, then go for the through-holes.
+- If you've never soldered SMD parts before: don't be intimidated by them! Working with SMDs is actually way easier than with through-hole ones. All the parts used here are big enough to not be annoying, and the probability of solder bridges becomes very low with a good flux. I recommend buying a hot-air soldering gun if you don't have it already, but you can assemble the controller board easily with soldering iron alone. Remember to solder the SMD parts first, then go for the through-holes.
 - Be careful with DS3231SN chip: heating it for too much might affect clock accuracy. I recommend soldering it with a temperature-controlled soldering iron instead of hot air gun or reflow oven.

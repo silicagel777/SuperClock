@@ -56,7 +56,7 @@ Firstly, install the [C/C++ plugin](https://code.visualstudio.com/docs/languages
 
 Once you are done, create `.vscode/c_cpp_properties.json` in project root to configure the C/C++ plugin. Here is mine:
 
-```json
+```js
 {
     "configurations": [
         {
@@ -84,7 +84,7 @@ Once you are done, create `.vscode/c_cpp_properties.json` in project root to con
 
 Create `.vscode/tasks.json` in project root to set up build tasks. You can also install the [quick-run-panel](https://marketplace.visualstudio.com/items/?itemName=davehart.quick-run-panel) plugin to have all the build tasks in your arm's reach. This is optional, as you can just run `make` commands from your command line. Here is mine:
 
-```json
+```js
 {
     "version": "2.0.0",
     "tasks": [

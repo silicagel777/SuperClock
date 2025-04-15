@@ -4,7 +4,7 @@
 
 You can further enhance the looks of your clock by laser-cutting an acrylic housing. You can find the DWG, DXF and PDF files here:
 
-- [Acrylic frame files](hw/frame/)
+- [Acrylic frame files](../hw/frame/)
 
 The front panel comes in two flavors: short and long. The short one only covers the front, while the long one is designed with an upper fin can be bent to cover the top. Most houses charge premium for acrylic bending, so I recommend ordering the usual laser cutting and then bending it yourself. Here are some tips:
 
