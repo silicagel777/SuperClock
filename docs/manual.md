@@ -13,12 +13,17 @@ Here is a mode list with corresponding button actions:
         - `MINUS` (press): show weekday for a few seconds
         - `MINUS` (hold): show ambient temperature for a few seconds
     - "Alarm view mode"
-        - `MODE` (press): go to "display test mode"
+        - `MODE` (press): go to "stopwatch mode"
         - `MODE` (hold): go to "alarm setup mode"
         - `PLUS` (press): show next alarm
         - `PLUS` (hold): enable/disable current alarm
         - `MINUS` (press): show previous alarm
         - `MINUS` (hold): enable/disable current alarm
+    - "Stopwatch mode"
+        - `MODE` (press): go to "display test mode"
+        - `MODE` (hold): reset stopwatch
+        - `PLUS` (press): run or pause stopwatch
+        - `MINUS` (press): run or pause stopwatch
     - "Display test mode"
         - `MODE` (press): go to "clock mode"
 - Auxiliary modes:

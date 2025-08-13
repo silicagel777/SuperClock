@@ -25,7 +25,7 @@ void AlarmViewPage::handleButton(Button::Type type, Button::State state) {
   }
   if (type == Button::Type::MODE) {
     if (state == Button::State::RELEASE) {
-      m_pageManager.changePage(PageType::TEST_PAGE);
+      m_pageManager.changePage(PageType::STOPWATCH_PAGE);
     } else if (state == Button::State::LONG_PRESS) {
       m_pageManager.changePage(PageType::ALARM_SETUP_PAGE, m_currentAlarm);
     }

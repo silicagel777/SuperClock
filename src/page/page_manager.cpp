@@ -41,6 +41,9 @@ void PageManager::createPage() {
   case PageType::ALARM_SETUP_PAGE:
     new (&m_currentPage) AlarmSetupPage{*this, m_env, m_pageArg};
     break;
+  case PageType::STOPWATCH_PAGE:
+    new (&m_currentPage) StopWatchPage{*this, m_env, m_pageArg};
+    break;
   case PageType::TEST_PAGE:
     new (&m_currentPage) TestPage{*this, m_env, m_pageArg};
     break;
@@ -63,6 +66,9 @@ void PageManager::destoryPage() {
     break;
   case PageType::ALARM_SETUP_PAGE:
     m_currentPage.alarmSetupPage.~AlarmSetupPage();
+    break;
+  case PageType::STOPWATCH_PAGE:
+    m_currentPage.stopwatchPage.~StopWatchPage();
     break;
   case PageType::TEST_PAGE:
     m_currentPage.testPage.~TestPage();

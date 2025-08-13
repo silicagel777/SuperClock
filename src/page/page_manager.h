@@ -5,9 +5,11 @@
 #include "page/alarm/alarm_view_page.h"
 #include "page/clock/clock_main_page.h"
 #include "page/clock/clock_setup_page.h"
+#include "page/stopwatch/stopwatch_page.h"
 #include "page/test/test_page.h"
 
 class Sched;
+class Time;
 class Display;
 class Buzzer;
 class Button;
@@ -17,6 +19,7 @@ class Alarm;
 
 struct PageEnv {
   Sched &sched;
+  Time &time;
   Display &display;
   Buzzer &buzzer;
   Button &button;
@@ -31,6 +34,7 @@ enum class PageType {
   ALARM_ALERT_PAGE,
   ALARM_VIEW_PAGE,
   ALARM_SETUP_PAGE,
+  STOPWATCH_PAGE,
   TEST_PAGE,
 };
 
@@ -42,6 +46,7 @@ union PageBuf {
   AlarmAlertPage alarmAlertPage;
   AlarmViewPage alarmViewPage;
   AlarmSetupPage alarmSetupPage;
+  StopWatchPage stopwatchPage;
   TestPage testPage;
 };
 

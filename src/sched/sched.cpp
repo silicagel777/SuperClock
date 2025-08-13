@@ -43,8 +43,8 @@ void Sched::run() {
   // TODO: optimize!
 
   // Decrement delays
-  uint16_t now = m_time.milliseconds();
-  uint16_t diff = now - m_lastRun;
+  uint32_t now = m_time.milliseconds();
+  uint32_t diff = now - m_lastRun;
   if (diff >= 1) {
     m_lastRun = now;
     for (uint8_t i = 0; i < m_tasksTail; i++) {

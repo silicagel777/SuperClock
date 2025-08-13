@@ -31,7 +31,7 @@ int main(void) {
   Brightness brightness{sched, display, filter, adc, brightnessAdcChannel};
   Button button{sched};
   Alarm alarm{sched, rtc};
-  PageEnv pageEnv{sched, display, buzzer, button, rtc, Ds3231, alarm};
+  PageEnv pageEnv{sched, time, display, buzzer, button, rtc, Ds3231, alarm};
   constexpr PageType startPageType = PageType::CLOCK_MAIN_PAGE;
   PageManager pageManager{pageEnv, startPageType};
 

@@ -53,7 +53,7 @@ private:
   }
 
   Time &m_time;
-  uint16_t m_lastRun = 0;
+  uint32_t m_lastRun = 0;
   uint8_t m_tasksTail = 0;
   Task m_tasks[c_maxTasks];
 };
