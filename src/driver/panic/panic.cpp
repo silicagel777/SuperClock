@@ -1,3 +1,4 @@
+#include <avr/cpufunc.h>
 #include <avr/interrupt.h>
 
 #include "driver/display/display.h"
@@ -18,5 +19,7 @@ void Panic::panic(Error error) {
   };
   m_display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
   m_display.update();
-  for (;;) {}
+  for (;;) {
+    _NOP();
+  }
 }
