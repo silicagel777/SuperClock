@@ -3,6 +3,7 @@
 #include "buzzer/buzzer.h"
 #include "driver/adc/adc.h"
 #include "driver/button/button.h"
+#include "driver/calib/persistent_calib.h"
 #include "driver/display/display.h"
 #include "driver/i2c/i2c.h"
 #include "driver/init/init.h"
@@ -27,13 +28,14 @@ int main(void) {
   I2C i2c{I2C::FreqMode::FREQ_400K};
   Ds3231 Ds3231{i2c};
   BufferedRtc rtc{sched, Ds3231};
+  PersistentCalib calib{sched, Ds3231};
   Adc adc{Adc::ReferenceMode::AVCC, Adc::PrescalerMode::DIV128};
   constexpr uint8_t brightnessAdcChannel = 7;
   ExponentialFilter filter{5.0f, Brightness::c_updateDelay / 1000.0f};
   Brightness brightness{sched, display, filter, adc, brightnessAdcChannel};
   Button button{sched};
   Alarm alarm{sched, rtc};
-  PageEnv pageEnv{sched, time, display, buzzer, button, rtc, Ds3231, alarm};
+  PageEnv pageEnv{sched, time, display, buzzer, button, rtc, Ds3231, calib, alarm};
   constexpr PageType startPageType = PageType::CLOCK_MAIN_PAGE;
   PageManager pageManager{pageEnv, startPageType};
 

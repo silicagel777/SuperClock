@@ -2,6 +2,7 @@
 
 #include "buzzer/buzzer.h"
 #include "driver/button/button.h"
+#include "driver/calib/icalib.h"
 #include "driver/display/display.h"
 #include "driver/rtc/irtc.h"
 #include "page/clock/clock_setup_page.h"
@@ -11,6 +12,7 @@
 ClockSetupPage::ClockSetupPage(PageManager &pageManager, PageEnv &env, uintptr_t)
     : m_pageManager(pageManager), m_env(env) {
   m_env.rtc.readTime(m_time);
+  m_env.calib.readCalib(m_calib);
   m_time.second = 0;
   m_env.button.setCallback<ClockSetupPage, &ClockSetupPage::handleButton>(this);
   m_env.sched.addTask<ClockSetupPage, &ClockSetupPage::showSetup>(this, 0, c_setupRefreshDelay);
@@ -18,6 +20,7 @@ ClockSetupPage::ClockSetupPage(PageManager &pageManager, PageEnv &env, uintptr_t
 
 ClockSetupPage::~ClockSetupPage() {
   m_env.rtc.setTime(m_time);
+  m_env.calib.setCalib(m_calib);
   m_env.button.resetCallback();
   m_env.sched.removeTasks(this);
 }
@@ -25,7 +28,7 @@ ClockSetupPage::~ClockSetupPage() {
 void ClockSetupPage::handleButton(Button::Type type, Button::State state) {
   if (type == Button::Type::MODE) {
     if (state == Button::State::RELEASE) {
-      if (m_mode == Mode::YEAR) {
+      if (m_mode == Mode::CALIB) {
         m_env.buzzer.success();
         m_pageManager.changePage(PageType::CLOCK_MAIN_PAGE);
       } else {
@@ -82,6 +85,9 @@ void ClockSetupPage::setupIncrease() {
     m_time.year = m_time.year < 2100 ? m_time.year + 1 : 2000;
     m_time.day = m_time.day > getMonthDays(m_time.month, m_time.year) ? 1 : m_time.day;
     break;
+  case Mode::CALIB:
+    m_calib = m_calib < INT8_MAX ? m_calib + 1 : INT8_MIN;
+    break;
   }
   m_time.week = getWeek(m_time.day, m_time.month, m_time.year);
   setupRefresh();
@@ -105,6 +111,9 @@ void ClockSetupPage::setupDecrease() {
   case Mode::YEAR:
     m_time.year = m_time.year > 2000 ? m_time.year - 1 : 2100;
     m_time.day = m_time.day > getMonthDays(m_time.month, m_time.year) ? 1 : m_time.day;
+    break;
+  case Mode::CALIB:
+    m_calib = m_calib > INT8_MIN ? m_calib - 1 : INT8_MAX;
     break;
   }
   m_time.week = getWeek(m_time.day, m_time.month, m_time.year);
@@ -144,8 +153,31 @@ void ClockSetupPage::setupRefresh() {
       m_env.display.writeBottomLine(1, 15);
     }
     break;
+  case Mode::CALIB:
+    writeCalib();
+    if (m_blinkFlag) {
+      m_env.display.writeBottomLine(1, 15);
+    }
+    break;
   }
   m_env.display.update();
+}
+
+void ClockSetupPage::writeCalib() {
+  int8_t sign = m_calib < 0 ? -1 : 1;
+  char signChar = sign < 0 ? '-' : '+';
+  char s[5];
+  if (m_calib > -100 && m_calib < 100) {
+    s[0] = 'C';
+    s[1] = signChar;
+  } else {
+    s[0] = signChar;
+    s[1] = (char)('0' + sign * m_calib / 100);
+  }
+  s[2] = (char)('0' + sign * m_calib / 10 % 10);
+  s[3] = (char)('0' + sign * m_calib % 10);
+  s[4] = '\0';
+  m_env.display.writeString(s, Display::c_centerX, 0, Display::Align::MIDDLE);
 }
 
 void ClockSetupPage::showSetup() {

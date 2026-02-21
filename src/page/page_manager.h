@@ -16,6 +16,7 @@ class Button;
 class IRtc;
 class ITemp;
 class Alarm;
+class ICalib;
 
 struct PageEnv {
   Sched &sched;
@@ -25,6 +26,7 @@ struct PageEnv {
   Button &button;
   IRtc &rtc;
   ITemp &temp;
+  ICalib &calib;
   Alarm &alarm;
 };
 

@@ -80,3 +80,37 @@ uint8_t Ds3231::readTemp(TempValue &temp) {
   temp.fractional = (data[1] >> 6) * 25;
   return 0;
 }
+
+uint8_t Ds3231::readCalib(int8_t &calib) {
+  const uint8_t dataStart = 0x10;
+  uint8_t data[1];
+  uint8_t err;
+
+  err = m_i2c.write(c_busAddr, &dataStart, sizeof(dataStart));
+  if (err) {
+    return err;
+  }
+  err = m_i2c.read(c_busAddr, data, sizeof(data));
+  if (err) {
+    return err;
+  }
+
+  calib = (int8_t)data[0];
+  return 0;
+}
+
+uint8_t Ds3231::setCalib(int8_t calib) {
+  constexpr uint8_t dataStart = 0x10;
+  uint8_t data[2];
+  uint8_t err;
+
+  data[0] = dataStart;
+  data[1] = (uint8_t)calib;
+
+  err = m_i2c.write(c_busAddr, data, sizeof(data));
+  if (err) {
+    return err;
+  }
+
+  return 0;
+}

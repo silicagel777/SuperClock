@@ -1,5 +1,7 @@
 # User manual
 
+## User interface
+
 The clock comes with three buttons: `MODE`, `PLUS` and `MINUS`. Press `MODE` button to toggle between main modes. Hold `MODE` button to enter setup modes. `PLUS` and `MINUS` actions are relative to current mode.
 
 Here is a mode list with corresponding button actions:
@@ -36,3 +38,13 @@ Here is a mode list with corresponding button actions:
         - `MINUS` (hold): decrease number by many
     - "Alarm alert mode"
         - This one appears when an alarm fires up, press any button to stop and go to "clock mode"
+
+## Clock calibration
+
+DS3231 support oscillator calibration though the "aging" register. The last screen of "Clock setup mode" sets the register value:
+
+- The initial value is 0 (displayed as `C+00`), maximum is +127, minimum is -128.
+- Positive values slow down the clock (seconds become longer)
+- Negative values speed up the clock (seconds become shorter)
+- Adjustment step is approximately 0.1ppm for DS3231SN or 0.12ppm for DS3231M.
+- The value is retained even if the battery is taken out (there is a backup in EEPROM)

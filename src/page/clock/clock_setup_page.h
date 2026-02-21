@@ -18,15 +18,17 @@ private:
   void setupIncrease();
   void setupDecrease();
   void setupRefresh();
+  void writeCalib();
   void showSetup();
   static uint8_t getMonthDays(const uint8_t month, const uint16_t year);
   static uint8_t getWeek(const uint8_t day, const uint8_t month, const uint16_t year);
   static constexpr uint16_t c_setupRefreshDelay = 500;
   static constexpr uint16_t c_autoChangeDelay = 150;
-  enum class Mode : uint8_t { HOURS, MINUTES, DAY, MONTH, YEAR };
+  enum class Mode : uint8_t { HOURS, MINUTES, DAY, MONTH, YEAR, CALIB };
   PageManager &m_pageManager;
   PageEnv &m_env;
   IRtc::RtcTime m_time{};
   Mode m_mode = Mode::HOURS;
   bool m_blinkFlag = true;
+  int8_t m_calib = 0;
 };
