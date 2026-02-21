@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 class Time;
+class Panic;
 
 class Sched {
 public:
@@ -15,13 +16,13 @@ public:
     uint16_t reloadMs; // zero is no reload
   };
 
-  explicit Sched(Time &time);
+  explicit Sched(Time &time, Panic &panic);
   void run();
-  bool addTask(task_cb_t cb, void *ctx, uint16_t delayMs, uint16_t reloadMs = 0);
+  void addTask(task_cb_t cb, void *ctx, uint16_t delayMs, uint16_t reloadMs = 0);
 
   template <class C, void (C::*M)()>
-  bool addTask(C *ctx, uint16_t delayMs, uint16_t reloadMs = 0) {
-    return addTask(memberCb<C, M>, ctx, delayMs, reloadMs);
+  void addTask(C *ctx, uint16_t delayMs, uint16_t reloadMs = 0) {
+    addTask(memberCb<C, M>, ctx, delayMs, reloadMs);
   }
 
   template <class C, void (C::*M)()>
@@ -44,7 +45,7 @@ public:
 private:
   Sched(const Sched &) = delete;
   void operator=(const Sched &) = delete;
-  bool removeTask(uint8_t index);
+  void removeTask(uint8_t index);
   bool removeTasks(task_cb_t cb, void *ctx, bool useCb, bool useCtx);
 
   template <class C, void (C::*M)()>
@@ -53,6 +54,7 @@ private:
   }
 
   Time &m_time;
+  Panic &m_panic;
   uint32_t m_lastRun = 0;
   uint8_t m_tasksTail = 0;
   Task m_tasks[c_maxTasks];

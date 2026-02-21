@@ -1,29 +1,28 @@
 #include "sched/sched.h"
+#include "driver/panic/panic.h"
 #include "driver/time/time.h"
 #include "sched.h"
 
-Sched::Sched(Time &time) : m_time(time) {
+Sched::Sched(Time &time, Panic &panic) : m_time(time), m_panic(panic) {
   m_lastRun = time.milliseconds();
 }
 
-bool Sched::addTask(task_cb_t cb, void *ctx, uint16_t delayMs, uint16_t reloadMs) {
+void Sched::addTask(task_cb_t cb, void *ctx, uint16_t delayMs, uint16_t reloadMs) {
   if (m_tasksTail >= c_maxTasks) {
-    return false;
+    m_panic.panic(Panic::Error::ERR_SCHED_FULL);
   }
   m_tasks[m_tasksTail] = {cb, ctx, delayMs, reloadMs};
   m_tasksTail++;
-  return true;
 }
 
-inline bool Sched::removeTask(uint8_t index) {
+inline void Sched::removeTask(uint8_t index) {
   if (index >= m_tasksTail) {
-    return false;
+    m_panic.panic(Panic::Error::ERR_SCHED_BUG);
   }
   for (uint8_t i = index; i < m_tasksTail - 1; i++) {
     m_tasks[i] = m_tasks[i + 1];
   }
   m_tasksTail--;
-  return true;
 }
 
 bool Sched::removeTasks(task_cb_t cb, void *ctx, bool useCb, bool useCtx) {

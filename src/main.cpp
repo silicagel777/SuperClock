@@ -6,6 +6,7 @@
 #include "driver/display/display.h"
 #include "driver/i2c/i2c.h"
 #include "driver/init/init.h"
+#include "driver/panic/panic.h"
 #include "driver/rtc/buffered_rtc.h"
 #include "driver/rtc/ds3231.h"
 #include "driver/rtc/irtc.h"
@@ -17,9 +18,10 @@
 
 int main(void) {
   Init init{};
-  Time time{};
-  Sched sched{time};
   Display display{};
+  Panic panic{display};
+  Time time{};
+  Sched sched{time, panic};
   Tone tone{};
   Buzzer buzzer{sched, tone};
   I2C i2c{I2C::FreqMode::FREQ_400K};
