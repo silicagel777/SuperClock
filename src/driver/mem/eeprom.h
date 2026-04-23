@@ -28,7 +28,7 @@ public:
     return eeprom_read_word(src);
   }
 
-  static inline void writeU16(uint8_t *dest, uint8_t value) {
-    eeprom_update_byte(dest, value);
+  static inline void writeU16(uint16_t *dest, uint16_t value) {
+    eeprom_update_word(dest, value);
   }
 };

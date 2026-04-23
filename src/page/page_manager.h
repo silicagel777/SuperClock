@@ -54,7 +54,7 @@ union PageBuf {
 
 class PageManager {
 public:
-  PageManager(PageEnv &env, PageType startPageType);
+  PageManager(PageEnv &env, PageType startPageType, uintptr_t startPageArg = 0);
   ~PageManager();
   void changePage(PageType nextPageType, uintptr_t arg = 0);
 
@@ -63,7 +63,7 @@ private:
   void operator=(const PageManager &) = delete;
   void nextPage();
   void createPage();
-  void destoryPage();
+  void destroyPage();
 
   PageEnv &m_env;
   PageType m_currentPageType;

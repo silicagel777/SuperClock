@@ -2,13 +2,13 @@
 #include "sched/sched.h"
 #include "util/new.h"
 
-PageManager::PageManager(PageEnv &env, PageType startPageType)
-    : m_env(env), m_currentPageType(startPageType) {
+PageManager::PageManager(PageEnv &env, PageType startPageType, uintptr_t startPageArg)
+    : m_env(env), m_currentPageType(startPageType), m_pageArg(startPageArg) {
   createPage();
 }
 
 PageManager::~PageManager() {
-  destoryPage();
+  destroyPage();
 }
 
 void PageManager::changePage(PageType nextPageType, uintptr_t arg) {
@@ -19,7 +19,7 @@ void PageManager::changePage(PageType nextPageType, uintptr_t arg) {
 }
 
 void PageManager::nextPage() {
-  destoryPage();
+  destroyPage();
   m_currentPageType = m_nextPageType;
   createPage();
 }
@@ -50,7 +50,7 @@ void PageManager::createPage() {
   }
 }
 
-void PageManager::destoryPage() {
+void PageManager::destroyPage() {
   switch (m_currentPageType) {
   case PageType::CLOCK_MAIN_PAGE:
     m_currentPage.clockMainPage.~ClockMainPage();

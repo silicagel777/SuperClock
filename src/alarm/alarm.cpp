@@ -41,7 +41,8 @@ uint8_t Alarm::setAlarm(uint8_t num, const AlarmTime &time) {
     return 1;
   }
   m_alarms[num] = time;
-  EepromMem::writeBlock(&m_alarms[num], &ge_alarmEepromData[num], sizeof(AlarmTime));
+  EepromMem::writeBlock(
+      &m_alarms[num], &ge_alarmEepromData[sizeof(AlarmTime) * num], sizeof(AlarmTime));
   return 0;
 }
 

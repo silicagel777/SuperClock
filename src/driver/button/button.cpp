@@ -10,7 +10,7 @@ Button::Button(Sched &sched) : m_sched(sched) {
 }
 
 Button::~Button() {
-  PORTB &= ~(1 << 5) | ~(1 << 6) | ~(1 << 7);
+  PORTB &= ~((1 << 5) | (1 << 6) | (1 << 7));
   m_sched.removeTasks(this);
 }
 

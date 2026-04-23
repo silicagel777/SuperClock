@@ -1,6 +1,7 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <string.h>
+#include <util/atomic.h>
 #include <util/delay.h>
 
 #include "driver/display/display.h"
@@ -36,23 +37,23 @@ struct ColumnPin {
 };
 
 static const ColumnPin c_columnPins[] = {
-    {&PORTC, (uint8_t)(1 << 2), (uint8_t) ~(1 << 2)}, // C0
-    {&PORTC, (uint8_t)(1 << 3), (uint8_t) ~(1 << 3)}, // C1
-    {&PORTC, (uint8_t)(1 << 4), (uint8_t) ~(1 << 4)}, // C2
-    {&PORTC, (uint8_t)(1 << 5), (uint8_t) ~(1 << 5)}, // C3
-    {&PORTC, (uint8_t)(1 << 6), (uint8_t) ~(1 << 6)}, // C4
-    {&PORTC, (uint8_t)(1 << 7), (uint8_t) ~(1 << 7)}, // C5
-    {&PORTA, (uint8_t)(1 << 6), (uint8_t) ~(1 << 6)}, // C6
-    {&PORTA, (uint8_t)(1 << 5), (uint8_t) ~(1 << 5)}, // C7
-    {&PORTA, (uint8_t)(1 << 4), (uint8_t) ~(1 << 4)}, // C8
-    {&PORTA, (uint8_t)(1 << 3), (uint8_t) ~(1 << 3)}, // C9
-    {&PORTA, (uint8_t)(1 << 2), (uint8_t) ~(1 << 2)}, // C10
-    {&PORTA, (uint8_t)(1 << 1), (uint8_t) ~(1 << 1)}, // C11
-    {&PORTA, (uint8_t)(1 << 0), (uint8_t) ~(1 << 0)}, // C12
-    {&PORTB, (uint8_t)(1 << 0), (uint8_t) ~(1 << 0)}, // C13
-    {&PORTB, (uint8_t)(1 << 1), (uint8_t) ~(1 << 1)}, // C14
-    {&PORTB, (uint8_t)(1 << 2), (uint8_t) ~(1 << 2)}, // C15
-    {&PORTB, (uint8_t)(1 << 4), (uint8_t) ~(1 << 4)}, // C16
+    {&PORTC, (uint8_t)(1 << 2), (uint8_t)~(1 << 2)}, // C0
+    {&PORTC, (uint8_t)(1 << 3), (uint8_t)~(1 << 3)}, // C1
+    {&PORTC, (uint8_t)(1 << 4), (uint8_t)~(1 << 4)}, // C2
+    {&PORTC, (uint8_t)(1 << 5), (uint8_t)~(1 << 5)}, // C3
+    {&PORTC, (uint8_t)(1 << 6), (uint8_t)~(1 << 6)}, // C4
+    {&PORTC, (uint8_t)(1 << 7), (uint8_t)~(1 << 7)}, // C5
+    {&PORTA, (uint8_t)(1 << 6), (uint8_t)~(1 << 6)}, // C6
+    {&PORTA, (uint8_t)(1 << 5), (uint8_t)~(1 << 5)}, // C7
+    {&PORTA, (uint8_t)(1 << 4), (uint8_t)~(1 << 4)}, // C8
+    {&PORTA, (uint8_t)(1 << 3), (uint8_t)~(1 << 3)}, // C9
+    {&PORTA, (uint8_t)(1 << 2), (uint8_t)~(1 << 2)}, // C10
+    {&PORTA, (uint8_t)(1 << 1), (uint8_t)~(1 << 1)}, // C11
+    {&PORTA, (uint8_t)(1 << 0), (uint8_t)~(1 << 0)}, // C12
+    {&PORTB, (uint8_t)(1 << 0), (uint8_t)~(1 << 0)}, // C13
+    {&PORTB, (uint8_t)(1 << 1), (uint8_t)~(1 << 1)}, // C14
+    {&PORTB, (uint8_t)(1 << 2), (uint8_t)~(1 << 2)}, // C15
+    {&PORTB, (uint8_t)(1 << 4), (uint8_t)~(1 << 4)}, // C16
 };
 static constexpr uint8_t c_pinMaskA = 0b01111111;
 static constexpr uint8_t c_pinMaskB = 0b00010111;
@@ -88,7 +89,7 @@ static inline void displayDeinit() {
   // De-init timer
   TCCR2 = 0;
   OCR2 = 0;
-  TIMSK &= ~(1 << OCIE2) | ~(1 << TOIE2);
+  TIMSK &= ~((1 << OCIE2) | (1 << TOIE2));
 }
 
 static inline void displaySetBrightness(uint8_t brightness) {
@@ -192,9 +193,11 @@ uint8_t Display::getGlobalBrightness() {
 }
 
 void Display::update() {
-  auto tmp = g_fgBuf;
-  g_fgBuf = g_bgBuf;
-  g_bgBuf = tmp;
+  ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+    auto tmp = g_fgBuf;
+    g_fgBuf = g_bgBuf;
+    g_bgBuf = tmp;
+  }
   memcpy((void *)g_bgBuf, (void *)g_fgBuf, c_height * c_width);
 }
 
@@ -209,7 +212,10 @@ void Display::writePixel(uint8_t x, uint8_t y, uint8_t brightness) {
 }
 
 uint8_t Display::readPixel(uint8_t x, uint8_t y) {
-  return g_bgBuf[x * c_height + y];
+  if (x < c_width && y < c_height) {
+    return g_bgBuf[x * c_height + y];
+  }
+  return 0;
 }
 
 void Display::writeBmp(
@@ -324,24 +330,28 @@ Display::CharData Display::getCharData(char c) {
 
 uint16_t Display::getStringWidth(const char *s) {
   uint16_t w = 0;
-  while (char c = *s++) {
-    w += getCharData(c).w + 1;
+  if (s) {
+    while (char c = *s++) {
+      w += getCharData(c).w + 1;
+    }
+    w--;
   }
-  w--;
   return w;
 }
 
 uint16_t Display::getStringMiddleOffset(const char *s) {
   uint16_t w = 0;
-  auto len = strlen(s);
-  auto middle = len / 2;
-  for (size_t i = 0; i < middle; i++) {
-    w += getCharData(s[i]).w + 1;
-  }
-  if (len % 2) {
-    w += getCharData(s[middle]).w / 2;
-  } else {
-    w--;
+  if (s) {
+    auto len = strlen(s);
+    auto middle = len / 2;
+    for (size_t i = 0; i < middle; i++) {
+      w += getCharData(s[i]).w + 1;
+    }
+    if (len % 2) {
+      w += getCharData(s[middle]).w / 2;
+    } else {
+      w--;
+    }
   }
   return w;
 }

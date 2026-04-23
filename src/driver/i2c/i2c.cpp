@@ -37,7 +37,7 @@ I2C::I2C(FreqMode freqMode, bool pullup) {
 }
 
 I2C::~I2C() {
-  TW_DDR &= ~(1 << TW_PIN_SDA) | ~(1 << TW_PIN_SCL);
+  TW_DDR &= ~((1 << TW_PIN_SDA) | (1 << TW_PIN_SCL));
   TW_PORT &= ~((1 << TW_PIN_SDA) | (1 << TW_PIN_SCL));
   TWBR = 0;
 }
