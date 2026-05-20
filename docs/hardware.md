@@ -43,8 +43,8 @@ D1 | 1 | 1N5819WS | This diode is used for voltage spike protection in buzzer dr
 J1-J4 | 4 | Round-pin single-row machined headers | The controller board requires 1x49, 1x17, 1x1 and 1x1 round-pin machined connectors. Sadly, the first size does not exist in the wild, but you can buy a bunch of 1x40 ones and cut/combine them with ease. You can find the connectors on AliExpress, just search for "round pin female header".
 J5 | 1 | USB Type-B 180-degree socket | This is the biggest USB socket, the same kind as in printers or Arduino UNO. The socket must be a vertical one, with pins on the opposite side of the socket. I don't know the correct part number for this, but you can find them on AliExpress, just search for "usb type-b socket 180"
 J6 | 1 | 2x5 90-degree IDC socket | The socket for USBasp programmer, used to flash ATmega32. Part numbers vary: it can be IDC-10MR, BH-10R, DS1013-10R or something completely else. You can find them on AliExpress by searching "idc connector"
-Q1-Q18 | 18 | AO3416A | A SOT-23 N-channel MOSFET. I recommend using either AO3416, AO3416A or 2N7002K here: these come with built-in ESD protection diodes. But you can also use any of the more popular ones instead: AO3400, IRLML2502, 2N7002, etc: just be morally prepared to replace a few busted ones, as they can be killed by ESD discharge while soldering.
-R1-R22, R24-R25 | 24 | SMD 0805 220R resistor | The R1-R17 are here to counteract [display ghosting](matrix.md#led-ghosting). The firmware employs a few tricks that remove ghosting for most brightness levels except for the lowest, so you can avoid soldering 17 resistors if you need them for another project.
+Q1-Q18 | 18 | 2N7002K | A SOT-23 N-channel MOSFET. I recommend using 2N7002K here: these come with built-in ESD protection diodes. But you can also use the more popular ones instead: 2N7002, BSS138. Just be morally prepared to replace a few busted ones, as they can be killed by ESD discharge while soldering. I don't recommend using higher-power MOSFETs like AO3400, AO3416, IRLML2502, etc, as their higher input capacitance causes slight [display ghosting](matrix.md#led-ghosting) on lowest bringtness.
+R18-R22, R24-R25 | 24 | SMD 0805 220R resistor | -
 R23 | 1 | SMD 0805 3.3K resistor | -
 R26, R31 | 2 | SMD 0805 10K resistor | -
 R27-R29 | 3 | SMD 0805 4.7K resistor | -
@@ -53,6 +53,7 @@ SW1-SW3 | 3 | 90-degree tactile switch | I don't know the correct part number fo
 U1 | 1 | ATmega32A-AU | Should work with any ATmega32 in TQFP-44 package
 U2 | 1 | DS3231SN | There also exists a less-accurate part called DS3231M. Both of them work, but you want to get the best one!
 Y1 | 1 | HC49S 16MHz Crystal | External crystal for ATmega32
+~~R1-R17~~ | ~~17~~ (do not place) | ~~SMD 0805 resistor~~ | These were used in an earlier attempt to counteract [display ghosting](matrix.md#led-ghosting), but turned out to cause more harm than good: green LEDs did not like the reverse voltage at all, and started failing in a few months! The ghosting issues were eventually resolved by other means, so don't solder these resistors at all.
 ~~U3~~ | ~~1~~ (do not place) | ~~DS1307ZN~~ | I've added this one just in case DS3231 chips become unavailable, but luckily that didn't happen! Don't solder DS3231 and DS1307 together, as they use the same I2C address.
 ~~Y2~~ | ~~1~~ (do not place) | ~~32.768kHz clock crystal~~ | External crystal for DS1307
 ~~C11~~ | ~~1~~ (do not place) | ~~SMD 0805 0.1uF ceramic capacitor~~ | Bypass capacitor for DS1307

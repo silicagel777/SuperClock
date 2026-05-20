@@ -12326,7 +12326,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "070d276a-08d9-41e1-80d4-94361740059a")
 		(property "Reference" "R15"
 			(at 347.98 134.874 90)
@@ -12336,7 +12336,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 139.446 90)
 			(effects
 				(font
@@ -12525,7 +12525,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "0fe7a2b2-49db-4a3d-a402-c16d8799ada7")
 		(property "Reference" "R14"
 			(at 347.98 127.254 90)
@@ -12535,7 +12535,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 131.826 90)
 			(effects
 				(font
@@ -12603,7 +12603,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 271.78 251.4599 0)
 			(effects
 				(font
@@ -12786,7 +12786,7 @@
 			(uuid "85f902df-a44f-4267-b28e-d9fc43668449")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "H1")
 					(unit 1)
@@ -12944,7 +12944,7 @@
 			(uuid "5fc2455e-4070-44e9-b172-e8789b98a444")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "J6")
 					(unit 1)
@@ -13039,7 +13039,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 271.78 120.6499 0)
 			(effects
 				(font
@@ -13249,7 +13249,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 271.78 93.9799 0)
 			(effects
 				(font
@@ -13368,7 +13368,7 @@
 			(uuid "117a3f85-7239-4d28-bb30-6753db47cbd6")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "C1")
 					(unit 1)
@@ -13438,7 +13438,7 @@
 			(uuid "5fc42c34-745c-4b75-8723-2a493caf2c72")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "R28")
 					(unit 1)
@@ -13453,7 +13453,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "2d6f7614-5d85-4640-a934-0cfbf7f8840f")
 		(property "Reference" "R5"
 			(at 347.98 58.674 90)
@@ -13463,7 +13463,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 63.246 90)
 			(effects
 				(font
@@ -13772,7 +13772,7 @@
 			(uuid "a301949a-a9a4-4649-939b-48f1329f51e9")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "Y2")
 					(unit 1)
@@ -13864,7 +13864,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 309.88 147.3199 0)
 			(effects
 				(font
@@ -13928,7 +13928,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "3893e901-423b-406f-8065-e207fa68d084")
 		(property "Reference" "R12"
 			(at 347.98 112.014 90)
@@ -13938,7 +13938,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 116.586 90)
 			(effects
 				(font
@@ -14113,7 +14113,7 @@
 			(uuid "810d5f48-9f22-487d-9b55-b51fa35a538d")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "J3")
 					(unit 1)
@@ -14312,7 +14312,7 @@
 			(uuid "805f3263-8753-4d99-8f6a-1c50dca62537")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "Y1")
 					(unit 1)
@@ -14327,7 +14327,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "43acbae8-fb01-4902-8a12-2f9718e3ffec")
 		(property "Reference" "R1"
 			(at 347.98 28.194 90)
@@ -14337,7 +14337,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 32.766 90)
 			(effects
 				(font
@@ -14405,7 +14405,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 309.88 95.2499 0)
 			(effects
 				(font
@@ -14480,7 +14480,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 309.88 173.9899 0)
 			(effects
 				(font
@@ -14728,7 +14728,7 @@
 			(uuid "11b79a10-ea31-4a73-aa9a-85e19e8c967c")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "#FLG01")
 					(unit 1)
@@ -14879,7 +14879,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "4ea52b13-51d3-4d3e-9ac0-1d2ef1170e33")
 		(property "Reference" "R7"
 			(at 347.98 73.914 90)
@@ -14889,7 +14889,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 78.486 90)
 			(effects
 				(font
@@ -15026,7 +15026,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 309.88 121.9199 0)
 			(effects
 				(font
@@ -15187,7 +15187,7 @@
 			(uuid "81bc233e-557a-41cb-a4fd-6447c4ebe383")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "U2")
 					(unit 1)
@@ -15279,7 +15279,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 271.78 199.3899 0)
 			(effects
 				(font
@@ -15672,7 +15672,7 @@
 			(uuid "1d800029-2615-423f-9f16-76b89549605d")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "J5")
 					(unit 1)
@@ -15754,7 +15754,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "62f8c6de-1c61-4e0c-a7a6-73331a1eea3c")
 		(property "Reference" "R10"
 			(at 347.98 96.774 90)
@@ -15764,7 +15764,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 101.346 90)
 			(effects
 				(font
@@ -16217,7 +16217,7 @@
 			(uuid "a34ad06e-d2d6-4790-9e60-e4c79739b470")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "J1")
 					(unit 1)
@@ -16309,7 +16309,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 309.88 41.9099 0)
 			(effects
 				(font
@@ -16424,7 +16424,7 @@
 			(uuid "ddc1f3ad-246d-4141-9372-9b001c853126")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "#PWR021")
 					(unit 1)
@@ -16572,7 +16572,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "7e92e314-4115-4704-bff1-6d02ff5b3642")
 		(property "Reference" "R3"
 			(at 347.98 43.434 90)
@@ -16582,7 +16582,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 48.006 90)
 			(effects
 				(font
@@ -16718,7 +16718,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 55.88 173.9899 0)
 			(effects
 				(font
@@ -16767,7 +16767,7 @@
 			(uuid "e3bad2ec-d014-4e9b-beb8-6dc07ab86bea")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "Q18")
 					(unit 1)
@@ -16968,7 +16968,7 @@
 			(uuid "694b7992-c7e2-4260-80ab-2a67262f4085")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "D1")
 					(unit 1)
@@ -17039,7 +17039,7 @@
 			(uuid "c9406699-8425-4934-a880-9bfb71530ba2")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "R30")
 					(unit 1)
@@ -17104,7 +17104,7 @@
 			(uuid "0d631196-3d54-4908-9005-c3378f9220f6")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "#PWR030")
 					(unit 1)
@@ -17189,7 +17189,7 @@
 			(uuid "695870f0-ba37-4596-b6e7-9faf294f3924")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "U3")
 					(unit 1)
@@ -17281,7 +17281,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 271.78 40.6399 0)
 			(effects
 				(font
@@ -17490,7 +17490,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 271.78 224.7899 0)
 			(effects
 				(font
@@ -17687,7 +17687,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "989ed9a2-6ccb-4e0c-93e2-787f2850c719")
 		(property "Reference" "R2"
 			(at 347.98 35.814 90)
@@ -17697,7 +17697,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 40.386 90)
 			(effects
 				(font
@@ -18068,7 +18068,7 @@
 			(uuid "3dbb1d7e-3e3e-49c0-a13b-333eda24e4f8")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "#PWR025")
 					(unit 1)
@@ -18083,7 +18083,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "a6a0af58-2c9e-4ef4-9cdd-ec8cf2df7943")
 		(property "Reference" "R13"
 			(at 347.98 119.634 90)
@@ -18093,7 +18093,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 124.206 90)
 			(effects
 				(font
@@ -18161,7 +18161,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 271.78 172.7199 0)
 			(effects
 				(font
@@ -18391,7 +18391,7 @@
 			(uuid "622b7d16-a34a-4a97-9463-48945c9b3041")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "J2")
 					(unit 1)
@@ -18417,7 +18417,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 271.78 146.0499 0)
 			(effects
 				(font
@@ -18481,7 +18481,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "ac64459a-2480-440c-98ff-3fb06bb65d3b")
 		(property "Reference" "R11"
 			(at 347.98 104.394 90)
@@ -18491,7 +18491,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 108.966 90)
 			(effects
 				(font
@@ -18866,7 +18866,7 @@
 			(uuid "38fc3223-b650-470d-9952-ca60d2c5560a")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "U1")
 					(unit 1)
@@ -19032,7 +19032,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 309.88 68.5799 0)
 			(effects
 				(font
@@ -19107,7 +19107,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 271.78 67.3099 0)
 			(effects
 				(font
@@ -19171,7 +19171,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "bd35d8c6-03c9-43af-9d3d-3e9a4d32f52c")
 		(property "Reference" "R16"
 			(at 347.98 142.494 90)
@@ -19181,7 +19181,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 147.066 90)
 			(effects
 				(font
@@ -19425,7 +19425,7 @@
 			(uuid "ed62a385-c485-4026-8dc0-54ed536bd385")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "C2")
 					(unit 1)
@@ -19506,7 +19506,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "c458fc1e-503c-4e0a-8ed6-31e04fc92de3")
 		(property "Reference" "R9"
 			(at 347.98 89.154 90)
@@ -19516,7 +19516,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 93.726 90)
 			(effects
 				(font
@@ -19573,7 +19573,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "c4b8f396-6afb-47bd-b085-4215424f4bfb")
 		(property "Reference" "R17"
 			(at 347.98 150.114 90)
@@ -19583,7 +19583,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 154.686 90)
 			(effects
 				(font
@@ -20093,7 +20093,7 @@
 			(uuid "c3c118c4-fb8f-4f6f-a398-f65a76775ebf")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "SW1")
 					(unit 1)
@@ -20227,7 +20227,7 @@
 			(uuid "a87aaac3-7a50-4953-8334-f0da9f58390a")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "BT1")
 					(unit 1)
@@ -20375,7 +20375,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "e39786e7-bba9-4492-b36b-ffc57af7839b")
 		(property "Reference" "R4"
 			(at 347.98 51.054 90)
@@ -20385,7 +20385,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 55.626 90)
 			(effects
 				(font
@@ -20442,7 +20442,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "e51a525b-6a43-46b1-86c2-1007af6e1bfa")
 		(property "Reference" "R8"
 			(at 347.98 81.534 90)
@@ -20452,7 +20452,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 86.106 90)
 			(effects
 				(font
@@ -20588,7 +20588,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 309.88 226.0599 0)
 			(effects
 				(font
@@ -20721,7 +20721,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "e9665cdc-eb93-40ea-a841-7b7c0f240934")
 		(property "Reference" "R6"
 			(at 347.98 66.294 90)
@@ -20731,7 +20731,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" ""
 			(at 347.98 70.866 90)
 			(effects
 				(font
@@ -21113,7 +21113,7 @@
 			(uuid "0b2f9a8d-fd33-4fae-b194-88f0bcf18de3")
 		)
 		(instances
-			(project ""
+			(project "SuperClockController"
 				(path "/3f1551bf-8fa4-45b3-afc6-c3558da4981c"
 					(reference "BZ1")
 					(unit 1)
@@ -21338,7 +21338,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 309.88 200.6599 0)
 			(effects
 				(font

@@ -108,7 +108,6 @@
 			(psnegative no)
 			(psa4output no)
 			(plot_black_and_white yes)
-			(plotinvisibletext no)
 			(sketchpadsonfab no)
 			(plotpadnumbers no)
 			(hidednponfab no)
@@ -226,7 +225,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -462,7 +461,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -515,18 +514,6 @@
 			(layer "F.CrtYd")
 			(uuid "ff1a5687-ca5c-420c-b168-1c53430bba3b")
 		)
-		(fp_text user "${REFERENCE}"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "e4d48091-3a60-45a6-a711-0e47cdc18bf8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(pad "1" thru_hole circle
 			(at 0 0)
 			(size 4 4)
@@ -568,7 +555,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -968,7 +955,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -1370,7 +1357,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -1423,18 +1410,6 @@
 			(layer "F.CrtYd")
 			(uuid "6a182360-d5a0-490c-ba21-2bb0ed23b33c")
 		)
-		(fp_text user "${REFERENCE}"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "f089e196-8e89-4852-bb87-792e93524e3f")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(pad "1" thru_hole circle
 			(at 0 0)
 			(size 4 4)
@@ -1476,7 +1451,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -1778,7 +1753,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -1831,18 +1806,6 @@
 			(layer "F.CrtYd")
 			(uuid "b7d73779-6282-4571-9ed5-5004b8e30137")
 		)
-		(fp_text user "${REFERENCE}"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "0583481d-7888-45ab-a332-c7ded63f82d6")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(pad "1" thru_hole circle
 			(at 0 0)
 			(size 4 4)
@@ -1884,7 +1847,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -2087,7 +2050,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -2799,7 +2762,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3201,7 +3164,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3254,18 +3217,6 @@
 			(layer "F.CrtYd")
 			(uuid "f81679ed-4c23-404e-a443-2dfaa6997a59")
 		)
-		(fp_text user "${REFERENCE}"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "531798c7-7a5c-41e2-902b-e676bf185621")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(pad "1" thru_hole circle
 			(at 0 0)
 			(size 4 4)
@@ -3308,7 +3259,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3544,7 +3495,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3906,7 +3857,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -3958,18 +3909,6 @@
 			(fill no)
 			(layer "F.CrtYd")
 			(uuid "fed02cb9-c45f-442e-8e54-f0059947a3a3")
-		)
-		(fp_text user "${REFERENCE}"
-			(at 0 0 0)
-			(layer "F.Fab")
-			(hide yes)
-			(uuid "d9159b28-3351-421a-bc2d-3f27febe2136")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
 		)
 		(pad "1" thru_hole circle
 			(at 0 0)
@@ -4307,7 +4246,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "c07472f5-341c-42ad-9dfe-befb827e922f")
@@ -4319,7 +4258,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -4351,7 +4290,7 @@
 		(path "/0fe7a2b2-49db-4a3d-a402-c16d8799ada7")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -4513,7 +4452,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "d3d9df54-5fa5-4280-af10-ad892984cf3a")
@@ -4525,7 +4464,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -4557,7 +4496,7 @@
 		(path "/c458fc1e-503c-4e0a-8ed6-31e04fc92de3")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -4731,7 +4670,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -4925,7 +4864,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "bf4d08fe-6022-4193-bb9b-285e629eac6f")
@@ -5185,7 +5124,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "849a1dc9-761c-4d34-aa59-157a50cf1ed7")
@@ -5197,7 +5136,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -5229,7 +5168,7 @@
 		(path "/4ea52b13-51d3-4d3e-9ac0-1d2ef1170e33")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -5403,7 +5342,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -5629,7 +5568,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -5823,7 +5762,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "18fbd592-c1b8-4d7e-a149-efea80165c80")
@@ -5835,7 +5774,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -5867,7 +5806,7 @@
 		(path "/989ed9a2-6ccb-4e0c-93e2-787f2850c719")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -6041,7 +5980,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -6247,7 +6186,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -6883,7 +6822,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -7077,7 +7016,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "4062b10e-d63c-4082-91b6-7b380a807e4e")
@@ -7337,7 +7276,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "b5e775a6-5210-403f-a986-0e1bb3551925")
@@ -7597,7 +7536,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "2f930115-f407-4b85-baba-dc5a9db76e11")
@@ -7609,7 +7548,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -7641,7 +7580,7 @@
 		(path "/070d276a-08d9-41e1-80d4-94361740059a")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -7815,7 +7754,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -8021,7 +7960,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -8326,7 +8265,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "4e98ec16-59d7-4a90-b9de-75a4e8113915")
@@ -8598,7 +8537,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -8792,7 +8731,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "de9297cd-8378-4161-b1bb-f346e6ac792d")
@@ -9052,7 +8991,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "25b8eaac-8021-40c3-a9ab-20993cdec0ac")
@@ -9312,7 +9251,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 90)
 			(layer "B.Fab")
 			(uuid "9b5dfb06-1a8a-415e-8733-01ab996b4e16")
@@ -9572,7 +9511,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "b3da190e-13f7-4a6f-855e-d18f25c592b5")
@@ -9584,7 +9523,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -9616,7 +9555,7 @@
 		(path "/c4b8f396-6afb-47bd-b085-4215424f4bfb")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -9778,7 +9717,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "ffaab737-b118-494a-ae73-cd07c1ac982d")
@@ -10050,7 +9989,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -10256,7 +10195,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -10462,7 +10401,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -10656,7 +10595,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "9c2392c0-1a49-49b3-8e37-8dc2e7a04571")
@@ -10668,7 +10607,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -10700,7 +10639,7 @@
 		(path "/e51a525b-6a43-46b1-86c2-1007af6e1bfa")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -10862,7 +10801,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "cfa607c8-c9dd-4834-9406-0ff790588f93")
@@ -10874,7 +10813,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -10906,7 +10845,7 @@
 		(path "/a6a0af58-2c9e-4ef4-9cdd-ec8cf2df7943")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -11080,7 +11019,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -11274,7 +11213,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "cc600b96-fa36-40c7-aad1-69efb7bbe9e3")
@@ -11286,7 +11225,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -11318,7 +11257,7 @@
 		(path "/bd35d8c6-03c9-43af-9d3d-3e9a4d32f52c")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -11492,7 +11431,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -11686,7 +11625,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "1439b1bc-228f-4fd8-90f7-b722a68ddab4")
@@ -11946,7 +11885,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "03dfe451-e6f8-444e-8d8f-1d31a3cbf2e7")
@@ -12218,7 +12157,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -12494,7 +12433,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -12740,7 +12679,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "aecbfba9-9788-423b-8004-c1eff89f2e56")
@@ -13012,7 +12951,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -13206,7 +13145,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "97702d22-a4f1-473d-a4d9-5254e7bd9db3")
@@ -13218,7 +13157,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -13250,7 +13189,7 @@
 		(path "/2d6f7614-5d85-4640-a934-0cfbf7f8840f")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -13412,7 +13351,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "4e0be565-6ae9-44c1-9f65-04e1b7f567c7")
@@ -13424,7 +13363,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -13456,7 +13395,7 @@
 		(path "/7e92e314-4115-4704-bff1-6d02ff5b3642")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -13618,7 +13557,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "fad5130e-2fcc-44f2-b1a4-b366797e96bf")
@@ -13630,7 +13569,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -13662,7 +13601,7 @@
 		(path "/e39786e7-bba9-4492-b36b-ffc57af7839b")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -13836,7 +13775,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -14042,7 +13981,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -14249,7 +14188,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -14571,7 +14510,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 0)
 			(layer "B.Fab")
 			(uuid "5039c647-26fb-4ff5-9ce6-fc9ea44b3745")
@@ -14844,7 +14783,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -15381,7 +15320,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "0d0405d3-a8f8-4403-a3a8-aeaad2c0c16f")
@@ -15653,7 +15592,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16525,7 +16464,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16719,7 +16658,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "ac0bdb09-e178-4f41-87c8-e733477a07c8")
@@ -16731,7 +16670,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -16763,7 +16702,7 @@
 		(path "/e9665cdc-eb93-40ea-a841-7b7c0f240934")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -16925,7 +16864,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "807bb79a-e61a-4e19-880e-b7fdf8d9c7e2")
@@ -17197,7 +17136,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -17403,7 +17342,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -17887,7 +17826,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18081,7 +18020,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "1c8049c7-d5e0-40e3-9ee8-6ca462f98394")
@@ -18093,7 +18032,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18125,7 +18064,7 @@
 		(path "/62f8c6de-1c61-4e0c-a7a6-73331a1eea3c")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -18299,7 +18238,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18493,7 +18432,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "958ce7d0-7752-4966-a476-291a4c79dded")
@@ -18765,7 +18704,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -18959,7 +18898,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "72e55b19-9285-4740-b31f-ec4065031d3b")
@@ -18971,7 +18910,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -19003,7 +18942,7 @@
 		(path "/ac64459a-2480-440c-98ff-3fb06bb65d3b")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -19165,7 +19104,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "16b45a2f-7329-46b2-adef-cec16453b352")
@@ -19425,7 +19364,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 0)
 			(layer "B.Fab")
 			(uuid "1c552898-1cf0-4595-ad8a-1ce92627b512")
@@ -19437,7 +19376,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -19469,7 +19408,7 @@
 		(path "/43acbae8-fb01-4902-8a12-2f9718e3ffec")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 -0.735)
 			(end -0.227064 -0.735)
@@ -19631,7 +19570,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "c39bd968-cea1-4dce-bf19-12a2093d4038")
@@ -19891,7 +19830,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "AO3416A"
+		(property "Value" "2N7002K"
 			(at 0 -2.4 270)
 			(layer "B.Fab")
 			(uuid "07cc7ac7-fe8c-4a5c-aa4a-a4bd2a670d72")
@@ -20151,7 +20090,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "~"
 			(at 0 -1.65 90)
 			(layer "B.Fab")
 			(uuid "f15d2977-1960-4aa7-b2b8-3fd1cc524a46")
@@ -20163,7 +20102,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 90)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -20195,7 +20134,7 @@
 		(path "/3893e901-423b-406f-8065-e207fa68d084")
 		(sheetname "/")
 		(sheetfile "SuperClockController.kicad_sch")
-		(attr smd)
+		(attr smd dnp)
 		(fp_line
 			(start 0.227064 0.735)
 			(end -0.227064 0.735)
@@ -20369,7 +20308,7 @@
 				(justify mirror)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "~"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "B.Fab")
@@ -20528,17 +20467,17 @@
 		(layer "Edge.Cuts")
 		(uuid "25248cb0-8499-43c9-a75f-4314de2c34ef")
 	)
-	(gr_text "Set"
-		(at 217.043 63.246 0)
+	(gr_text "Power"
+		(at 107.823 82.677 0)
 		(layer "B.SilkS")
-		(uuid "07c5dbc1-03fb-4a48-8b3d-8414a58b9510")
+		(uuid "80ab636e-69e8-4c0c-a771-818940695a9e")
 		(effects
 			(font
 				(size 1.2 1.2)
 				(thickness 0.2)
 				(bold yes)
 			)
-			(justify bottom mirror)
+			(justify left bottom mirror)
 		)
 	)
 	(gr_text "AVR ISP"
@@ -20554,17 +20493,17 @@
 			(justify left bottom mirror)
 		)
 	)
-	(gr_text "Power"
-		(at 107.823 82.677 0)
+	(gr_text "+"
+		(at 216.789 74.295 0)
 		(layer "B.SilkS")
-		(uuid "80ab636e-69e8-4c0c-a771-818940695a9e")
+		(uuid "b5d6a5be-5951-45f0-885e-21dab84c2487")
 		(effects
 			(font
 				(size 1.2 1.2)
 				(thickness 0.2)
 				(bold yes)
 			)
-			(justify left bottom mirror)
+			(justify bottom mirror)
 		)
 	)
 	(gr_text "-"
@@ -20580,10 +20519,10 @@
 			(justify bottom mirror)
 		)
 	)
-	(gr_text "+"
-		(at 216.789 74.295 0)
+	(gr_text "Set"
+		(at 217.043 63.246 0)
 		(layer "B.SilkS")
-		(uuid "b5d6a5be-5951-45f0-885e-21dab84c2487")
+		(uuid "07c5dbc1-03fb-4a48-8b3d-8414a58b9510")
 		(effects
 			(font
 				(size 1.2 1.2)

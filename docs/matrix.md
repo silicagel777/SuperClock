@@ -78,9 +78,9 @@ The solution is to use high-current driver ICs, or add transistor switches. This
 
 ## LED ghosting
 
-A very common issue for DIY LED matrix displays is ghosting. The most common cause for it are software defects: it can happen when LED rows are reconfigured without disabling column first. If display is scanned left-to right, you'll see ghosts to the **right side** of lit pixels.
+A very common issue for DIY LED matrix displays is ghosting. The most common cause for it are software defects: it can happen when LED rows are reconfigured without disabling column first. If display is scanned left-to right, you'll see ghosts to the **left side** of lit pixels.
 
-But there can be also another cause for ghosting: **parasitic capacitance**. Turns out, that LEDs are also capacitors and can store a tiny charge. On fast refresh speeds and small brightness levels this can result in ghosting as well! If display is scanned left-to right, you'll see a ghosting trail to the **left side** of lit pixels.
+But there can be also another cause for ghosting: **parasitic capacitance**. Turns out, that LEDs are also capacitors and can store a tiny charge. On fast refresh speeds and small brightness levels this can result in ghosting as well! If display is scanned left-to right, you'll see a ghosting trail to the **right side** of lit pixels.
 
 The second issue if way nastier, since it can't be fully defeated in software. It can be somewhat reduced by several workarounds, though:
 
@@ -89,7 +89,6 @@ The second issue if way nastier, since it can't be fully defeated in software. I
 
 The definitive fix is, however, the hardware one:
 
-- Use a push-pull driver for LED cathodes: setting it low enables LEDs, and setting it high discharges parasitic capacitors.
-    - Unfortunately, high current push-pull drivers are virtually non-existent. The popular 74HC595 is out of spec even for this small display, the I/O pins of ATmega32 are not enough either, and anything more powerful is open-drain only.
-- Attach a pull-up resistor to cathodes: it discharges parasitic capacitance when open-drain is not open.
-    - This one is easier to achieve, and that's how I've dealt with ghosting for this LED display! Most people recommend resistor values of something like 1K-10K, but I've had to lower it down to 220R to combat ghosting on lowest brightness level.
+- Use a push-pull driver for LED anodes (or add some pull-down resistors), this will help discharging the capacitance in LEDs.
+- Use MOSFETs with low parasitic capacitance for LED cathodes (or use BJTs instead), so you won't have extra capacitance on low side.
+    - You might also be tempted to use push-pull drivers (or pull-up resistors) for cathodes as well, but I don't recommend this: some LED types don't like the reverse voltage at all! My green LEDs began failing in a few months after trying that: they slowly started conducting in reverse, and the whole display went wrong.
