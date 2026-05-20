@@ -41,7 +41,7 @@ Here is a mode list with corresponding button actions:
 
 ## Clock calibration
 
-DS3231 support oscillator calibration though the "aging" register. The last screen of "Clock setup mode" sets the register value:
+DS3231 supports oscillator calibration through the "aging" register. The last screen of "Clock setup mode" sets the register value:
 
 - The initial value is 0 (displayed as `C+00`), maximum is +127, minimum is -128.
 - Positive values slow down the clock (seconds become longer)

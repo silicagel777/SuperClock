@@ -1,6 +1,6 @@
 # Software notes
 
-The firmware is written in C++. It can be compiled by [avr-gcc](avr-gcc) and flashed by [avrdude](https://github.com/avrdudes/avrdude) through [USBasp](https://www.fischl.de/usbasp/). You can find latest firmware builds in "Releases" section.
+The firmware is written in C++. It can be compiled by [avr-gcc](https://www.nongnu.org/avr-libc/user-manual/overview.html) and flashed by [avrdude](https://github.com/avrdudes/avrdude) through [USBasp](https://www.fischl.de/usbasp/). You can find the latest firmware builds in "Releases" section.
 
 ## Flashing firmware
 
@@ -14,8 +14,8 @@ To flash firmware, do the following:
 - Connect your programmer to your PC and your clock. Most USBasp clones come with a 2x5 ribbon of standard [AVR ISP pinout](https://en.m.wikipedia.org/wiki/File:Isp_headers.svg): if that's the case, just plug the cable into the IDC socket. USB power is not required, as the clock will receive power from the programmer.
 - Install drivers for your programmer. For USBasp, you can consult [the official page](https://www.fischl.de/usbasp/).
 - Download the programming software. My favorite is [SinaProg](https://cxem.net/software/download/SinaProg2.1.1.rar), but sadly it's very dated, and the official website is long gone. Another good (and maintained) option is [AVRDUDESS](https://github.com/ZakKemble/AVRDUDESS). Both tools are Windows-only and are GUI wrappers for the [avrdude](https://github.com/avrdudes/avrdude) tool. If you run Linux, you can use avrdude directly instead and flash firmware by running a Makefile (see below).
-- The pristine ATmega32 is configured to run at 1MHz. Before flashing the firmware, we need to tell it to run from the external crystal at 16Mhz and configure a few other settings. This is done by setting fuse bits. You need to set **low byte** to `0xBF` and **high byte** to `0xD1`. Be careful, setting wrong fuse values can brick your chip!
-    - For fuses, you need to set a low programming speed in your software, as the default 1MHz clock is not enough for ATmega32 to react on fastest speeds.
+- A factory-fresh ATmega32 is configured to run at 1MHz. Before flashing the firmware, we need to tell it to run from the external crystal at 16MHz and configure a few other settings. This is done by setting fuse bits. You need to set **low byte** to `0xBF` and **high byte** to `0xD1`. Be careful, setting wrong fuse values can brick your chip!
+    - For fuses, you need to set a low programming speed in your software, as the default 1MHz clock is not enough for ATmega32 to respond at the fastest speeds.
     - Some USBasp clones from AliExpress run a very old firmware version that doesn't allow configuring programming speed in software: they always use the fastest one instead (1.5MHz). If this happens to you, short the "JP3" jumper on the programmer, it will reduce programming speed.
     - Once the fuses are flashed, you can return to full programming speed.
     - If the chip fails to detect after fuses are flashed, carefully check the soldering around crystal: ATmega32 won't run if it can't make it oscillate.
@@ -42,10 +42,10 @@ Run as root: `apt update && apt install gcc-avr binutils-avr avr-libc make avrdu
 
 The project comes with a `Makefile` that defines a few commands. Switch to project directory and try the following:
 
-- `make` to build a hex file (you can append `-j<NUMBER>` for parallel builds, for example `make -j16` for a 8-core 16-thread CPU)
+- `make` to build a hex file (you can append `-j<NUMBER>` for parallel builds, for example `make -j16` for an 8-core 16-thread CPU)
 - `make font` to update font file
-- `make fuse` write fuse bits through USBasp (do it once before flashing)
-- `make flash` flash firmware through USBasp
+- `make fuse` to write fuse bits through USBasp (do it once before flashing)
+- `make flash` to flash firmware through USBasp
 - `make clean` to remove build files
 
 ### Using Visual Studio Code to develop

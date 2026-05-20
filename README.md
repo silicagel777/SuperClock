@@ -23,7 +23,7 @@ A DIY desk clock with retro-style dot matrix display
 - Intuitive (kinda) user interface with three buttons
 - Cool acrylic glass frame
 - Powered by any USB brick through a Type-B cable
-    - Finally, a reason to pick that old printer cable from your drawer!
+    - Finally, a reason to pick up that old printer cable from your drawer!
 - Built around ATmega32 microcontroller, with firmware written in C++
     - Uses **every** I/O pin on ATmega32, no wasted potential!
 - No AI and no internet connection! (yup, that's a feature nowadays...)
