@@ -82,7 +82,7 @@ void ClockSetupPage::setupIncrease() {
     m_time.day = m_time.day > getMonthDays(m_time.month, m_time.year) ? 1 : m_time.day;
     break;
   case Mode::YEAR:
-    m_time.year = m_time.year < 2100 ? m_time.year + 1 : 2000;
+    m_time.year = m_time.year < 2099 ? m_time.year + 1 : 2000;
     m_time.day = m_time.day > getMonthDays(m_time.month, m_time.year) ? 1 : m_time.day;
     break;
   case Mode::CALIB:
@@ -109,7 +109,7 @@ void ClockSetupPage::setupDecrease() {
     m_time.day = m_time.day > getMonthDays(m_time.month, m_time.year) ? 1 : m_time.day;
     break;
   case Mode::YEAR:
-    m_time.year = m_time.year > 2000 ? m_time.year - 1 : 2100;
+    m_time.year = m_time.year > 2000 ? m_time.year - 1 : 2099;
     m_time.day = m_time.day > getMonthDays(m_time.month, m_time.year) ? 1 : m_time.day;
     break;
   case Mode::CALIB:
